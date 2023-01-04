@@ -10,7 +10,9 @@
  import net.minecraft.util.ResourceLocation;
  import net.minecraftforge.common.util.EnumHelper;
  import net.minecraftforge.oredict.OreDictionary;
- import tb.common.item.ItemBloodyArmor;
+import scala.tools.nsc.doc.model.Public;
+import tb.common.item.EyeInstable;
+import tb.common.item.ItemBloodyArmor;
  import tb.common.item.ItemCastingBracelet;
  import tb.common.item.ItemConcentratedTaint;
  import tb.common.item.ItemHerobrinesScythe;
@@ -84,6 +86,11 @@
      ItemRegistry.registerItem(silverwoodPipe, "silverwoodPipe", core);
      ItemRegistry.registerItem(voidSeed, "voidSeed", core);
      
+     //Dev items here
+     if (TBCore.isDev) {
+    	 ItemRegistry.registerItem(eyeInstable, "eyeInstable", core);
+     }
+     
      ItemRegistry.registerItem(bloodyChest, "bloodyChest", core);
      ItemRegistry.registerItem(bloodyLeggings, "bloodyLeggings", core);
      ItemRegistry.registerItem(bloodyBoots, "bloodyBoots", core);
@@ -112,6 +119,10 @@
      WAND_ROD_THAUMIUM = new WandRod("tbthaumium", 80, new ItemStack(resource, 1, 3), 6, (IWandRodOnUpdate)new WandRodPrimalOnUpdate(), new ResourceLocation("thaumicbases", "textures/items/wand_rod_thaumium_uv.png"));
      WAND_ROD_VOID = new WandRod("tbvoid", 160, new ItemStack(resource, 1, 4), 16, (IWandRodOnUpdate)new WandRodPrimalOnUpdate(), new ResourceLocation("thaumicbases", "textures/items/wand_rod_void_uv.png"));
    }
+   
+   
+   //Dev Items here
+   public static Item eyeInstable = new EyeInstable().setUnlocalizedName("eyeUnstable");
    
    public static Item resource = (new TBResource()).setUnlocalizedName("resource");
    
