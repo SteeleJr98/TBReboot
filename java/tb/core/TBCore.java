@@ -50,8 +50,8 @@ import tb.api.RevolverUpgrade;
    public static final String dependencies = "required-after:Thaumcraft@[4.2.3.5,);required-after:Baubles@[1.0.1.10,);required-after:DummyCore@[1.6,);";
    public static final TBConfig cfg = new TBConfig();
    
-   public static final boolean isDev = System.getProperty("user.name").equals("Steele");
-   //public static final boolean isDev = false;
+   //public static final boolean isDev = System.getProperty("user.name").equals("Steele");
+   public static final boolean isDev = true;
    
    
    
@@ -65,9 +65,10 @@ import tb.api.RevolverUpgrade;
    
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
-	   
-	 Logging.writeToConsole(Level.DEBUG, "Dev environment detected, Loading dev tools...");
 	 
+	 if (isDev) {
+		 Logging.writeToConsole(Level.DEBUG, "Dev environment detected, Loading dev tools...");
+	 }
 	   
      instance = this;
        Core.registerModAbsolute(getClass(), "Thaumic Bases", event.getModConfigurationDirectory().getAbsolutePath(), (IDummyConfig)cfg);
