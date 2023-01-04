@@ -33,6 +33,7 @@ import tb.api.ITobacco;
    }
  
    
+   @Override
    public ItemStack onItemRightClick(ItemStack stack, World w, EntityPlayer player) {
      if (getTobacco(player) != null)
        player.setItemInUse(stack, getMaxItemUseDuration(stack)); 
@@ -40,16 +41,19 @@ import tb.api.ITobacco;
    }
  
    
+   @Override
    public EnumAction getItemUseAction(ItemStack stack) {
      return EnumAction.bow;
    }
  
    
+   @Override
    public int getMaxItemUseDuration(ItemStack stack) {
      return 64;
    }
  
    
+   @Override
    public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {
      Vec3 look = player.getLookVec();
      double x = player.posX + look.xCoord / 5.0D;
