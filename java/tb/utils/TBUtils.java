@@ -3,7 +3,9 @@
  import cpw.mods.fml.common.network.simpleimpl.IMessage;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.EntityPlayerMP;
- import thaumcraft.api.aspects.Aspect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import thaumcraft.api.aspects.Aspect;
  import thaumcraft.common.Thaumcraft;
  import thaumcraft.common.lib.network.PacketHandler;
  import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
