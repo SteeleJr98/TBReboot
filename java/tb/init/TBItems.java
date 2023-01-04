@@ -11,7 +11,7 @@
  import net.minecraftforge.common.util.EnumHelper;
  import net.minecraftforge.oredict.OreDictionary;
 import scala.tools.nsc.doc.model.Public;
-import tb.common.item.EyeInstable;
+import tb.common.item.ItemEyeInstable;
 import tb.common.item.ItemBloodyArmor;
  import tb.common.item.ItemCastingBracelet;
  import tb.common.item.ItemConcentratedTaint;
@@ -122,7 +122,7 @@ import tb.common.item.ItemBloodyArmor;
    
    
    //Dev Items here
-   public static Item eyeInstable = new EyeInstable().setUnlocalizedName("eyeUnstable");
+   public static Item eyeInstable = new ItemEyeInstable().setUnlocalizedName("eyeUnstable");
    
    public static Item resource = (new TBResource()).setUnlocalizedName("resource");
    
