@@ -51,6 +51,7 @@ import tb.api.RevolverUpgrade;
    public static final TBConfig cfg = new TBConfig();
    
    public static final boolean isDev = System.getProperty("user.name").equals("Steele");
+   //public static final boolean isDev = false;
    
    
    
