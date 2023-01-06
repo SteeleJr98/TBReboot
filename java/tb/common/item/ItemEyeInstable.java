@@ -249,16 +249,16 @@ public class ItemEyeInstable extends Item {
 	}
 
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void makeToolTip(ItemTooltipEvent event) {
-		if(event.itemStack.getItem().equals(Items.skull))
-			event.toolTip.add(StatCollector.translateToLocal("can be stabiliser"));
-		else if(Block.getBlockFromItem(event.itemStack.getItem())!=null)
-			for(Class intf : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getInterfaces())
-				if(intf.getCanonicalName().endsWith("IInfusionStabiliser"))
-					event.toolTip.add(StatCollector.translateToLocal("can be stabiliser"));
-	}
+//	@SideOnly(Side.CLIENT)
+//	@SubscribeEvent
+//	public void makeToolTip(ItemTooltipEvent event) {
+//		if(event.itemStack.getItem().equals(Items.skull))
+//			event.toolTip.add(StatCollector.translateToLocal("can be stabiliser"));
+//		else if(Block.getBlockFromItem(event.itemStack.getItem())!=null)
+//			for(Class intf : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getInterfaces())
+//				if(intf.getCanonicalName().endsWith("IInfusionStabiliser"))
+//					event.toolTip.add(StatCollector.translateToLocal("can be stabiliser"));
+//	}
 
 		
 
