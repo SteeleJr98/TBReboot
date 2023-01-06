@@ -1,6 +1,7 @@
 package tb.asm;
 
 
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
@@ -30,7 +31,9 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.steelehook.SteeleCore.Handlers.Logging;
 import scala.collection.parallel.ParIterableLike.Forall;
 import scala.reflect.internal.Trees.New;
+import tb.common.block.TBBlock;
 import tb.core.TBCore;
+import thaumcraft.api.crafting.IInfusionStabiliser;
 
 public class TBCoreTransformer implements IClassTransformer {
 
@@ -174,9 +177,21 @@ public class TBCoreTransformer implements IClassTransformer {
 		if(event.itemStack.getItem().equals(Items.skull))
 			event.toolTip.add(StatCollector.translateToLocal("hello from tb asm"));
 		else if(Block.getBlockFromItem(event.itemStack.getItem())!=null)
-			for(Class intf : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getInterfaces())
-				if(intf.getCanonicalName().endsWith("IInfusionStabiliser"))
-					event.toolTip.add(StatCollector.translateToLocal("hello from tb asm"));
+			for(Method m : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getMethods())
+				if(m.getName().endsWith("canStabaliseInfusion")) {
+					
+					
+					
+					event.toolTip.add(StatCollector.translateToLocal("has method"));
+					Block sBlock = Block.getBlockFromItem(event.itemStack.getItem());
+					
+					IInfusionStabiliser conv = (IInfusionStabiliser) sBlock;
+					
+					
+					event.toolTip.add(StatCollector.translateToLocal("Can stabalize: " + String.valueOf(conv.canStabaliseInfusion(event.entity.worldObj, 0, 0, 0))));
+				}
+					
+					
 	}
 
 
