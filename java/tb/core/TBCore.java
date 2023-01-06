@@ -19,14 +19,18 @@
  import java.util.ArrayList;
 
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.steelehook.SteeleCore.Handlers.Logging;
+import scala.reflect.internal.Trees.New;
 import tb.api.RevolverUpgrade;
  import tb.common.enchantment.EnchantmentHandler;
  import tb.common.entity.EntityRevolverBullet;
  import tb.common.event.TBEventHandler;
- import tb.init.TBBlocks;
+import tb.common.item.ItemEyeInstable;
+import tb.init.TBBlocks;
  import tb.init.TBEnchant;
  import tb.init.TBFociUpgrades;
  import tb.init.TBItems;
@@ -47,11 +51,13 @@ import tb.api.RevolverUpgrade;
    public static final String name = "Thaumic Bases Reboot";
    public static final String serverProxy = "tb.network.proxy.TBServer";
    public static final String clientProxy = "tb.network.proxy.TBClient";
-   public static final String dependencies = "required-after:Thaumcraft@[4.2.3.5,);required-after:Baubles@[1.0.1.10,);required-after:DummyCore@[1.6,);";
+   public static final String dependencies = "required-after:Thaumcraft@[4.2.3.5,);required-after:Baubles@[1.0.1.10,);required-after:DummyCore@[1.6,);required-after:stcore170";
    public static final TBConfig cfg = new TBConfig();
    
    //public static final boolean isDev = System.getProperty("user.name").equals("Steele");
    public static final boolean isDev = true;
+   
+   public static final Logger TBLogger = LogManager.getLogger("TBLogger");
    
    
    
@@ -67,7 +73,10 @@ import tb.api.RevolverUpgrade;
    public void preInit(FMLPreInitializationEvent event) {
 	 
 	 if (isDev) {
-		 Logging.writeToConsole(Level.DEBUG, "Dev environment detected, Loading dev tools...");
+		 Logging.writeToConsole(Level.INFO, "Dev environment detected, Loading dev tools...");
+//		 for(int i = 0; i < 10; i++) {
+//			 Logging.writeToConsole(Level.INFO, "");
+//		 }
 	 }
 	   
      instance = this;
@@ -86,6 +95,9 @@ import tb.api.RevolverUpgrade;
    public void init(FMLInitializationEvent event) {
      MinecraftForge.EVENT_BUS.register(new EnchantmentHandler());
      MinecraftForge.EVENT_BUS.register(new TBEventHandler());
+     if (isDev) {
+    	 MinecraftForge.EVENT_BUS.register(new ItemEyeInstable());
+     }
      NetworkRegistry.INSTANCE.registerGuiHandler(instance, (IGuiHandler)proxy);
      
      EntityRegistry.registerModEntity(EntityRevolverBullet.class, "revolverBullet", 0, this, 32, 1, true);
