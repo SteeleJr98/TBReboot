@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,9 +19,14 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.steelehook.SteeleCore.Handlers.Logging;
 import net.steelehook.SteeleCore.Handlers.MessageLogging;
+import tb.common.block.BlockCrystalBlock;
+import tb.common.itemblock.ItemBlockCrystal;
+import tb.init.TBBlocks;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.crafting.InfusionRunicAugmentRecipe;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
@@ -29,41 +38,59 @@ import thaumcraft.api.crafting.IInfusionStabiliser;
 import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 
+import tb.core.TBCore;
+
 public class ItemEyeInstable extends Item {
 	
+
 	public void Eyeinstable() {
 	     setFull3D();
 	     setMaxStackSize(1);
+	     
 	   }
+	
+	
 	
 	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int faceQ, float hitXQ, float hityQ, float hitZQ)
     {
-		if (world.isRemote) {
-			MessageLogging.sendFromClient(player, world.getBlock(x, y, z).getLocalizedName());
-		}
 		Block block = world.getBlock(x, y, z);
+		
+
+		
+		if (!world.isRemote && TBCore.isDev) {
+			MessageLogging.sendFromClient(player, world.getBlock(x, y, z).getLocalizedName());
+			MessageLogging.sendFromClient(player, "intf start");
+			for(Class intf : block.getClass().getInterfaces()) {
+				MessageLogging.sendFromClient(player, intf.getCanonicalName());
+			}
+			MessageLogging.sendFromClient(player, "inft end");
+		}
+		
 		if (block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
 			if (world.getTileEntity(x, y, z) instanceof thaumcraft.common.tiles.TileInfusionMatrix) {
-				if (world.isRemote) {
+				if (!world.isRemote && TBCore.isDev) {
 					MessageLogging.sendFromClient(player, "is matrix");
 				}
 				TileInfusionMatrix te = (TileInfusionMatrix) world.getTileEntity(x, y, z);
 				String instabilityString = String.valueOf(te.instability);
-				MessageLogging.sendFromClient(player, "Instability: " + instabilityString);
+				//MessageLogging.sendFromClient(player, "Instability: " + instabilityString);
 				if (!world.isRemote) {
 					getInstability(world, player, x, y, z);
 				}
 				
 			}
 			else {
-				if (world.isRemote) {
+				if (!world.isRemote && TBCore.isDev) {
 					MessageLogging.sendFromClient(player, "not matrix");
 				}
 			}
 		} else {
-			if (world.isRemote) {
+			//Block testBlock  = Block.getBlockFromItem(Item.getItemFromBlock(TBBlocks.crystalBlock));
+			
+			if (!world.isRemote && TBCore.isDev) {
 				MessageLogging.sendFromClient(player, "not tile");
+				
 			}
 			
 		}
@@ -212,11 +239,27 @@ public class ItemEyeInstable extends Item {
 				String w = "wg.chat."+"infusionWarning."+warning[0];
 				player.addChatMessage(new ChatComponentTranslation(w,warning[1],warning[2],warning[3]).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GRAY)) );
 			}
+			
+			
+			
+			
+			
 			return 0;
 		}
-	
-}
-		
+	}
+
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void makeToolTip(ItemTooltipEvent event) {
+		if(event.itemStack.getItem().equals(Items.skull))
+			event.toolTip.add(StatCollector.translateToLocal("can be stabiliser"));
+		else if(Block.getBlockFromItem(event.itemStack.getItem())!=null)
+			for(Class intf : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getInterfaces())
+				if(intf.getCanonicalName().endsWith("IInfusionStabiliser"))
+					event.toolTip.add(StatCollector.translateToLocal("can be stabiliser"));
+	}
+
 		
 
 	
