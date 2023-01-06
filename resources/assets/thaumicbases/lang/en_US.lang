@@ -668,3 +668,15 @@ tc.research_text.TB.ROD_primal_staff=Elemental power combined
 #Chat notifications
 tb.txt.linkStarted=Link Started
 tb.txt.linkEstabilished=Link Estabilished
+
+#witching gadgets
+wg.chat.nodeContents.primal=Primal Aspects within this node: §eAer: %1$s§f, §2Terra: %2$s§f, §cIgnis: %3$s§f, §3Aqua: %4$s§f, §7Ordo: %5$s§f, §8Perditio: %6$s
+wg.chat.infusionWarning.pedestalHeight=Infusion pedestal at %1$s, %2$s, %3$s must not be higher than the Infusion Matrix
+wg.chat.infusionWarning.pedestalPos=Pedestal at %1$s, %2$s, %3$s must not be more than 8 blocks horizontally from the matrix
+wg.chat.infusionWarning.noPartnerItem=Pedestal at %1$s, %2$s, %3$s should have an item to match its partner
+wg.chat.infusionWarning.noPartnerPedestal=Pedestal at %1$s, %2$s, %3$s lacks a symmetrical partner
+wg.chat.infusionWarning.noPartnerStabilizer=Stabilizer at %1$s, %2$s, %3$s lacks a symmetrical partner
+wg.chat.infusionInfo.stabilityTotal=Total Stability booster: %1$s
+wg.chat.infusionInfo.instability=Total Instability of this Infusion: %1$s
+wg.chat.infusionInfo.essentiaMod=This Infusion Enchantment will consume %1$s times the amount of essentia displayed in the Thaumonomicon:
+wg.chat.infusionInfo.essentiaRunicMod=The essentia costs for this Runic Augmentation are to the power of %1$s:
