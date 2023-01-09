@@ -173,26 +173,7 @@ public class TBCoreTransformer implements IClassTransformer {
 	}
 	
 
-	public static void makeToolTip(ItemTooltipEvent event) {
-		if(event.itemStack.getItem().equals(Items.skull))
-			event.toolTip.add(StatCollector.translateToLocal("hello from tb asm"));
-		else if(Block.getBlockFromItem(event.itemStack.getItem())!=null)
-			for(Method m : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getMethods())
-				if(m.getName().endsWith("canStabaliseInfusion")) {
-					
-					
-					
-					event.toolTip.add(StatCollector.translateToLocal("has method"));
-					Block sBlock = Block.getBlockFromItem(event.itemStack.getItem());
-					
-					IInfusionStabiliser conv = (IInfusionStabiliser) sBlock;
-					
-					
-					event.toolTip.add(StatCollector.translateToLocal("Can stabalize: " + String.valueOf(conv.canStabaliseInfusion(event.entity.worldObj, 0, 0, 0))));
-				}
-					
-					
-	}
+
 
 
 
