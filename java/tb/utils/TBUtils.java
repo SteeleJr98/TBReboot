@@ -1,12 +1,20 @@
  package tb.utils;
  
- import cpw.mods.fml.common.network.simpleimpl.IMessage;
- import net.minecraft.entity.player.EntityPlayer;
+ import java.lang.reflect.Method;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import thaumcraft.api.aspects.Aspect;
- import thaumcraft.common.Thaumcraft;
+import thaumcraft.api.crafting.IInfusionStabiliser;
+import thaumcraft.common.Thaumcraft;
  import thaumcraft.common.lib.network.PacketHandler;
  import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
  import thaumcraft.common.lib.research.ResearchManager;
@@ -46,6 +54,6 @@ import thaumcraft.api.aspects.Aspect;
      
      Thaumcraft.addWarpToPlayer(addTo, amount, false);
    }
- }
+}
 
 
