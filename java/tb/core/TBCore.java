@@ -15,7 +15,9 @@
  import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
  import cpw.mods.fml.common.registry.EntityRegistry;
  import cpw.mods.fml.relauncher.Side;
- import java.io.IOException;
+
+import java.io.File;
+import java.io.IOException;
  import java.util.ArrayList;
 
 import org.apache.logging.log4j.Level;
@@ -23,7 +25,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.steelehook.SteeleCore.Handlers.Logging;
 import scala.reflect.internal.Trees.New;
 import tb.api.RevolverUpgrade;
  import tb.common.enchantment.EnchantmentHandler;
@@ -43,7 +44,7 @@ import tb.init.TBBlocks;
  import tb.utils.TBConfig;
  
  
- @Mod(modid = "thaumicbases", version = "1.3.1710.2", name = "Thaumic Bases Reboot", dependencies = "required-after:Thaumcraft@[4.2.3.5,);required-after:Baubles@[1.0.1.10,);required-after:DummyCore@[1.6,);")
+ @Mod(modid = "thaumicbases", version = "1.3.1710.2", name = "Thaumic Bases Reboot", dependencies = TBCore.dependencies)
  public class TBCore
  {
    public static final String modid = "thaumicbases";
@@ -51,11 +52,14 @@ import tb.init.TBBlocks;
    public static final String name = "Thaumic Bases Reboot";
    public static final String serverProxy = "tb.network.proxy.TBServer";
    public static final String clientProxy = "tb.network.proxy.TBClient";
-   public static final String dependencies = "required-after:Thaumcraft@[4.2.3.5,);required-after:Baubles@[1.0.1.10,);required-after:DummyCore@[1.6,);required-after:stcore170";
+   public static final String dependencies = "required-after:Thaumcraft@[4.2.3.5,);required-after:Baubles@[1.0.1.10,);required-after:DummyCore@[1.6,);";
    public static final TBConfig cfg = new TBConfig();
    
    //public static final boolean isDev = System.getProperty("user.name").equals("Steele");
-   public static final boolean isDev = true;
+   //public static final boolean isDev = true;
+   private static final String fileName = "C:/Users/Steele/Desktop/Coding/1.7.10 modding/TBTesting/External/devEnableFile";
+   
+   public static final boolean isDev = new File(fileName).exists();
    
    public static final Logger TBLogger = LogManager.getLogger("TBLogger");
    
@@ -73,7 +77,8 @@ import tb.init.TBBlocks;
    public void preInit(FMLPreInitializationEvent event) {
 	 
 	 if (isDev) {
-		 Logging.writeToConsole(Level.INFO, "Dev environment detected, Loading dev tools...");
+		 //Logging.writeToConsole(Level.INFO, "Dev environment detected, Loading dev tools...");
+		 TBLogger.log(Level.INFO, "Dev environment detected, Loading dev tools...");
 //		 for(int i = 0; i < 10; i++) {
 //			 Logging.writeToConsole(Level.INFO, "");
 //		 }
