@@ -21,7 +21,7 @@ public class TBCoreLoader implements IFMLLoadingPlugin {
 	public String getModContainerClass() {
 		// TODO Auto-generated method stub
 		//return TBContainerCore.class.getName();
-		return "tb.asm.TBContainerCore";
+		return TBContainerCore.class.getName();
 	}
 
 	@Override
