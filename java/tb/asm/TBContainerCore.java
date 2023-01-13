@@ -22,7 +22,7 @@ public class TBContainerCore extends DummyModContainer {
 		super(new ModMetadata());
 		ModMetadata meta = getMetadata();
 		meta.modId = TBCore.modid + "Core";
-		meta.name = TBCore.name + "Core";
+		meta.name = TBCore.name + " Core";
 		meta.version = TBCore.version;
 		ArrayList<String> authors = new ArrayList<String>();
 	    authors.add("Modbder");
