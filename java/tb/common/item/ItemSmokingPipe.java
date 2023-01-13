@@ -6,7 +6,7 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.util.Vec3;
  import net.minecraft.world.World;
-import net.steelehook.SteeleCore.Handlers.MessageLogging;
+
 import tb.api.ITobacco;
  
  
@@ -68,7 +68,7 @@ import tb.api.ITobacco;
    public ItemStack onEaten(ItemStack stack, World w, EntityPlayer player) {
      ItemStack tobacco = getTobacco(player);
      ITobacco t = ITobacco.class.cast(tobacco.getItem());
-     MessageLogging.sendFromServer("Item Cast to ITobacco");
+     //MessageLogging.sendFromServer("Item Cast to ITobacco");
      t.performTobaccoEffect(player, tobacco.getItemDamage(), this.isSilverwood);
      for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
        
