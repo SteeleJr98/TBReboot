@@ -33,6 +33,8 @@
      shardsFromOre = cfg.getInt("shardsFromOre", "General", 8, 1, 64, "Amount of shards recieved from crucible ore processing");
      brightFociRequiresPrimordialPearl = cfg.getBoolean("brightFociRequiresPrimordialPearl", "General", true, "Does the Brightness Foci for the Node Manipulator requires a Primordial Pearl");
      
+     wisdomMaxAspect = cfg.getInt("wisdomMaxAspects", "General", 250, 100, 500, "Max number of any aspect you can recieve from the wisdom tobacco");
+     
      enableTTCompathability = cfg.getBoolean("enableTTCompathability", "General", true, "Allow the mod to register it's enchantments in the Thaumic Tinkerer's enchanter? Set to false if Thaumic Tinkerer is crashing you.");
    }
    
@@ -56,6 +58,7 @@
    public static boolean makeRequireAlumentium;
    public static int shardsFromOre;
    public static boolean brightFociRequiresPrimordialPearl;
+   public static int wisdomMaxAspect;
  }
 
 

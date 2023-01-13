@@ -18,9 +18,8 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
-import net.steelehook.SteeleCore.Handlers.MessageLogging;
 import tb.api.ITobacco;
-import tb.core.TBCore;
+import tb.utils.TBConfig;
 import tb.utils.TBUtils;
  import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -38,7 +37,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
    }
    
    public static final String[] names = new String[] { "tobacco_pile", "tobacco_eldritch", "tobacco_fighting", "tobacco_hunger", "tobacco_knowledge", "tobacco_mining", "tobacco_sanity", "tobacco_tainted", "tobacco_wispy"};
-   private static final int maxAspect = 250;
+   private static final int maxAspect = TBConfig.wisdomMaxAspect;
  
  
  
@@ -111,13 +110,13 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
         	   }
            }
            
-           if (TBCore.isDev) {MessageLogging.sendFromClient(smoker, "Valid aspect list length, " + validList.size());}
+           
            //Aspect[] validArray = (Aspect[]) validList.toArray();
            
            if (validList.size() > 0) {
 	           for (int i = 0; i < (isSilverwood ? 20 : 10); i++) {
 	        	 Aspect a = validList.get(smoker.worldObj.rand.nextInt(validList.size()));
-	        	 if (TBCore.isDev) {MessageLogging.sendFromClient(smoker, a.getName());}
+
 	        	 
 	             TBUtils.addAspectToKnowledgePool(smoker, a, (short)(isSilverwood ? 2 : 1));
 	             if (a == Aspect.TAINT && !isSilverwood) {
@@ -204,7 +203,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
     	   Aspect[] aList = pKnow.getAspects();
     	   for (int i = 0; i < aList.length; i++) {
     		   //System.out.println(aList[i].getName());
-    		   MessageLogging.sendFromClient(smoker, aList[i].getName());
+    		   
     		   TBUtils.addAspectToKnowledgePool(smoker, aList[i], (short)50);
     		   
     	   }
