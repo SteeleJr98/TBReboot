@@ -13,7 +13,8 @@
  import net.minecraft.util.DamageSource;
  import net.minecraft.util.MovingObjectPosition;
  import net.minecraft.world.World;
- import tb.api.RevolverUpgrade;
+import scala.reflect.internal.Trees.This;
+import tb.api.RevolverUpgrade;
  import tb.common.item.ItemRevolver;
  import thaumcraft.common.Thaumcraft;
  
@@ -63,7 +64,7 @@
      } 
    }
  
-   
+   @Override
    public void onUpdate() {
      if (this.worldObj.isRemote) {
        Thaumcraft.proxy.sparkle((float)this.posX, (float)this.posY, (float)this.posZ, 4);
@@ -79,17 +80,17 @@
      if (this.isPrimal && !this.isDead) {
        
        this.ticksExisted++;
-       onUpdate();
+       onUpdate(); //instant loop for hitscan
      } 
    }
  
-   
+   @Override
    protected float getGravityVelocity() {
      return this.isPrimal ? 0.0F : 0.01F;
    }
  
  
-   
+   @Override
    protected void onImpact(MovingObjectPosition object) {
      if (this.isDead) {
        return;
@@ -100,17 +101,24 @@
          return; 
        if (this.worldObj.isBlockNormalCubeDefault(object.blockX, object.blockY, object.blockZ, true)) {
          setDead();
-       } else {
-         
+       } 
+       else {
+//         
          Block b = this.worldObj.getBlock(object.blockX, object.blockY, object.blockZ);
-         int meta = this.worldObj.getBlockMetadata(object.blockX, object.blockY, object.blockZ);
+         //int meta = this.worldObj.getBlockMetadata(object.blockX, object.blockY, object.blockZ);
+//         
+//         for (int i = 0; i < 100; i++) {
+//           this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(b) + "_" + meta, object.blockX + this.worldObj.rand.nextDouble(), object.blockY + this.worldObj.rand.nextDouble(), object.blockZ + this.worldObj.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+//         }
+//         if (this.worldObj.isRemote) {
+//        	 //this.worldObj.playSound(object.blockX + 0.5D, object.blockY + 0.5D, object.blockZ + 0.5D, b.stepSound.getBreakSound(), 1.0F, 1.0F, false);
+//        	 
+//         }
+         this.worldObj.playSoundEffect(object.blockX + 0.5D, object.blockY + 0.5D, object.blockZ + 0.5D, b.stepSound.getBreakSound(), 1.0F, 1.0F);
+         setDead();
          
-         for (int i = 0; i < 100; i++) {
-           this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(b) + "_" + meta, object.blockX + this.worldObj.rand.nextDouble(), object.blockY + this.worldObj.rand.nextDouble(), object.blockZ + this.worldObj.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
-         }
-         this.worldObj.playSound(object.blockX + 0.5D, object.blockY + 0.5D, object.blockZ + 0.5D, b.stepSound.getBreakSound(), 1.0F, 1.0F, false);
-         
-         //this.worldObj.setBlockToAir(object.blockX, object.blockY, object.blockZ);
+//         
+//         //this.worldObj.setBlockToAir(object.blockX, object.blockY, object.blockZ);
        } 
      } 
      if (object.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
