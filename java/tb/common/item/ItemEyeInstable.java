@@ -22,8 +22,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.steelehook.SteeleCore.Handlers.Logging;
-import net.steelehook.SteeleCore.Handlers.MessageLogging;
 import tb.common.block.BlockCrystalBlock;
 import tb.common.itemblock.ItemBlockCrystal;
 import tb.init.TBBlocks;
@@ -59,18 +57,17 @@ public class ItemEyeInstable extends Item {
 
 		
 		if (!world.isRemote && TBCore.isDev) {
-			MessageLogging.sendFromClient(player, world.getBlock(x, y, z).getLocalizedName());
-			MessageLogging.sendFromClient(player, "intf start");
+
 			for(Class intf : block.getClass().getInterfaces()) {
-				MessageLogging.sendFromClient(player, intf.getCanonicalName());
+				
 			}
-			MessageLogging.sendFromClient(player, "inft end");
+			
 		}
 		
 		if (block.hasTileEntity(world.getBlockMetadata(x, y, z))) {
 			if (world.getTileEntity(x, y, z) instanceof thaumcraft.common.tiles.TileInfusionMatrix) {
 				if (!world.isRemote && TBCore.isDev) {
-					MessageLogging.sendFromClient(player, "is matrix");
+					
 				}
 				TileInfusionMatrix te = (TileInfusionMatrix) world.getTileEntity(x, y, z);
 				String instabilityString = String.valueOf(te.instability);
@@ -81,17 +78,12 @@ public class ItemEyeInstable extends Item {
 				
 			}
 			else {
-				if (!world.isRemote && TBCore.isDev) {
-					MessageLogging.sendFromClient(player, "not matrix");
-				}
+
 			}
 		} else {
 			//Block testBlock  = Block.getBlockFromItem(Item.getItemFromBlock(TBBlocks.crystalBlock));
 			
-			if (!world.isRemote && TBCore.isDev) {
-				MessageLogging.sendFromClient(player, "not tile");
-				
-			}
+
 			
 		}
 		
