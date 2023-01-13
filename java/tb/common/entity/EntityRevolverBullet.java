@@ -2,7 +2,10 @@
  
  import DummyCore.Utils.Pair;
  import java.util.ArrayList;
- import net.minecraft.block.Block;
+
+import org.apache.logging.log4j.Level;
+
+import net.minecraft.block.Block;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.EntityLivingBase;
  import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +19,8 @@
 import scala.reflect.internal.Trees.This;
 import tb.api.RevolverUpgrade;
  import tb.common.item.ItemRevolver;
- import thaumcraft.common.Thaumcraft;
+import tb.core.TBCore;
+import thaumcraft.common.Thaumcraft;
  
  
  public class EntityRevolverBullet
@@ -100,6 +104,10 @@ import tb.api.RevolverUpgrade;
        if (this.noClip)
          return; 
        if (this.worldObj.isBlockNormalCubeDefault(object.blockX, object.blockY, object.blockZ, true)) {
+    	   Block b = this.worldObj.getBlock(object.blockX, object.blockY, object.blockZ);
+    	   this.worldObj.playSoundEffect(object.blockX + 0.5D, object.blockY + 0.5D, object.blockZ + 0.5D, b.stepSound.getBreakSound(), 1.0F, 1.0F);
+    	   //TBCore.TBLogger.log(Level.DEBUG, b.stepSound.getBreakSound());
+    	   //System.out.println(b.stepSound.getBreakSound());
          setDead();
        } 
        else {
@@ -115,6 +123,8 @@ import tb.api.RevolverUpgrade;
 //        	 
 //         }
          this.worldObj.playSoundEffect(object.blockX + 0.5D, object.blockY + 0.5D, object.blockZ + 0.5D, b.stepSound.getBreakSound(), 1.0F, 1.0F);
+         //TBCore.TBLogger.log(Level.DEBUG, b.stepSound.getBreakSound());
+         //System.out.println(b.stepSound.getBreakSound());
          setDead();
          
 //         
