@@ -1,11 +1,15 @@
  package tb.common.item;
  
- import cpw.mods.fml.relauncher.Side;
+ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import java.util.ArrayList;
  import java.util.Collection;
  import java.util.List;
- import net.minecraft.client.renderer.texture.IIconRegister;
+
+import org.apache.logging.log4j.Level;
+
+import net.minecraft.client.renderer.texture.IIconRegister;
  import net.minecraft.creativetab.CreativeTabs;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +19,13 @@
  import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import tb.api.ITobacco;
+import tb.core.TBCore;
+import tb.network.proxy.TBNetworkManager;
 import tb.utils.TBConfig;
 import tb.utils.TBUtils;
  import thaumcraft.api.aspects.Aspect;
@@ -36,7 +43,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
      setHasSubtypes(true);
    }
    
-   public static final String[] names = new String[] { "tobacco_pile", "tobacco_eldritch", "tobacco_fighting", "tobacco_hunger", "tobacco_knowledge", "tobacco_mining", "tobacco_sanity", "tobacco_tainted", "tobacco_wispy"};
+   public static final String[] names = new String[] { "tobacco_pile", "tobacco_eldritch", "tobacco_fighting", "tobacco_hunger", "tobacco_knowledge", "tobacco_mining", "tobacco_sanity", "tobacco_tainted", "tobacco_wispy", "tobacco_homeward"};
    private static final int maxAspect = TBConfig.wisdomMaxAspect;
  
  
@@ -196,18 +203,35 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
          } 
          break;
          
-       case 9:
-    	   aspects = new ArrayList<Aspect>(Aspect.aspects.values());
-    	   //aspectNum = new ArrayList<Integer>();
-    	   AspectList pKnow = Thaumcraft.proxy.playerKnowledge.getAspectsDiscovered(smoker.getDisplayName());
-    	   Aspect[] aList = pKnow.getAspects();
-    	   for (int i = 0; i < aList.length; i++) {
-    		   //System.out.println(aList[i].getName());
-    		   
-    		   TBUtils.addAspectToKnowledgePool(smoker, aList[i], (short)50);
-    		   
+       case 9: //homeward tobacco
+    	   ChunkCoordinates spawnCoords = smoker.getBedLocation(smoker.dimension);
+    	   ChunkCoordinates playerCoords = smoker.getPlayerCoordinates();
+    	   
+    	   if (!smoker.worldObj.isRemote) {
+    		   //System.out.println("X: " + spawnCoords.posX + " Y: " + spawnCoords.posY + " Z: " + spawnCoords.posZ);
+    		   //TBCore.TBLogger.log(Level.INFO, "X: " + spawnCoords.posX + " Y: " + spawnCoords.posY + " Z: " + spawnCoords.posZ);
+    		   if (spawnCoords != null) {
+    			   //smoker.setPositionAndUpdate(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+    			   double dist = TBUtils.SimpleDist(spawnCoords, playerCoords);
+    			   if (dist < (isSilverwood ? 200 : 100) && dist > 5) {
+    				   TBNetworkManager.playSoundOnServer(smoker.worldObj, "mob.endermen.portal", smoker.posX, smoker.posY, smoker.posZ, 1.0F, 1.0F);
+    				   smoker.setPositionAndUpdate(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+    				   //smoker.worldObj.playSoundEffect(smoker.serverPosX, smoker.serverPosY, smoker.serverPosZ, "mob.cat.meow1", 1.0F, 1.0F);
+    				   TBNetworkManager.playSoundOnServer(smoker.worldObj, "mob.endermen.portal", smoker.posX, smoker.posY, smoker.posZ, 1.0F, 1.0F);
+    			   } else {
+    				   if (dist > 5) {
+    					   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(isSilverwood ? "tb.txt.nosilvbedwarp" : "tb.txt.noregbedwarp")));
+    				   } else {
+    					   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.bedtooclose")));
+					}
+    			   }
+    		   } else {
+    			   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.nobedwarp")));
+    		   }
     	   }
-    	break;
+
+    	   break;
+
     	   
     	   
      } 
