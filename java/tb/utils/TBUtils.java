@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -53,6 +54,13 @@ import thaumcraft.common.Thaumcraft;
  
      
      Thaumcraft.addWarpToPlayer(addTo, amount, false);
+   }
+   
+   public static double SimpleDist(ChunkCoordinates c1, ChunkCoordinates c2) {
+	   int deltaX = c1.posX - c2.posX;
+	   int deltaY = c1.posY - c2.posY;
+	   int deltaZ = c1.posZ - c2.posZ;
+	   return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
    }
 }
 
