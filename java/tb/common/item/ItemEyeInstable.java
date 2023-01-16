@@ -52,11 +52,13 @@ public class ItemEyeInstable extends Item {
 	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int faceQ, float hitXQ, float hityQ, float hitZQ)
     {
+		
 		Block block = world.getBlock(x, y, z);
 		
 
 		
 		if (!world.isRemote && TBCore.isDev) {
+			player.worldObj.playSoundEffect(player.serverPosX + 0.5D, player.serverPosY + 1.5D, player.serverPosZ + 0.5D, "random.chestopen", 1.0F, 1.0F);
 
 			for(Class intf : block.getClass().getInterfaces()) {
 				
