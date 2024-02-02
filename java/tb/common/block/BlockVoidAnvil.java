@@ -1,6 +1,7 @@
  package tb.common.block;
  
- import cpw.mods.fml.relauncher.Side;
+ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.List;
@@ -16,7 +17,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
  import net.minecraft.world.World;
  import tb.core.TBCore;
- import thaumcraft.api.crafting.IInfusionStabiliser;
+import tb.utils.TBUtils;
+import thaumcraft.api.crafting.IInfusionStabiliser;
  import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.research.PlayerKnowledge;
  
@@ -49,35 +51,33 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
 	   List playerList = w.getEntitiesWithinAABB(EntityPlayer.class, box);
 	   //System.out.println("Meta: " + meta + " World Time: " + worldTime + " Should Repair: " + (worldTime % 100 == 0 ? "True" : "False") + " Players: " + playerList.toString());
 	   
-	   if (worldTime % 100 == 0 || forceUpdate) {
+
+	   if (worldTime % 5 == 0 || forceUpdate) {
 		   if (meta / 4 > 0) {
 			   w.setBlockMetadataWithNotify(x, y, z, meta - 4, 3);
-			   if (!playerList.isEmpty()) {
-				   for (Object playerObject : playerList) {
-					   EntityPlayer player = (EntityPlayer) playerObject;
-					   //player.addChatMessage(warpText1.appendSibling(warpText2));
-					   Thaumcraft.addWarpToPlayer(player, 1, true); //how much warp to add?
-				   }
-			   }
+			   warpPlayers(w, playerList);
 		   }
 	   }
    }
  
-   
+   @Override
    public void updateTick(World w, int x, int y, int z, Random rnd) {
      super.updateTick(w, x, y, z, rnd);
-     //updateHealth(w, x, y, z, true);
-//     int meta = w.getBlockMetadata(x, y, z);
-//     if (meta / 4 > 0)
-//     {
-//       w.setBlockMetadataWithNotify(x, y, z, w.getBlockMetadata(x, y, z) - 4, 3);
-//     }
+     if (!w.isRemote) {
+	     updateHealth(w, x, y, z, false);
+     }
+   }
+   
+   @Override
+   public int tickRate(World p_149738_1_)
+   {
+       return 100;
    }
  
-   
+   @Override
    public void randomDisplayTick(World w, int x, int y, int z, Random r) {
      Thaumcraft.proxy.sparkle(x + r.nextFloat(), y + r.nextFloat(), z + r.nextFloat(), 2.0F, 5, -0.1F);
-     updateHealth(w, x, y, z, false);
+     //updateHealth(w, x, y, z, false);
      //System.out.print(w.getBlockMetadata(x, y, z));
    }
  
@@ -121,6 +121,19 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
    
    public boolean canStabaliseInfusion(World w, int x, int y, int z) {
      return true;
+   }
+   
+   public void warpPlayers(World w, List playerList) {
+
+	   if (!playerList.isEmpty()) {
+		   for (Object playerObject : playerList) {
+			   EntityPlayer player = (EntityPlayer) playerObject;
+			   //player.addChatMessage(new ChatComponentText("test"));
+			   //Thaumcraft.addWarpToPlayer(player, 1, true); //how much warp to add?
+			   TBUtils.addWarpToPlayer(player, 10, 0);
+
+		   }
+	   }
    }
  }
 
