@@ -5,10 +5,12 @@
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import net.minecraft.block.Block;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -62,6 +64,16 @@ import thaumcraft.common.Thaumcraft;
 	   int deltaZ = c1.posZ - c2.posZ;
 	   return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
    }
+   
+   public static void sendChatToSender(ICommandSender sender, Object str) {
+	   sender.addChatMessage(new ChatComponentText(str.toString()));
+   }
+   
+   public static String getClassLastString(String s) {
+	   String last = s.substring(s.lastIndexOf(".") + 1).trim();
+	   return last;
+   }
+   
 }
 
 
