@@ -1,6 +1,5 @@
  package tb.client.render.item;
  
- import DummyCore.Utils.Pair;
  import java.util.ArrayList;
  import net.minecraft.client.Minecraft;
  import net.minecraft.entity.Entity;
@@ -12,6 +11,7 @@
  import org.lwjgl.opengl.GL11;
  import tb.api.RevolverUpgrade;
  import tb.common.item.ItemRevolver;
+ import tb.utils.DummySteele.Pair;
  
  
  

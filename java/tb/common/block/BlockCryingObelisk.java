@@ -1,6 +1,5 @@
  package tb.common.block;
  
- import DummyCore.Utils.MathUtils;
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import java.util.Random;
@@ -18,6 +17,7 @@
  import net.minecraft.util.StatCollector;
  import net.minecraft.world.IBlockAccess;
  import net.minecraft.world.World;
+ import tb.utils.DummySteele;
  
  
  public class BlockCryingObelisk
@@ -58,7 +58,7 @@
        for (int i = 0; i < 10; i++) {
          
          double rndY = rnd.nextDouble() * 3.0D;
-         w.spawnParticle("portal", x + 0.5D + MathUtils.randomDouble(rnd), (y - 3) + rndY, z + 0.5D + MathUtils.randomDouble(rnd), 0.0D, rndY, 0.0D);
+         w.spawnParticle("portal", x + 0.5D + DummySteele.randomDouble(rnd), (y - 3) + rndY, z + 0.5D + DummySteele.randomDouble(rnd), 0.0D, rndY, 0.0D);
        } 
      }
    }

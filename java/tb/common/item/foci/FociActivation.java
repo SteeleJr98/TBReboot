@@ -1,6 +1,5 @@
  package tb.common.item.foci;
  
- import DummyCore.Utils.MiscUtils;
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import java.util.List;
@@ -16,7 +15,8 @@
  import net.minecraft.util.StatCollector;
  import net.minecraft.util.Vec3;
  import net.minecraft.world.World;
- import thaumcraft.api.aspects.Aspect;
+import tb.utils.DummySteele;
+import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.aspects.AspectList;
  import thaumcraft.api.wands.FocusUpgradeType;
  import thaumcraft.api.wands.ItemFocusBasic;
@@ -62,25 +62,25 @@
        
        if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
          
-         NBTTagCompound fociTag = MiscUtils.getStackTag(wandstack).getCompoundTag("focus").getCompoundTag("tag");
+         NBTTagCompound fociTag = DummySteele.getStackTag(wandstack).getCompoundTag("focus").getCompoundTag("tag");
          fociTag.setInteger("blockX", movingobjectposition.blockX);
          fociTag.setInteger("blockY", movingobjectposition.blockY);
          fociTag.setInteger("blockZ", movingobjectposition.blockZ);
          fociTag.setInteger("dim", player.dimension);
-         ((NBTTagCompound)MiscUtils.getStackTag(wandstack).getTag("focus")).setTag("tag", (NBTBase)fociTag);
+         ((NBTTagCompound)DummySteele.getStackTag(wandstack).getTag("focus")).setTag("tag", (NBTBase)fociTag);
          player.swingItem();
          WandManager.consumeVisFromInventory(player, (new AspectList()).add(Aspect.ORDER, 100));
        } 
      } else {
        
-       NBTTagCompound fociTag = MiscUtils.getStackTag(wandstack).getCompoundTag("focus").getCompoundTag("tag");
+       NBTTagCompound fociTag = DummySteele.getStackTag(wandstack).getCompoundTag("focus").getCompoundTag("tag");
        if (fociTag.hasKey("blockX")) {
          
          int x = fociTag.getInteger("blockX");
          int y = fociTag.getInteger("blockY");
          int z = fociTag.getInteger("blockZ");
          
-         ItemStack foci = ItemStack.loadItemStackFromNBT(MiscUtils.getStackTag(wandstack).getCompoundTag("focus"));
+         ItemStack foci = ItemStack.loadItemStackFromNBT(DummySteele.getStackTag(wandstack).getCompoundTag("focus"));
          
          int potencyLevel = getUpgradeLevel(foci, FocusUpgradeType.potency);
          
@@ -138,7 +138,7 @@
    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
      super.addInformation(stack, player, list, par4);
      
-     NBTTagCompound tag = MiscUtils.getStackTag(stack);
+     NBTTagCompound tag = DummySteele.getStackTag(stack);
      
      if (tag.hasKey("blockX")) {
        

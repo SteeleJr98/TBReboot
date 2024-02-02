@@ -1,6 +1,5 @@
  package tb.utils;
  
- import DummyCore.Utils.Pair;
  import java.util.ArrayList;
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.item.ItemStack;
@@ -8,6 +7,7 @@
  import tb.api.RevolverUpgrade;
  import tb.common.item.ItemRevolver;
  import tb.init.TBItems;
+ import tb.utils.DummySteele.Pair;
  import thaumcraft.api.ThaumcraftApiHelper;
  import thaumcraft.api.aspects.AspectList;
  import thaumcraft.api.crafting.InfusionRecipe;

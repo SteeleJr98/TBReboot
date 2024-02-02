@@ -1,6 +1,5 @@
  package tb.common.entity;
  
- import DummyCore.Utils.Pair;
  import java.util.ArrayList;
 
 import org.apache.logging.log4j.Level;
@@ -20,6 +19,7 @@ import scala.reflect.internal.Trees.This;
 import tb.api.RevolverUpgrade;
  import tb.common.item.ItemRevolver;
 import tb.core.TBCore;
+import tb.utils.DummySteele.Pair;
 import thaumcraft.common.Thaumcraft;
  
  

@@ -1,6 +1,5 @@
  package tb.common.block;
  
- import DummyCore.Utils.MiscUtils;
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import net.minecraft.block.Block;
@@ -18,7 +17,8 @@
  import net.minecraft.world.IBlockAccess;
  import net.minecraft.world.World;
  import tb.common.tile.TileAdvAlchemicalFurnace;
- import thaumcraft.common.Thaumcraft;
+import tb.utils.DummySteele;
+import thaumcraft.common.Thaumcraft;
  
  public class BlockAdvAlchemicalFurnace
    extends BlockContainer {
@@ -95,7 +95,7 @@
  
    
    public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
-     MiscUtils.dropItemsOnBlockBreak(w, x, y, z, b, meta);
+     DummySteele.dropItemsOnBlockBreak(w, x, y, z, b, meta); //fix in dummysteele
    }
  
    

@@ -1,10 +1,11 @@
  package tb.network.proxy;
- import DummyCore.Client.GuiCommon;
+ //import DummyCore.Client.GuiCommon; //too tired...
  import cpw.mods.fml.client.registry.ClientRegistry;
  import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
  import cpw.mods.fml.client.registry.RenderingRegistry;
  import net.minecraft.client.Minecraft;
- import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.gui.inventory.GuiCrafting;
+import net.minecraft.client.particle.EntityFX;
  import net.minecraft.client.renderer.entity.Render;
  import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
  import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +16,12 @@
  import net.minecraftforge.client.IItemRenderer;
  import net.minecraftforge.client.MinecraftForgeClient;
  import net.minecraftforge.common.MinecraftForge;
- import tb.client.RevolverEvents;
+//import tb.client.RenderFociItems;
+import tb.client.RevolverEvents;
  import tb.client.gui.GuiRevolver;
  import tb.client.gui.GuiVoidAnvil;
 import tb.client.gui.GuiThaumicAnvil;
+import tb.client.gui.GuiFociCrafter;
  import tb.client.render.block.BrazierRenderer;
  import tb.client.render.block.CampfireRenderer;
  import tb.client.render.block.ThaumicRelocatorRenderer;
@@ -29,7 +32,8 @@ import tb.client.gui.GuiThaumicAnvil;
  import tb.client.render.item.NodeLinkerItemRenderer;
  import tb.client.render.item.NodeManipulatorItemRenderer;
  import tb.client.render.item.RenderRevolver;
- import tb.client.render.tile.RenderEntityDeconstructor;
+//import tb.client.render.tile.RenderCraftingFocusItems;
+import tb.client.render.tile.RenderEntityDeconstructor;
  import tb.client.render.tile.RenderNodeLinker;
  import tb.client.render.tile.RenderNodeManipulator;
  import tb.client.render.tile.RenderOverchanter;
@@ -41,7 +45,8 @@ import tb.common.inventory.ContainerOverchanter;
  import tb.common.tile.TileOverchanter;
  import tb.init.TBBlocks;
  import tb.init.TBItems;
- import thaumcraft.client.fx.ParticleEngine;
+import tb.utils.DummySteeleTempGui;
+import thaumcraft.client.fx.ParticleEngine;
  import thaumcraft.client.fx.bolt.FXLightningBolt;
  import thaumcraft.client.fx.particles.FXSparkle;
  
@@ -55,7 +60,7 @@ import tb.common.inventory.ContainerOverchanter;
        {
          if (tile instanceof TileOverchanter)
          {
-           return new GuiCommon((Container)new ContainerOverchanter(player.inventory, tile), tile);
+           return new DummySteeleTempGui((Container)new ContainerOverchanter(player.inventory, tile), tile);
          }
        }
      } else {
@@ -68,6 +73,9 @@ import tb.common.inventory.ContainerOverchanter;
        }
        if (ID == 4331801) {
          return new GuiRevolver(player.inventory, world, x, y, z);
+       }
+       if (ID == 4331811) {
+    	   return new GuiFociCrafter(player.inventory, world, x, y, z);
        }
      } 
      return null;
@@ -88,10 +96,14 @@ import tb.common.inventory.ContainerOverchanter;
      MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(TBBlocks.nodeLinker), (IItemRenderer)new NodeLinkerItemRenderer());
      MinecraftForgeClient.registerItemRenderer(TBItems.castingBracelet, (IItemRenderer)new CastingBraceletRenderer());
      
+     //MinecraftForgeClient.registerItemRenderer(TBItems.fociCraftingTest, (IItemRenderer) new RenderCraftingFocusItems());
+     
      RenderingRegistry.registerBlockHandler((ISimpleBlockRenderingHandler)new ThaumicRelocatorRenderer());
      RenderingRegistry.registerBlockHandler((ISimpleBlockRenderingHandler)new CampfireRenderer());
      RenderingRegistry.registerBlockHandler((ISimpleBlockRenderingHandler)new BrazierRenderer());
      RenderingRegistry.registerEntityRenderingHandler(EntityRevolverBullet.class, (Render)new RenderBullet());
+     
+     
      
      MinecraftForge.EVENT_BUS.register(new RevolverEvents());
    }

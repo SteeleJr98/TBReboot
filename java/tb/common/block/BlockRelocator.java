@@ -1,6 +1,6 @@
  package tb.common.block;
  
- import DummyCore.Utils.MathUtils;
+ 
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import java.util.List;
@@ -20,6 +20,7 @@
  import net.minecraftforge.common.util.ForgeDirection;
  import tb.common.tile.TileRelocator;
  import tb.core.TBCore;
+ import tb.utils.DummySteele;
  
  public class BlockRelocator
    extends BlockContainer
@@ -114,44 +115,44 @@
        if (meta == 0) {
  
          
-         double dx = x + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dx = x + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          double dy = y;
-         double dz = z + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dz = z + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          TBCore.proxy.sparkle(w, dx, doColor ? (dy - 3.0D) : dy, dz, dx, doColor ? dy : (dy - 3.0D), dz, doColor ? 2 : 1, 1.0F);
        } 
        if (meta == 1) {
          
-         double dx = x + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dx = x + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          double dy = (y + 1);
-         double dz = z + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dz = z + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          TBCore.proxy.sparkle(w, dx, doColor ? (dy + 3.0D) : dy, dz, dx, doColor ? dy : (dy + 3.0D), dz, doColor ? 2 : 1, 1.0F);
        } 
        if (meta == 2) {
          
-         double dx = x + 0.5D + MathUtils.randomDouble(r) / 2.0D;
-         double dy = y + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dx = x + 0.5D + DummySteele.randomDouble(r) / 2.0D;
+         double dy = y + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          double dz = z;
          TBCore.proxy.sparkle(w, dx, dy, doColor ? (dz - 3.0D) : dz, dx, dy, doColor ? dz : (dz - 3.0D), doColor ? 2 : 1, 1.0F);
        } 
        if (meta == 3) {
          
-         double dx = x + 0.5D + MathUtils.randomDouble(r) / 2.0D;
-         double dy = y + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dx = x + 0.5D + DummySteele.randomDouble(r) / 2.0D;
+         double dy = y + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          double dz = (z + 1);
          TBCore.proxy.sparkle(w, dx, dy, doColor ? (dz + 3.0D) : dz, dx, dy, doColor ? dz : (dz + 3.0D), doColor ? 2 : 1, 1.0F);
        } 
        if (meta == 4) {
          
          double dx = x;
-         double dy = y + 0.5D + MathUtils.randomDouble(r) / 2.0D;
-         double dz = z + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dy = y + 0.5D + DummySteele.randomDouble(r) / 2.0D;
+         double dz = z + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          TBCore.proxy.sparkle(w, doColor ? (dx - 3.0D) : dx, dy, dz, doColor ? dx : (dx - 3.0D), dy, dz, doColor ? 2 : 1, 1.0F);
        } 
        if (meta == 5) {
          
          double dx = (x + 1);
-         double dy = y + 0.5D + MathUtils.randomDouble(r) / 2.0D;
-         double dz = z + 0.5D + MathUtils.randomDouble(r) / 2.0D;
+         double dy = y + 0.5D + DummySteele.randomDouble(r) / 2.0D;
+         double dz = z + 0.5D + DummySteele.randomDouble(r) / 2.0D;
          TBCore.proxy.sparkle(w, doColor ? (dx + 3.0D) : dx, dy, dz, doColor ? dx : (dx + 3.0D), dy, dz, doColor ? 2 : 1, 1.0F);
        } 
      } 

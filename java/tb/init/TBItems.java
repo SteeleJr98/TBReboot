@@ -1,6 +1,5 @@
  package tb.init;
  
- import DummyCore.Items.ItemRegistry;
  import net.minecraft.block.Block;
  import net.minecraft.init.Blocks;
  import net.minecraft.item.Item;
@@ -15,15 +14,18 @@ import tb.common.item.ItemEyeInstable;
 import tb.common.item.ItemBloodyArmor;
  import tb.common.item.ItemCastingBracelet;
  import tb.common.item.ItemConcentratedTaint;
- import tb.common.item.ItemHerobrinesScythe;
+import tb.common.item.ItemDebugStick;
+import tb.common.item.ItemHerobrinesScythe;
  import tb.common.item.ItemKnoseFragment;
  import tb.common.item.ItemKnoseSeeds;
  import tb.common.item.ItemMortarAndPestle;
  import tb.common.item.ItemNodeFoci;
- import tb.common.item.ItemPyrofluidBucket;
+import tb.common.item.ItemNodeRefuler;
+import tb.common.item.ItemPyrofluidBucket;
  import tb.common.item.ItemRevolver;
  import tb.common.item.ItemRosehipSyrup;
- import tb.common.item.ItemSmokingPipe;
+import tb.common.item.ItemSleepingPill;
+import tb.common.item.ItemSmokingPipe;
  import tb.common.item.ItemThauminiteArmor;
  import tb.common.item.ItemThauminiteAxe;
  import tb.common.item.ItemThauminiteHoe;
@@ -36,11 +38,14 @@ import tb.common.item.ItemBloodyArmor;
  import tb.common.item.TBResource;
  import tb.common.item.TBTobacco;
  import tb.common.item.foci.FociActivation;
- import tb.common.item.foci.FociDrain;
+import tb.common.item.foci.FociCraftTest;
+import tb.common.item.foci.FociDecompose;
+import tb.common.item.foci.FociDrain;
  import tb.common.item.foci.FociExperience;
  import tb.common.item.foci.FociFlux;
  import tb.core.TBCore;
- import thaumcraft.api.wands.IWandRodOnUpdate;
+import tb.utils.DummySteele;
+import thaumcraft.api.wands.IWandRodOnUpdate;
  import thaumcraft.api.wands.StaffRod;
  import thaumcraft.api.wands.WandCap;
  import thaumcraft.api.wands.WandRod;
@@ -49,67 +54,75 @@ import tb.common.item.ItemBloodyArmor;
  public class TBItems
  {
    public static void setup() {
-     ItemRegistry.registerItem(resource, "resource", core);
+     DummySteele.registerItem(resource, "resource", core);
      
-     ItemRegistry.registerItem(thauminiteAxe, "thauminiteAxe", core);
+     DummySteele.registerItem(thauminiteAxe, "thauminiteAxe", core);
      thauminiteAxe.setHarvestLevel("axe", 3);
-     ItemRegistry.registerItem(thauminiteHoe, "thauminiteHoe", core);
+     DummySteele.registerItem(thauminiteHoe, "thauminiteHoe", core);
      thauminiteHoe.setHarvestLevel("hoe", 3);
-     ItemRegistry.registerItem(thauminitePickaxe, "thauminitePickaxe", core);
+     DummySteele.registerItem(thauminitePickaxe, "thauminitePickaxe", core);
      thauminitePickaxe.setHarvestLevel("pickaxe", 3);
-     ItemRegistry.registerItem(thauminiteShears, "thauminiteShears", core);
+     DummySteele.registerItem(thauminiteShears, "thauminiteShears", core);
      thauminiteShears.setHarvestLevel("shears", 3);
-     ItemRegistry.registerItem(thauminiteShovel, "thauminiteShovel", core);
+     DummySteele.registerItem(thauminiteShovel, "thauminiteShovel", core);
      thauminiteShovel.setHarvestLevel("shovel", 3);
-     ItemRegistry.registerItem(thauminiteSword, "thauminiteSword", core);
+     DummySteele.registerItem(thauminiteSword, "thauminiteSword", core);
      thauminiteSword.setHarvestLevel("sword", 3);
      
-     ItemRegistry.registerItem(thauminiteHelmet, "thauminiteHelmet", core);
-     ItemRegistry.registerItem(thauminiteChest, "thauminiteChest", core);
-     ItemRegistry.registerItem(thauminiteLeggings, "thauminiteLeggings", core);
-     ItemRegistry.registerItem(thauminiteBoots, "thauminiteBoots", core);
-     ItemRegistry.registerItem(pyroBucket, "pyroBucket", core);
-     ItemRegistry.registerItem(plaxSeed, "plaxSeed", core);
-     ItemRegistry.registerItem(metalleatSeeds, "metalleatSeeds", core);
-     ItemRegistry.registerItem(lucriteSeeds, "lucriteSeeds", core);
-     ItemRegistry.registerItem(knoseFragment, "knoseFragment", core);
-     ItemRegistry.registerItem(knoseSeed, "knoseSeed", core);
-     ItemRegistry.registerItem(sweedSeeds, "sweedSeeds", core);
-     ItemRegistry.registerItem(lazulliaSeeds, "lazulliaSeeds", core);
-     ItemRegistry.registerItem(redlonSeeds, "redlonSeeds", core);
-     ItemRegistry.registerItem(glieoniaSeed, "glieoniaSeed", core);
-     ItemRegistry.registerItem(rosehipSyrup, "rosehipSyrup", core);
-     ItemRegistry.registerItem(tobaccoSeeds, "tobaccoSeeds", core);
-     ItemRegistry.registerItem(mortar, "mortar", core);
-     ItemRegistry.registerItem(tobacco, "tobaccoPowder", core);
-     ItemRegistry.registerItem(greatwoodPipe, "greatwoodPipe", core);
-     ItemRegistry.registerItem(silverwoodPipe, "silverwoodPipe", core);
-     ItemRegistry.registerItem(voidSeed, "voidSeed", core);
+     DummySteele.registerItem(thauminiteHelmet, "thauminiteHelmet", core);
+     DummySteele.registerItem(thauminiteChest, "thauminiteChest", core);
+     DummySteele.registerItem(thauminiteLeggings, "thauminiteLeggings", core);
+     DummySteele.registerItem(thauminiteBoots, "thauminiteBoots", core);
+     DummySteele.registerItem(pyroBucket, "pyroBucket", core);
+     DummySteele.registerItem(plaxSeed, "plaxSeed", core);
+     DummySteele.registerItem(metalleatSeeds, "metalleatSeeds", core);
+     DummySteele.registerItem(lucriteSeeds, "lucriteSeeds", core);
+     DummySteele.registerItem(knoseFragment, "knoseFragment", core);
+     DummySteele.registerItem(knoseSeed, "knoseSeed", core);
+     DummySteele.registerItem(sweedSeeds, "sweedSeeds", core);
+     DummySteele.registerItem(lazulliaSeeds, "lazulliaSeeds", core);
+     DummySteele.registerItem(redlonSeeds, "redlonSeeds", core);
+     DummySteele.registerItem(glieoniaSeed, "glieoniaSeed", core);
+     DummySteele.registerItem(rosehipSyrup, "rosehipSyrup", core);
+     DummySteele.registerItem(tobaccoSeeds, "tobaccoSeeds", core);
+     DummySteele.registerItem(mortar, "mortar", core);
+     DummySteele.registerItem(tobacco, "tobaccoPowder", core);
+     DummySteele.registerItem(greatwoodPipe, "greatwoodPipe", core);
+     DummySteele.registerItem(silverwoodPipe, "silverwoodPipe", core);
+     DummySteele.registerItem(voidSeed, "voidSeed", core);
      
      //Dev items here
      if (TBCore.isDev) {
-    	 ItemRegistry.registerItem(eyeInstable, "eyeInstable", core);
+    	 DummySteele.registerItem(eyeInstable, "eyeInstable", core);
+    	 DummySteele.registerItem(nodeRefuler, "nodeRefuler", core);
+    	 DummySteele.registerItem(debugStick, "debutStick", core);
+    	 
+    	 //DummySteele.registerItem(sleepPill, "sleepingPill", core);
+    	 //DummySteele.registerItem(fociCraftingTest, "fociCraftingTest", core);
+         DummySteele.registerItem(fociDecompose, "fociDecompose", core);
+         DummySteele.registerItem(corruptedPipe, "corruptedPipe", core);
      }
      
-     ItemRegistry.registerItem(bloodyChest, "bloodyChest", core);
-     ItemRegistry.registerItem(bloodyLeggings, "bloodyLeggings", core);
-     ItemRegistry.registerItem(bloodyBoots, "bloodyBoots", core);
+     DummySteele.registerItem(bloodyChest, "bloodyChest", core);
+     DummySteele.registerItem(bloodyLeggings, "bloodyLeggings", core);
+     DummySteele.registerItem(bloodyBoots, "bloodyBoots", core);
      
-     ItemRegistry.registerItem(concentratedTaint, "concentratedTaint", core);
+     DummySteele.registerItem(concentratedTaint, "concentratedTaint", core);
      
-     ItemRegistry.registerItem(fociActivation, "fociActivation", core);
-     ItemRegistry.registerItem(fociDrain, "fociDrain", core);
-     ItemRegistry.registerItem(fociExperience, "fociExperience", core);
-     ItemRegistry.registerItem(fociFlux, "fociFlux", core);
+     DummySteele.registerItem(fociActivation, "fociActivation", core);
+     DummySteele.registerItem(fociDrain, "fociDrain", core);
+     DummySteele.registerItem(fociExperience, "fociExperience", core);
+     DummySteele.registerItem(fociFlux, "fociFlux", core);
      
-     ItemRegistry.registerItem(nodeFoci, "nodeFoci", core);
-     ItemRegistry.registerItem(herobrinesScythe, "herobrinesScythe", core);
      
-     ItemRegistry.registerItem(voidShears, "voidShears", core);
-     ItemRegistry.registerItem(voidFAS, "voidFAS", core);
+     DummySteele.registerItem(nodeFoci, "nodeFoci", core);
+     DummySteele.registerItem(herobrinesScythe, "herobrinesScythe", core);
      
-     ItemRegistry.registerItem(revolver, "revolver", core);
-     ItemRegistry.registerItem(castingBracelet, "castingBracelet", core);
+     DummySteele.registerItem(voidShears, "voidShears", core);
+     DummySteele.registerItem(voidFAS, "voidFAS", core);
+     
+     DummySteele.registerItem(revolver, "revolver", core);
+     DummySteele.registerItem(castingBracelet, "castingBracelet", core);
      
      OreDictionary.registerOre("ingotThauminite", new ItemStack(resource, 1, 1));
      
@@ -123,6 +136,13 @@ import tb.common.item.ItemBloodyArmor;
    
    //Dev Items here
    public static Item eyeInstable = new ItemEyeInstable().setUnlocalizedName("eyeUnstable");
+   public static Item nodeRefuler = new ItemNodeRefuler().setUnlocalizedName("nodeRefuler");
+   public static Item sleepPill = new ItemSleepingPill().setUnlocalizedName("sleepingPill");
+   public static Item debugStick = new ItemDebugStick().setUnlocalizedName("debugStick").setTextureName("thaumicbases:debugStick");
+   public static Item fociCraftingTest = (new FociCraftTest()).setUnlocalizedName("fociCraftingTest").setTextureName("thaumicbases:foci/crafting/foci");
+   public static Item fociDecompose = (new FociDecompose()).setUnlocalizedName("decomposeFoci").setTextureName("thaumicbases:foci/decompose/foci");
+   public static Item corruptedPipe = (new ItemSmokingPipe(2)).setUnlocalizedName("corruptedPipe").setTextureName("thaumicbases:corruptedPipe");
+   
    
    public static Item resource = (new TBResource()).setUnlocalizedName("resource");
    
@@ -157,8 +177,9 @@ import tb.common.item.ItemBloodyArmor;
    public static Item tobaccoSeeds = (new ItemSeeds(TBBlocks.tobacco, Blocks.farmland)).setUnlocalizedName("tobaccoSeeds").setTextureName("thaumicbases:tobacco_seeds");
    public static Item mortar = (new ItemMortarAndPestle()).setUnlocalizedName("mortar").setTextureName("thaumicbases:mortar");
    public static Item tobacco = (new TBTobacco()).setUnlocalizedName("tobacco");
-   public static Item greatwoodPipe = (new ItemSmokingPipe(false)).setUnlocalizedName("greatwoodPipe").setTextureName("thaumicbases:smokingPipe");
-   public static Item silverwoodPipe = (new ItemSmokingPipe(true)).setUnlocalizedName("silverwoodPipe").setTextureName("thaumicbases:smokingPipe_silverwood");
+   public static Item greatwoodPipe = (new ItemSmokingPipe(0)).setUnlocalizedName("greatwoodPipe").setTextureName("thaumicbases:smokingPipe");
+   public static Item silverwoodPipe = (new ItemSmokingPipe(1)).setUnlocalizedName("silverwoodPipe").setTextureName("thaumicbases:smokingPipe_silverwood");
+
    public static Item voidSeed = (new ItemSeeds(TBBlocks.voidPlant, Blocks.farmland)).setUnlocalizedName("voidSeed").setTextureName("thaumicbases:void_seed");
    
    public static Item bloodyChest = (new ItemBloodyArmor(bloodyA, 1)).setUnlocalizedName("bloodyChest").setTextureName("thaumicbases:bloodyRobes/bloodychest");
@@ -171,6 +192,8 @@ import tb.common.item.ItemBloodyArmor;
    public static Item fociDrain = (new FociDrain()).setUnlocalizedName("drainFoci").setTextureName("thaumicbases:foci/drain/foci");
    public static Item fociExperience = (new FociExperience()).setUnlocalizedName("experienceFoci").setTextureName("thaumicbases:foci/experience/foci");
    public static Item fociFlux = (new FociFlux()).setUnlocalizedName("fluxFoci").setTextureName("thaumicbases:foci/flux/foci");
+   
+   
    
    public static Item nodeFoci = (new ItemNodeFoci()).setUnlocalizedName("nodeFoci.");
    

@@ -1,6 +1,5 @@
  package tb.client.render.tile;
  
- import DummyCore.Utils.MiscUtils;
  import net.minecraft.client.Minecraft;
  import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
  import net.minecraft.tileentity.TileEntity;
@@ -9,6 +8,7 @@
  import net.minecraftforge.client.model.IModelCustom;
  import org.lwjgl.opengl.GL11;
  import tb.common.item.ItemNodeFoci;
+import tb.utils.DummySteele;
  
  public class RenderNodeManipulator
    extends TileEntitySpecialRenderer
@@ -34,7 +34,7 @@
      int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
      if (meta != 0) {
        
-       MiscUtils.bindTexture("thaumicbases", "textures/blocks/nodeManipulator/foci_" + ItemNodeFoci.names[meta - 1] + ".png");
+       DummySteele.bindTexture("thaumicbases", "textures/blocks/nodeManipulator/foci_" + ItemNodeFoci.names[meta - 1] + ".png");
        model.renderPart("foci_Cube.003");
      } 
      

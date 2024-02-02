@@ -1,6 +1,5 @@
  package tb.common.item.foci;
  
- import DummyCore.Utils.MiscUtils;
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import net.minecraft.block.Block;
@@ -16,7 +15,8 @@
  import net.minecraft.util.Vec3;
  import net.minecraft.world.World;
  import tb.init.TBFociUpgrades;
- import thaumcraft.api.aspects.Aspect;
+import tb.utils.DummySteele;
+import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.aspects.AspectList;
  import thaumcraft.api.wands.FocusUpgradeType;
  import thaumcraft.api.wands.ItemFocusBasic;
@@ -78,7 +78,7 @@
  
    
    public void onUsingFocusTick(ItemStack wandstack, EntityPlayer player, int count) {
-     ItemStack foci = ItemStack.loadItemStackFromNBT(MiscUtils.getStackTag(wandstack).getCompoundTag("focus"));
+     ItemStack foci = ItemStack.loadItemStackFromNBT(DummySteele.getStackTag(wandstack).getCompoundTag("focus"));
      
      if (!WandManager.consumeVisFromInventory(player, getVisCost(foci))) {
        

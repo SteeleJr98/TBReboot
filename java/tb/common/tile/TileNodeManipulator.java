@@ -1,6 +1,6 @@
  package tb.common.tile;
  
- import DummyCore.Utils.MiscUtils;
+ //import DummyCore.Utils.MiscUtils; //Seriously i need help
  import java.util.Hashtable;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +8,8 @@
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.tileentity.TileEntity;
  import net.minecraft.world.World;
- import thaumcraft.api.aspects.Aspect;
+import tb.utils.DummySteele;
+import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.nodes.INode;
  import thaumcraft.api.nodes.NodeModifier;
  import thaumcraft.api.nodes.NodeType;
@@ -121,7 +122,7 @@
              } 
              if (isNodeChanged)
              {
-               MiscUtils.sendPacketToAllAround(this.worldObj, this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord).getDescriptionPacket(), this.xCoord, this.yCoord, this.zCoord, this.worldObj.provider.dimensionId, 6.0D);
+               DummySteele.sendPacketToAllAround(this.worldObj, this.worldObj.getTileEntity(this.xCoord, this.yCoord - 1, this.zCoord).getDescriptionPacket(), this.xCoord, this.yCoord, this.zCoord, this.worldObj.provider.dimensionId, 6.0D);
              }
            } 
          }

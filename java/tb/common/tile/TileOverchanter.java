@@ -1,9 +1,7 @@
  package tb.common.tile;
  
- import DummyCore.Utils.Coord3D;
- import DummyCore.Utils.Lightning;
- import DummyCore.Utils.MathUtils;
- import DummyCore.Utils.MiscUtils;
+
+
  import java.util.Iterator;
  import java.util.LinkedHashMap;
  import java.util.List;
@@ -22,7 +20,11 @@
  import net.minecraft.util.DamageSource;
  import net.minecraft.world.World;
  import net.minecraftforge.common.util.ForgeDirection;
- import thaumcraft.api.aspects.Aspect;
+import tb.utils.DummySteele.Coord3D;
+import tb.utils.DummySteele.Lightning;
+import tb.utils.DummySteele;
+
+import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.wands.IWandable;
  import thaumcraft.common.lib.events.EssentiaHandler;
  
@@ -55,7 +57,7 @@
        tg.setInteger("x", this.xCoord);
        tg.setInteger("y", this.yCoord);
        tg.setInteger("z", this.zCoord);
-       MiscUtils.syncTileEntity(tg, 0);
+       DummySteele.syncTileEntity(tg, 0);
      } else {
        this.syncTimer--;
      } 
@@ -71,7 +73,7 @@
        
        if (this.worldObj.getWorldTime() % 20L == 0L) {
          
-         this.renderedLightning = new Lightning(this.worldObj.rand, new Coord3D(0.0F, 0.0F, 0.0F), new Coord3D(MathUtils.randomDouble(this.worldObj.rand) / 50.0D, MathUtils.randomDouble(this.worldObj.rand) / 50.0D, MathUtils.randomDouble(this.worldObj.rand) / 50.0D), 0.3F, new float[] { 1.0F, 0.0F, 1.0F });
+         this.renderedLightning = new Lightning(this.worldObj.rand, new Coord3D(0.0F, 0.0F, 0.0F), new Coord3D(DummySteele.randomDouble(this.worldObj.rand) / 50.0D, DummySteele.randomDouble(this.worldObj.rand) / 50.0D, DummySteele.randomDouble(this.worldObj.rand) / 50.0D), 0.3F, new float[] { 1.0F, 0.0F, 1.0F });
          this.worldObj.playSoundEffect(this.xCoord, this.yCoord, this.zCoord, "thaumcraft:infuserstart", 1.0F, 1.0F);
          if (EssentiaHandler.drainEssentia(this, Aspect.MAGIC, ForgeDirection.UNKNOWN, 8, false)) {
            
@@ -106,7 +108,7 @@
                if (tag != null && Integer.valueOf(tag.getShort("id")).intValue() == enchId) {
                  
                  tag.setShort("lvl", (short)(Integer.valueOf(tag.getShort("lvl")).intValue() + 1));
-                 NBTTagCompound stackTag = MiscUtils.getStackTag(this.inventory);
+                 NBTTagCompound stackTag = DummySteele.getStackTag(this.inventory);
                  if (!stackTag.hasKey("overchants")) {
                    
                    stackTag.setIntArray("overchants", new int[] { enchId });
@@ -160,7 +162,7 @@
  
    
    public int findEnchantment(ItemStack enchanted) {
-     NBTTagCompound stackTag = MiscUtils.getStackTag(this.inventory);
+     NBTTagCompound stackTag = DummySteele.getStackTag(this.inventory);
      LinkedHashMap<Integer, Integer> ench = (LinkedHashMap<Integer, Integer>)EnchantmentHelper.getEnchantments(enchanted);
      Set<Integer> keys = ench.keySet();
      Iterator<Integer> $i = keys.iterator();
@@ -174,7 +176,7 @@
        }
        
        int[] overchants = stackTag.getIntArray("overchants");
-       if (MathUtils.arrayContains(overchants, i)) {
+       if (DummySteele.arrayContains(overchants, i)) {
          continue;
        }
        return i;

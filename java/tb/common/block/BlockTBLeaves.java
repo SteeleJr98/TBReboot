@@ -1,6 +1,5 @@
  package tb.common.block;
  
- import DummyCore.Utils.MathUtils;
  import cpw.mods.fml.common.FMLLog;
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
@@ -25,7 +24,7 @@
  import net.minecraftforge.common.util.ForgeDirection;
  import net.minecraftforge.oredict.OreDictionary;
  import tb.init.TBBlocks;
- 
+ import tb.utils.DummySteele;
  
  
  
@@ -142,7 +141,7 @@
        }
      }
      if (w.getBlockMetadata(x, y, z) % 8 == 3) {
-       w.spawnParticle("portal", x + rnd.nextDouble(), y + rnd.nextDouble(), z + rnd.nextDouble(), MathUtils.randomDouble(rnd), MathUtils.randomDouble(rnd), MathUtils.randomDouble(rnd));
+       w.spawnParticle("portal", x + rnd.nextDouble(), y + rnd.nextDouble(), z + rnd.nextDouble(), DummySteele.randomDouble(rnd), DummySteele.randomDouble(rnd), DummySteele.randomDouble(rnd));
      }
    }
    

@@ -1,7 +1,5 @@
  package tb.common.item;
  
- import DummyCore.Utils.MathUtils;
- import DummyCore.Utils.MiscUtils;
  import cpw.mods.fml.common.network.simpleimpl.IMessage;
  import net.minecraft.block.Block;
  import net.minecraft.entity.Entity;
@@ -21,7 +19,8 @@
  import net.minecraft.util.StatCollector;
  import net.minecraft.world.IBlockAccess;
  import net.minecraft.world.World;
- import tb.utils.TBUtils;
+import tb.utils.DummySteele;
+import tb.utils.TBUtils;
  import thaumcraft.api.damagesource.DamageSourceThaumcraft;
  import thaumcraft.api.nodes.INode;
  import thaumcraft.api.nodes.NodeType;
@@ -53,10 +52,10 @@
      
      for (int i = 0; i < 100; i++) {
        
-       int dX = x + MathHelper.floor_double(MathUtils.randomDouble(w.rand) * 16.0D);
-       int dZ = z + MathHelper.floor_double(MathUtils.randomDouble(w.rand) * 16.0D);
+       int dX = x + MathHelper.floor_double(DummySteele.randomDouble(w.rand) * 16.0D);
+       int dZ = z + MathHelper.floor_double(DummySteele.randomDouble(w.rand) * 16.0D);
        int dY = y + w.rand.nextInt(2) - w.rand.nextInt(2);
-       MiscUtils.changeBiome(w, ThaumcraftWorldGenerator.biomeTaint, dX, dZ);
+       DummySteele.changeBiome(w, ThaumcraftWorldGenerator.biomeTaint, dX, dZ);  //fix in dummysteele
        if (w.isBlockNormalCubeDefault(dX, dY - 1, dZ, false) && w.getBlock(dX, dY, dZ).isReplaceable((IBlockAccess)w, dX, dY, dZ))
        {
          w.setBlock(dX, dY, dZ, ConfigBlocks.blockTaintFibres, 0, 3);

@@ -1,6 +1,5 @@
  package tb.common.item;
  
- import DummyCore.Utils.Pair;
  import com.google.common.collect.HashMultimap;
  import com.google.common.collect.Multimap;
  import java.util.ArrayList;
@@ -22,6 +21,7 @@
  import tb.common.entity.EntityRevolverBullet;
  import tb.core.TBCore;
  import tb.network.proxy.TBNetworkManager;
+ import tb.utils.DummySteele.Pair;
  import thaumcraft.api.IRepairable;
  import thaumcraft.api.IWarpingGear;
  import thaumcraft.api.aspects.Aspect;

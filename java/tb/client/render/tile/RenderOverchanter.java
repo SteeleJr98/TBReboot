@@ -1,10 +1,10 @@
  package tb.client.render.tile;
  
- import DummyCore.Utils.MiscUtils;
  import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
  import net.minecraft.tileentity.TileEntity;
  import org.lwjgl.opengl.GL11;
  import tb.common.tile.TileOverchanter;
+import tb.utils.DummySteele;
  
  
  
@@ -18,7 +18,7 @@
        
        GL11.glPushMatrix();
        
-       MiscUtils.renderItemStack_Full(overchanter.inventory, 0.0D, 0.0D, 0.0D, screenX, screenY, screenZ, (float)(tile.getWorldObj().getWorldTime() % 360L), 0.0F, 1.0F, 1.0F, 1.0F, 0.5F, 0.9F, 0.5F);
+       DummySteele.renderItemStack_Full(overchanter.inventory, 0.0D, 0.0D, 0.0D, screenX, screenY, screenZ, (float)(tile.getWorldObj().getWorldTime() % 360L), 0.0F, 1.0F, 1.0F, 1.0F, 0.5F, 0.9F, 0.5F, false);
        
        GL11.glPopMatrix();
      } 

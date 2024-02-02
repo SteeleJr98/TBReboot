@@ -1,14 +1,15 @@
  package tb.utils;
  
- import DummyCore.Utils.IDummyConfig;
+ import java.io.File;
+
  import net.minecraft.enchantment.Enchantment;
  import net.minecraftforge.common.config.Configuration;
+import tb.core.TBCore;
  
- public class TBConfig implements IDummyConfig {
+ public class TBConfig {
    static Configuration cfg;
    
-   public void load(Configuration config) {
-     cfg = config;
+   public static void load() {
      elderKnowledgeID = cfg.getInt("elderKnowledgeEnchantmentID", "Enchantments", 98, 0, Enchantment.enchantmentsList.length, "");
      eldritchBaneID = cfg.getInt("eldritchBaneEnchantmentID", "Enchantments", 99, 0, Enchantment.enchantmentsList.length, "");
      magicTouchID = cfg.getInt("magicTouchEnchantmentID", "Enchantments", 100, 0, Enchantment.enchantmentsList.length, "");
@@ -59,6 +60,21 @@
    public static int shardsFromOre;
    public static boolean brightFociRequiresPrimordialPearl;
    public static int wisdomMaxAspect;
+   
+   public static Configuration getConfiguration() {
+       return cfg;
+   }
+   
+   public static void init(String configDir) {
+
+       if (cfg == null) {
+           File path = new File(configDir + "/" + TBCore.modid + ".cfg");
+           cfg = new Configuration(path);
+           load();
+       }
+   }
+   
+   
  }
 
 

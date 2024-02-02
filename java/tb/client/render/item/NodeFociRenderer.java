@@ -1,6 +1,5 @@
  package tb.client.render.item;
  
- import DummyCore.Utils.MiscUtils;
  import net.minecraft.item.ItemStack;
  import net.minecraft.util.ResourceLocation;
  import net.minecraftforge.client.IItemRenderer;
@@ -8,6 +7,7 @@
  import net.minecraftforge.client.model.IModelCustom;
  import org.lwjgl.opengl.GL11;
  import tb.common.item.ItemNodeFoci;
+import tb.utils.DummySteele;
  
  public class NodeFociRenderer
    implements IItemRenderer
@@ -34,7 +34,7 @@
      if (type == IItemRenderer.ItemRenderType.INVENTORY) {
        GL11.glTranslated(0.0D, -1.0D, 0.0D);
      }
-     MiscUtils.bindTexture("thaumicbases", "textures/blocks/nodeManipulator/foci_" + ItemNodeFoci.names[item.getItemDamage()] + ".png");
+     DummySteele.bindTexture("thaumicbases", "textures/blocks/nodeManipulator/foci_" + ItemNodeFoci.names[item.getItemDamage()] + ".png");
      model.renderAll();
      
      GL11.glPopMatrix();

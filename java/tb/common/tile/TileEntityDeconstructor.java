@@ -1,7 +1,5 @@
  package tb.common.tile;
  
- import DummyCore.Utils.MathUtils;
- import DummyCore.Utils.MiscUtils;
  import java.util.List;
  import net.minecraft.entity.Entity;
  import net.minecraft.entity.item.EntityItem;
@@ -16,7 +14,8 @@
  import net.minecraft.tileentity.TileEntity;
  import net.minecraft.util.AxisAlignedBB;
  import net.minecraft.util.DamageSource;
- import tb.utils.TBUtils;
+import tb.utils.DummySteele;
+import tb.utils.TBUtils;
  import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.aspects.AspectList;
  import thaumcraft.codechicken.lib.math.MathHelper;
@@ -79,7 +78,7 @@
    
    public void updateEntity() {
      if (!this.worldObj.isRemote && this.tickTime == 0) {
-       MiscUtils.sendPacketToAllAround(this.worldObj, getDescriptionPacket(), this.xCoord, this.yCoord, this.zCoord, this.worldObj.provider.dimensionId, 16.0D);
+       DummySteele.sendPacketToAllAround(this.worldObj, getDescriptionPacket(), this.xCoord, this.yCoord, this.zCoord, this.worldObj.provider.dimensionId, 16.0D); //Fix in dummysteele
      }
      int additionalStability = 0;
      
@@ -146,7 +145,7 @@
                    } 
                  } 
                } 
-               Thaumcraft.proxy.blockRunes(this.worldObj, this.xCoord, this.yCoord + MathUtils.randomDouble(this.worldObj.rand) * 0.5D, this.zCoord, 1.0F, 0.5F, 0.5F, 8, 0.0F);
+               Thaumcraft.proxy.blockRunes(this.worldObj, this.xCoord, this.yCoord + DummySteele.randomDouble(this.worldObj.rand) * 0.5D, this.zCoord, 1.0F, 0.5F, 0.5F, 8, 0.0F);
                
                return;
              } 
@@ -185,7 +184,7 @@
                  } 
                } 
              } 
-             Thaumcraft.proxy.blockRunes(this.worldObj, this.xCoord, this.yCoord + MathUtils.randomDouble(this.worldObj.rand) * 0.5D, this.zCoord, 1.0F, 0.5F, 0.5F, 8, 0.0F);
+             Thaumcraft.proxy.blockRunes(this.worldObj, this.xCoord, this.yCoord + DummySteele.randomDouble(this.worldObj.rand) * 0.5D, this.zCoord, 1.0F, 0.5F, 0.5F, 8, 0.0F);
              
              return;
            } 

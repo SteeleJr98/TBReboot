@@ -1,6 +1,6 @@
  package tb.common.item.foci;
  
- import DummyCore.Utils.MiscUtils;
+
  import cpw.mods.fml.relauncher.Side;
  import cpw.mods.fml.relauncher.SideOnly;
  import java.util.ArrayList;
@@ -22,7 +22,8 @@
  import net.minecraft.world.World;
  import tb.init.TBFociUpgrades;
  import tb.init.TBThaumonomicon;
- import thaumcraft.api.ThaumcraftApi;
+import tb.utils.DummySteele;
+import thaumcraft.api.ThaumcraftApi;
  import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.aspects.AspectList;
  import thaumcraft.api.wands.FocusUpgradeType;
@@ -90,7 +91,7 @@
  
    
    public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition) {
-     ItemStack foci = ItemStack.loadItemStackFromNBT(MiscUtils.getStackTag(wandstack).getCompoundTag("focus"));
+     ItemStack foci = ItemStack.loadItemStackFromNBT(DummySteele.getStackTag(wandstack).getCompoundTag("focus"));
      
      int vaporisingLevel = getUpgradeLevel(foci, TBFociUpgrades.vaporizing);
      int decomposingLevel = getUpgradeLevel(foci, TBFociUpgrades.decomposing);

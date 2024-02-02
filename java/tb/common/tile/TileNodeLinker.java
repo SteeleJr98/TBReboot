@@ -1,27 +1,32 @@
  package tb.common.tile;
- 
- import DummyCore.Utils.Coord3D;
- import DummyCore.Utils.MiscUtils;
+
  import cpw.mods.fml.common.network.NetworkRegistry;
  import cpw.mods.fml.common.network.simpleimpl.IMessage;
  import java.util.ArrayList;
  import java.util.Collection;
  import java.util.List;
- import net.minecraft.entity.Entity;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
  import net.minecraft.entity.player.EntityPlayer;
- import net.minecraft.item.ItemStack;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.network.NetworkManager;
  import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
  import net.minecraft.tileentity.TileEntity;
  import net.minecraft.util.AxisAlignedBB;
  import net.minecraft.util.ChatComponentText;
- import net.minecraft.util.DamageSource;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.DamageSource;
  import net.minecraft.util.IChatComponent;
  import net.minecraft.util.StatCollector;
  import net.minecraft.world.World;
  import net.minecraftforge.common.util.ForgeDirection;
- import thaumcraft.api.aspects.Aspect;
+import tb.utils.DummySteele;
+import tb.utils.DummySteele.Coord3D;
+import thaumcraft.api.aspects.Aspect;
  import thaumcraft.api.aspects.AspectList;
  import thaumcraft.api.wands.IWandable;
  import thaumcraft.codechicken.lib.math.MathHelper;
@@ -52,7 +57,7 @@
        tg.setInteger("x", this.xCoord);
        tg.setInteger("y", this.yCoord);
        tg.setInteger("z", this.zCoord);
-       MiscUtils.syncTileEntity(tg, 0);
+       DummySteele.syncTileEntity(tg, 0);
      } else {
        this.syncTimer--;
      } 
@@ -256,10 +261,8 @@
      int x = side ? MathHelper.floor_double(this.linkCoord.x) : this.xCoord;
      int y = side ? MathHelper.floor_double(this.linkCoord.y) : this.yCoord;
      int z = side ? MathHelper.floor_double(this.linkCoord.z) : this.zCoord;
-     int fluxMeta = this.worldObj.rand.nextInt(8);
-     int pos = 2 + this.worldObj.rand.nextInt(4);
-     ForgeDirection off = ForgeDirection.VALID_DIRECTIONS[pos];
-     this.worldObj.setBlock(x + off.offsetX, y - 1, z + off.offsetZ, ConfigBlocks.blockFluxGoo, fluxMeta, 3);
+
+     makeGooOrGas(x, y, z, true);
      return 5;
    }
  
@@ -269,9 +272,25 @@
      int x = side ? MathHelper.floor_double(this.linkCoord.x) : this.xCoord;
      int y = side ? MathHelper.floor_double(this.linkCoord.y) : this.yCoord;
      int z = side ? MathHelper.floor_double(this.linkCoord.z) : this.zCoord;
-     int fluxMeta = this.worldObj.rand.nextInt(8);
-     this.worldObj.setBlock(x, y + 1, z, ConfigBlocks.blockFluxGas, fluxMeta, 3);
+
+
+     makeGooOrGas(x, y, z, false);
      return 3;
+   }
+   
+   public void makeGooOrGas(int x, int y, int z, boolean type) {
+	   int fluxMeta = this.worldObj.rand.nextInt(8);
+	   int typeOffset = type ? -1 : 1;
+	   ArrayList<ChunkCoordinates> testBlocks = DummySteele.findOpenBlocks(this.worldObj, x, y + typeOffset, z, 1);
+	     
+	     if (testBlocks.size() > 0) {
+	    	 int index = new Random().nextInt(testBlocks.size());
+	    	 ChunkCoordinates coords = testBlocks.get(index);
+	    	 worldObj.setBlock(coords.posX, coords.posY, coords.posZ, type ? ConfigBlocks.blockFluxGoo : ConfigBlocks.blockFluxGas, fluxMeta, 3);
+	     }
+	     else {
+	    	 worldObj.getClosestPlayer(x, y, z, 10).addChatComponentMessage((IChatComponent)new ChatComponentText("No spaces available"));
+	     }
    }
  
    
