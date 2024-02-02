@@ -1,5 +1,7 @@
  package tb.init;
- import cpw.mods.fml.common.Loader;
+ import org.omg.CORBA.OBJECT_NOT_EXIST;
+
+import cpw.mods.fml.common.Loader;
  import net.minecraft.block.Block;
  import net.minecraft.init.Blocks;
  import net.minecraft.init.Items;
@@ -1476,7 +1478,18 @@
      if (flag) {
        copy((ResearchItem)(ResearchCategories.getResearchList("ELDRITCH")).research.get("PRIMPEARL"), "TB.PRIMPEARL", "THAUMICBASES", 3, -29).setConcealed().setHidden().registerResearchItem();
      }
-     (new String[2])[0] = "TB.NodeMan"; (new String[2])[1] = "TB.PRIMPEARL"; (new String[1])[0] = "TB.NodeMan"; String[] bParents = flag ? new String[2] : new String[1];
+     //(new String[2])[0] = "TB.NodeMan"; (new String[2])[1] = "TB.PRIMPEARL"; (new String[1])[0] = "TB.NodeMan"; String[] bParents = flag ? new String[2] : new String[1];
+//     String[] string2 = new String[2];
+//     String[] string1 = new String[1];
+//     string2[0] = "TB.NodeMan";
+//     string2[1] = "TB.PRIMPEARL";
+//     string1[0] = "TB.NodeMan";
+//     String[] bParents = flag ? string1 : string1;
+     
+     String pearlString = flag ? "PRIMPEARL" : "TB.NodeMan";
+     String[] bParents = {"TB.NodeMan", pearlString};
+
+
      
      (new ResearchItem("TB.NodeFoci.Bright", "THAUMICBASES", (new AspectList()).add(Aspect.AURA, 8).add(Aspect.LIGHT, 8), 2, -28, 0, new ItemStack(TBItems.nodeFoci, 1, 0)))
        .setParents(bParents)
@@ -2022,8 +2035,8 @@
  
  
  
- 
- 
+       //ShapelessArcaneRecipe tbHomewardTobacco = new ShapelessArcaneRecipe("TB.Tobacco.Homeward", new ItemStack(TBItems.tobacco, 1, 9), (new AspectList().add(Aspect.AIR, 1)), new Object[] { new ItemStack(TBItems.tobacco, 1, 0), new ItemStack(Items.arrow), new ItemStack(Items.ender_pearl) });
+       InfusionRecipe homewardTobaccoRec = new InfusionRecipe("TB.Tobacco.Homeward", new ItemStack(TBItems.tobacco, 6, 9), 1, (new AspectList().add(Aspect.TRAVEL, 16).add(Aspect.CLOTH, 16).add(Aspect.MAGIC, 20)), new ItemStack(Items.ender_pearl), new ItemStack[] { (new ItemStack(TBItems.tobacco, 1, 0)), new ItemStack(TBItems.tobacco, 1, 0), new ItemStack(TBItems.tobacco, 1, 0), new ItemStack(TBItems.tobacco, 1, 0), new ItemStack(TBItems.tobacco, 1, 0), new ItemStack(TBItems.tobacco, 1, 0), });
  
        
        InfusionRecipe eldritchTobacoRec = new InfusionRecipe("TB.Tobacco.Eldritch", new ItemStack(TBItems.tobacco, 1, 1), 1, (new AspectList()).add(Aspect.ELDRITCH, 4).add(Aspect.DEATH, 1), new ItemStack(TBItems.tobacco, 1, 0), new ItemStack[] { new ItemStack(Items.ender_eye, 1, 0), new ItemStack(Items.arrow, 1, 0) });
@@ -2071,6 +2084,18 @@
  
            
            }).registerResearchItem();
+       
+       
+       
+       
+       (new ResearchItem("TB.Tobacco.Homeward", "THAUMICBASES", (new AspectList()).add(Aspect.CLOTH, 1).add(Aspect.LIFE, 1).add(Aspect.ORDER, 1).add(Aspect.TRAVEL, 1), 3, -15, 1, new ItemStack(TBItems.tobacco, 1, 9)))
+       	.setParents(new String[] { "TB.Tobacco", "TB.INFUSION"}).setComplexity(0).setPages(new ResearchPage[] {
+       			new ResearchPage("tb.rec.homewardTobacco.page.0"), new ResearchPage("tb.rec.homewardTobacco.page.1"), new ResearchPage(homewardTobaccoRec)
+       	}).registerResearchItem();
+       
+       
+       
+       
        
        (new ResearchItem("TB.Tobacco.Eldritch", "THAUMICBASES", (new AspectList()).add(Aspect.DEATH, 4).add(Aspect.ELDRITCH, 4), 1, -16, 0, new ItemStack(TBItems.tobacco, 1, 1)))
          .setParents(new String[] { "TB.Tobacco", "TB.INFUSION"
@@ -2165,6 +2190,7 @@
        ThaumcraftApi.getCraftingRecipes().add(saturatingTobaccoRec);
        ThaumcraftApi.getCraftingRecipes().add(saturatingTobaccoRecM);
        ThaumcraftApi.getCraftingRecipes().add(sanityTobaccoRec);
+       ThaumcraftApi.getCraftingRecipes().add(homewardTobaccoRec);
        ThaumcraftApi.getCraftingRecipes().add(silverwoodPipeRec);
      } 
      ThaumcraftApi.getCraftingRecipes().add(voidSeedRec);
