@@ -1,4 +1,6 @@
 tc.research_category.THAUMICBASES=Thaumic Bases
+itemGroup.thaumicbases.items.name=Thaumic Bases Items
+itemGroup.thaumicbases.blocks.name=Thaumic Bases Blocks
 
 #enchantments
 enchantment.elderKnowledge=Elder Wisdom
@@ -143,6 +145,7 @@ item.tobacco.tobacco_mining.name=Miner's Tobacco Pile
 item.tobacco.tobacco_sanity.name=Relaxing Tobacco Pile
 item.tobacco.tobacco_tainted.name=Tainted Tobacco Pile
 item.tobacco.tobacco_wispy.name=Wispy Tobacco Pile
+item.tobacco.tobacco_homeward.name=Homeward Tobacco Pile
 item.tobaccoSeeds.name=Tobacco Seeds
 item.mortar.name=Pestle And Mortar
 item.voidSeed.name=Void Plant Seed
@@ -168,6 +171,9 @@ item.nodeFoci.taint.name=§eNode Manipulator Focus: Taint
 item.herobrinesScythe.name=Scythe Of The White-Eyed One
 item.tb.voidShears.name=Void Shears
 item.tb.voidFAS.name=Void Flint and Steel
+
+#DevItems
+item.debugStick.name=Debug Stick
 
 #Researchs
 tc.research_name.TB.CRUCIBLE=Basic Alchemy
@@ -297,6 +303,10 @@ tb.rec.stobacco.page.0=You have found a way to stop hunger starvation. Smoking t
 tc.research_name.TB.Tobacco.Sanity=Relaxing Tobacco
 tc.research_text.TB.Tobacco.Sanity=Just what the doctor ordered
 tb.rec.satobacco.page.0=Well, most thaumaturges use different smoking herbs to 'relax'. You do not need that kind of relaxation, no. They are fools, who will soon loose their magic if they continue doing so! However, your mind might need some relaxation from that warp. Sure, just a regular tobacco does the trick, but you can do it better, can you?.. You have created a perfect tobacco, which calms down your nerves and removes temporary warp.
+tc.research_name.TB.Tobacco.Homeward=Homeward Tobacco
+tc.research_text.TB.Tobacco.Homeward=Go home your drunk
+tb.rec.homewardTobacco.page.0=This enchanting strain of magical tobacco possesses the power to transcend the boundaries of reality. When carefully rolled into a magical cigar or pipe, this tobacco offers a unique and transcendental experience to those daring enough to indulge.<BR>As the ethereal smoke curls and dances in the air, the imbiber becomes enveloped in a gentle shimmering glow. Space itself seems to stretch and warp, creating a bridge between the present moment and the sanctuary of one's bed. The smoker is transported through the fabric of this reality, leaving the material plane behind as they traverse the ethereal landscape.
+tb.rec.homewardTobacco.page.1=In the blink of an eye, the journey concludes, and the smoker finds themselves nestled comfortably in their bed, as if the passage through this other realm had been nothing more than a fleeting dream.
 tc.research_name.TB.SilverwoodPipe=Silverwood Smoking Pipe
 tc.research_text.TB.SilverwoodPipe=Purified smoke
 tb.rec.silverPipe.page.0=Most tobaccos what you have managed to create are safe. Not all of them though. You think, that the only soultion here is to get a better pipe. Silverwood can be just perfect for that. It is however not as mundane as the greatwood is and requires much more complex processes than just arcane crafting. The silverwood smoking pipe is a better pipe - it negates most of negative effects on your tobaccoes, and once that have no negatives will instead have additional positive effects.
@@ -668,6 +678,10 @@ tc.research_text.TB.ROD_primal_staff=Elemental power combined
 #Chat notifications
 tb.txt.linkStarted=Link Started
 tb.txt.linkEstabilished=Link Estabilished
+tb.txt.nosilvbedwarp=While your bed may be too far away, the taste does remind you of home.
+tb.txt.noregbedwarp=You figure your pipe may not be pure enough to find your way back home.
+tb.txt.bedtooclose=Surely walking to your bed would be far much easier.
+tb.txt.nobedwarp=No spawn location detected.
 
 #witching gadgets
 wg.chat.nodeContents.primal=Primal Aspects within this node: §eAer: %1$s§f, §2Terra: %2$s§f, §cIgnis: %3$s§f, §3Aqua: %4$s§f, §7Ordo: %5$s§f, §8Perditio: %6$s
