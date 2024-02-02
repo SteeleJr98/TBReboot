@@ -8,6 +8,10 @@
  import tb.common.inventory.ContainerRevolver;
  import tb.common.inventory.ContainerThaumicAnvil;
  import tb.common.inventory.ContainerVoidAnvil;
+import thaumcraft.common.container.ContainerArcaneWorkbench;
+import thaumcraft.common.tiles.TileArcaneWorkbench;
+import tb.common.inventory.FociCrafterContainer;
+import tb.common.tile.FakeWorkbenchTile;
  
  
  
@@ -37,6 +41,14 @@
        }
        if (ID == 4331801) {
          return new ContainerRevolver(player.inventory, world, x, y, z);
+       }
+       if (ID == 4331811) {
+    	   //return new FociCrafterContainer(player.inventory, world, x, y, z);
+    	   FakeWorkbenchTile tempTile = new FakeWorkbenchTile();
+    	   tempTile.xCoord = x;
+    	   tempTile.yCoord = y;
+    	   tempTile.zCoord = z;
+    	   return new FociCrafterContainer(player.inventory, tempTile);
        }
      } 
      return null;
