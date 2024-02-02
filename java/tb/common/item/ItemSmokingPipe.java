@@ -13,9 +13,9 @@ import tb.api.ITobacco;
  public class ItemSmokingPipe
    extends Item
  {
-   public boolean isSilverwood;
+   public int isSilverwood;
    
-   public ItemSmokingPipe(boolean silverwood) {
+   public ItemSmokingPipe(int silverwood) {
      this.isSilverwood = silverwood;
      setFull3D();
      setMaxStackSize(1);
@@ -60,25 +60,27 @@ import tb.api.ITobacco;
      double y = player.posY + player.getEyeHeight() + look.yCoord / 5.0D;
      double z = player.posZ + look.zCoord / 5.0D;
      if (count < 32) {
-       player.worldObj.spawnParticle(this.isSilverwood ? "explode" : "smoke", x, y, z, look.xCoord / 10.0D, look.yCoord / 10.0D, look.zCoord / 10.0D);
+       player.worldObj.spawnParticle(this.isSilverwood == 1 ? "explode" : "smoke", x, y, z, look.xCoord / 10.0D, look.yCoord / 10.0D, look.zCoord / 10.0D);
      }
    }
    
    @Override
    public ItemStack onEaten(ItemStack stack, World w, EntityPlayer player) {
-     ItemStack tobacco = getTobacco(player);
-     ITobacco t = ITobacco.class.cast(tobacco.getItem());
-     //MessageLogging.sendFromServer("Item Cast to ITobacco");
-     t.performTobaccoEffect(player, tobacco.getItemDamage(), this.isSilverwood);
-     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-       
-       ItemStack stk = player.inventory.getStackInSlot(i);
-       if (stk != null && stk.getItem() != null && stk.getItem() instanceof ITobacco) {
-         
-         player.inventory.decrStackSize(i, 1);
-         break;
-       } 
-     } 
+	 if (!w.isRemote) {
+	     ItemStack tobacco = getTobacco(player);
+	     ITobacco t = ITobacco.class.cast(tobacco.getItem());
+	     //MessageLogging.sendFromServer("Item Cast to ITobacco");
+	     t.performTobaccoEffect(player, tobacco.getItemDamage(), this.isSilverwood);
+	     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+	       
+	       ItemStack stk = player.inventory.getStackInSlot(i);
+	       if (stk != null && stk.getItem() != null && stk.getItem() instanceof ITobacco) {
+	         
+	         player.inventory.decrStackSize(i, 1);
+	         break;
+	       } 
+	     }
+	 }
      Vec3 look = player.getLookVec();
      for (int j = 0; j < 100; j++) {
        
@@ -86,11 +88,12 @@ import tb.api.ITobacco;
        double y = player.posY + player.getEyeHeight() + look.yCoord / 5.0D;
        double z = player.posZ + look.zCoord / 5.0D;
        
-       player.worldObj.spawnParticle(this.isSilverwood ? "explode" : "smoke", x, y, z, look.xCoord / 10.0D, look.yCoord / 10.0D, look.zCoord / 10.0D);
+       player.worldObj.spawnParticle(this.isSilverwood == 1 ? "explode" : "smoke", x, y, z, look.xCoord / 10.0D, look.yCoord / 10.0D, look.zCoord / 10.0D);
      } 
      
      return stack;
    }
+   
  }
 
 

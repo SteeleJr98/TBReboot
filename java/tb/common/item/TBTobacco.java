@@ -23,8 +23,10 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import tb.api.ITobacco;
 import tb.core.TBCore;
+import tb.init.TBItems;
 import tb.network.proxy.TBNetworkManager;
 import tb.utils.TBConfig;
 import tb.utils.TBUtils;
@@ -52,19 +54,25 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
  
  
    
-   public void performTobaccoEffect(EntityPlayer smoker, int metadata, boolean isSilverwood) {
+   public void performTobaccoEffect(EntityPlayer smoker, int metadata, int isSilverwood) {
      ArrayList<Aspect> aspects;
      ArrayList<Integer> aspectNum;
      Collection<Aspect> pa;
      EntityWisp wisp;
+     
+     if (isSilverwood == 2) {
+    	 smoker.addChatComponentMessage(new ChatComponentText("smoking is bad for you"));
+    	 return;
+     }
+     
      switch (metadata) {
  
        
        case 0:
-         if (isSilverwood && smoker.worldObj.rand.nextFloat() <= 0.3F) {
+         if (isSilverwood == 1 && smoker.worldObj.rand.nextFloat() <= 0.3F) {
            TBUtils.addWarpToPlayer(smoker, -1, 0);
          }
-         if (!isSilverwood && smoker.worldObj.rand.nextFloat() <= 0.1F) {
+         if (isSilverwood == 0 && smoker.worldObj.rand.nextFloat() <= 0.1F) {
            TBUtils.addWarpToPlayer(smoker, -1, 0);
          }
          break;
@@ -74,7 +82,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
          if (!smoker.worldObj.isRemote) {
            
            smoker.addPotionEffect(new PotionEffect(Config.potionDeathGazeID, 2000, 0, true));
-           if (!isSilverwood) {
+           if (isSilverwood == 0) {
              TBUtils.addWarpToPlayer(smoker, 3, 0);
            }
          } 
@@ -85,7 +93,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
          if (!smoker.worldObj.isRemote) {
            
            smoker.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 8000, 1, true));
-           if (isSilverwood && smoker.worldObj.rand.nextFloat() <= 0.1F) {
+           if (isSilverwood == 1 && smoker.worldObj.rand.nextFloat() <= 0.1F) {
              smoker.addPotionEffect(new PotionEffect(Potion.resistance.id, 8000, 0, true));
            }
          } 
@@ -95,7 +103,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
          if (!smoker.worldObj.isRemote) {
            
            smoker.getFoodStats().addStats(3, 3.0F);
-           if (!isSilverwood && smoker.worldObj.rand.nextFloat() <= 0.4F) {
+           if (isSilverwood == 0 && smoker.worldObj.rand.nextFloat() <= 0.4F) {
              smoker.addPotionEffect(new PotionEffect(Potion.confusion.id, 200, 0, true));
            }
          } 
@@ -121,12 +129,12 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
            //Aspect[] validArray = (Aspect[]) validList.toArray();
            
            if (validList.size() > 0) {
-	           for (int i = 0; i < (isSilverwood ? 20 : 10); i++) {
+	           for (int i = 0; i < (isSilverwood == 1 ? 20 : 10); i++) {
 	        	 Aspect a = validList.get(smoker.worldObj.rand.nextInt(validList.size()));
 
 	        	 
-	             TBUtils.addAspectToKnowledgePool(smoker, a, (short)(isSilverwood ? 2 : 1));
-	             if (a == Aspect.TAINT && !isSilverwood) {
+	             TBUtils.addAspectToKnowledgePool(smoker, a, (short)(isSilverwood == 1 ? 2 : 1));
+	             if (a == Aspect.TAINT && isSilverwood == 0) {
 	               TBUtils.addWarpToPlayer(smoker, 1, 0);
 	             }
 	           }
@@ -142,7 +150,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
          if (!smoker.worldObj.isRemote) {
            
            smoker.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 8000, 1, true));
-           if (isSilverwood && smoker.worldObj.rand.nextFloat() <= 0.3F) {
+           if (isSilverwood == 1 && smoker.worldObj.rand.nextFloat() <= 0.3F) {
              smoker.addPotionEffect(new PotionEffect(Potion.nightVision.id, 8000, 0, true));
            }
          } 
@@ -151,11 +159,11 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
        case 6:
          if (!smoker.worldObj.isRemote) {
            
-           if (smoker.worldObj.rand.nextFloat() <= (isSilverwood ? 0.6F : 0.4F))
+           if (smoker.worldObj.rand.nextFloat() <= (isSilverwood == 1 ? 0.6F : 0.4F))
            {
              TBUtils.addWarpToPlayer(smoker, -1, 0);
            }
-           if (isSilverwood && smoker.worldObj.rand.nextFloat() <= 0.1F) {
+           if (isSilverwood == 1 && smoker.worldObj.rand.nextFloat() <= 0.1F) {
              TBUtils.addWarpToPlayer(smoker, -1, 1);
            }
          } 
@@ -164,7 +172,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
        case 7:
          if (!smoker.worldObj.isRemote) {
            
-           if (!isSilverwood) {
+           if (isSilverwood == 0) {
              
              TBUtils.addWarpToPlayer(smoker, 1 + smoker.worldObj.rand.nextInt(3), 0);
              if (smoker.worldObj.rand.nextFloat() <= 0.4F)
@@ -174,8 +182,13 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
            ItemStack stk = smoker.getCurrentEquippedItem();
            if (stk != null) {
              
-             smoker.renderBrokenItemStack(stk);
-             smoker.inventory.setInventorySlotContents(smoker.inventory.currentItem, null);
+        	   TBNetworkManager.playSoundOnServer(smoker.worldObj, "ambient.weather.thunder", smoker.posX, smoker.posY + 2.0F, smoker.posZ, 1, 1);
+        	   ItemStack pipeStack = new ItemStack(TBItems.corruptedPipe);
+        	   smoker.inventory.setInventorySlotContents(smoker.inventory.currentItem, pipeStack);
+        	   smoker.dropOneItem(true);
+        	   
+             //smoker.renderBrokenItemStack(stk);
+             //smoker.inventory.setInventorySlotContents(smoker.inventory.currentItem, null);
            } 
            return;
          } 
@@ -191,7 +204,7 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
            aspects.add(aspect);
          }
          
-         if (isSilverwood) {
+         if (isSilverwood == 1) {
            aspects.remove(Aspect.TAINT);
          }
          wisp = new EntityWisp(smoker.worldObj);
@@ -206,28 +219,37 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
        case 9: //homeward tobacco
     	   ChunkCoordinates spawnCoords = smoker.getBedLocation(smoker.dimension);
     	   ChunkCoordinates playerCoords = smoker.getPlayerCoordinates();
+    	   ChunkCoordinates worldCoords = smoker.worldObj.getSpawnPoint();
     	   
     	   if (!smoker.worldObj.isRemote) {
+    		   
+    		   
+    		   
     		   //System.out.println("X: " + spawnCoords.posX + " Y: " + spawnCoords.posY + " Z: " + spawnCoords.posZ);
     		   //TBCore.TBLogger.log(Level.INFO, "X: " + spawnCoords.posX + " Y: " + spawnCoords.posY + " Z: " + spawnCoords.posZ);
     		   if (spawnCoords != null) {
-    			   //smoker.setPositionAndUpdate(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
-    			   double dist = TBUtils.SimpleDist(spawnCoords, playerCoords);
-    			   if (dist < (isSilverwood ? 200 : 100) && dist > 5) {
-    				   TBNetworkManager.playSoundOnServer(smoker.worldObj, "mob.endermen.portal", smoker.posX, smoker.posY, smoker.posZ, 1.0F, 1.0F);
-    				   smoker.setPositionAndUpdate(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
-    				   //smoker.worldObj.playSoundEffect(smoker.serverPosX, smoker.serverPosY, smoker.serverPosZ, "mob.cat.meow1", 1.0F, 1.0F);
-    				   TBNetworkManager.playSoundOnServer(smoker.worldObj, "mob.endermen.portal", smoker.posX, smoker.posY, smoker.posZ, 1.0F, 1.0F);
-    			   } else {
-    				   if (dist > 5) {
-    					   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(isSilverwood ? "tb.txt.nosilvbedwarp" : "tb.txt.noregbedwarp")));
-    				   } else {
-    					   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.bedtooclose")));
-					}
+    			   if (spawnCoords != worldCoords) {
+    				   //smoker.addChatMessage(new ChatComponentText("player spawn: " + spawnCoords.posX + " " + spawnCoords.posY + " " + spawnCoords.posZ));
+    	    		   //smoker.addChatMessage(new ChatComponentText("world spawn: " + worldCoords.posX + " " + worldCoords.posY + " " + worldCoords.posZ));
+	    			   //smoker.setPositionAndUpdate(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+	    			   double dist = TBUtils.SimpleDist(spawnCoords, playerCoords);
+	    			   if (dist < (isSilverwood == 1 ? 6000 : 700) && dist > 5) {
+	    				   TBNetworkManager.playSoundOnServer(smoker.worldObj, "mob.endermen.portal", smoker.posX, smoker.posY, smoker.posZ, 1.0F, 1.0F);
+	    				   smoker.setPositionAndUpdate(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+	    				   //smoker.worldObj.playSoundEffect(smoker.serverPosX, smoker.serverPosY, smoker.serverPosZ, "mob.cat.meow1", 1.0F, 1.0F);
+	    				   TBNetworkManager.playSoundOnServer(smoker.worldObj, "mob.endermen.portal", smoker.posX, smoker.posY, smoker.posZ, 1.0F, 1.0F);
+	    			   } else {
+	    				   if (dist > 5) {
+	    					   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(isSilverwood == 1 ? "tb.txt.nosilvbedwarp" : "tb.txt.noregbedwarp")));
+	    				   } else {
+	    					   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.bedtooclose")));
+						}
+    			   	}
     			   }
     		   } else {
     			   smoker.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.nobedwarp")));
     		   }
+    		   
     	   }
 
     	   break;
