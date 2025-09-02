@@ -2,6 +2,7 @@ package tb.utils.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,6 +14,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.blocks.BlockJarItem;
 import thaumcraft.common.blocks.ItemJarFilled;
 import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.config.ConfigItems;
 
 public class CommandFillJar extends CommandBase {
 	
@@ -80,7 +82,7 @@ public class CommandFillJar extends CommandBase {
 				
 				
 				
-				ItemStack stack = new ItemStack(ConfigBlocks.blockJar);
+				ItemStack stack = new ItemStack(ConfigItems.itemJarFilled);
 				
 				((ItemJarFilled) stack.getItem()).setAspects(stack, aList);
 				
@@ -90,6 +92,24 @@ public class CommandFillJar extends CommandBase {
 				
 				if (player.getCurrentEquippedItem().stackSize == 1) {
 					player.setCurrentItemOrArmor(0, stack);
+				}
+				else {
+					ItemStack playerStack = player.getCurrentEquippedItem();
+					playerStack.stackSize -= 1;
+					player.setCurrentItemOrArmor(0, playerStack);
+					int playerInvEmpty = player.inventory.getFirstEmptyStack();
+					if (playerInvEmpty != -1) {
+						player.inventory.setInventorySlotContents(playerInvEmpty, stack);
+					}
+					else {
+						EntityItem ei = new EntityItem(player.worldObj);
+						ei.setEntityItemStack(stack);
+						ei.setPosition(player.posX, player.posY + 0.5f, player.posZ);
+						if (!player.worldObj.isRemote) {
+							player.worldObj.spawnEntityInWorld(ei);
+						}
+						
+					}
 				}
 				
 			}

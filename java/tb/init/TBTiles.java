@@ -2,7 +2,8 @@
  
  import cpw.mods.fml.common.registry.GameRegistry;
  import tb.common.tile.TileAdvAlchemicalFurnace;
- import tb.common.tile.TileBraizer;
+import tb.common.tile.TileAutoDeconstructor;
+import tb.common.tile.TileBraizer;
  import tb.common.tile.TileCampfire;
  import tb.common.tile.TileEntityDeconstructor;
  import tb.common.tile.TileNodeLinker;
@@ -22,6 +23,9 @@
      GameRegistry.registerTileEntity(TileNodeLinker.class, "tb.nodeLinker");
      GameRegistry.registerTileEntity(TileCampfire.class, "tb.campfire");
      GameRegistry.registerTileEntity(TileBraizer.class, "tb.brazier");
+     GameRegistry.registerTileEntity(TileAutoDeconstructor.class, "tb.autoConst");
+   
+     
    }
  }
 

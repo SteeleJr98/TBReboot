@@ -24,77 +24,77 @@ import thaumcraft.common.lib.WarpEvents;
 import thaumcraft.common.tiles.TileMagicWorkbench;
 
 public class FociCraftTest extends ItemFocusBasic {
-	
+
 	@Override
 	public int getFocusColor(ItemStack focusStack) {
 		return 11184810;
 	}
-	
+
 	@Override
 	public String getSortingHelper(ItemStack focusstack) {
 		String out = "CT";
-	    for (short id : getAppliedUpgrades(focusstack)) {
-	    	out = out + id;
-	    }
-	    return out;
+		for (short id : getAppliedUpgrades(focusstack)) {
+			out = out + id;
+		}
+		return out;
 	}
-	
+
 	@Override
 	public AspectList getVisCost(ItemStack focusstack) {
 		return (new AspectList()).add(Aspect.ORDER, 5).add(Aspect.EARTH, 10);
 	}
-	
+
 	@Override
 	public int getActivationCooldown(ItemStack focusstack) {
 		return 0;
 	}
-	
+
 	@Override
 	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack, int rank) {
 		return new FocusUpgradeType[] { FocusUpgradeType.frugal, FocusUpgradeType.potency };
 	}
-	
-	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition) {
-		
 
-		
+	public ItemStack onFocusRightClick(ItemStack wandstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition) {
+
+
+
 		if (!world.isRemote){
 			player.openGui(TBCore.instance, 4331811, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-			
-			
-			
-			
-//			Class<WarpEvents> warpClass = WarpEvents.class;
-//			try {
-//				Method method = warpClass.getDeclaredMethod("suddenlySpiders", new Class[] { EntityPlayer.class, int.class, boolean.class });
-//				boolean access = method.isAccessible();
-//				
-//				if (!access) {
-//					method.setAccessible(true);
-//				}
-//				
-//				method.invoke((Object)null, new Object[] {player, 5, false});
-//				
-//				
-//				if (!access) {
-//					method.setAccessible(false);
-//				}
-//				
-//				
-//				
-//			} catch (Exception e) {
-//				return wandstack;
-//			}
-			
-			
+
+
+
+
+			//			Class<WarpEvents> warpClass = WarpEvents.class;
+			//			try {
+			//				Method method = warpClass.getDeclaredMethod("suddenlySpiders", new Class[] { EntityPlayer.class, int.class, boolean.class });
+			//				boolean access = method.isAccessible();
+			//				
+			//				if (!access) {
+			//					method.setAccessible(true);
+			//				}
+			//				
+			//				method.invoke((Object)null, new Object[] {player, 5, false});
+			//				
+			//				
+			//				if (!access) {
+			//					method.setAccessible(false);
+			//				}
+			//				
+			//				
+			//				
+			//			} catch (Exception e) {
+			//				return wandstack;
+			//			}
+
+
 		}
 		return wandstack;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	   public void registerIcons(IIconRegister reg) {
-	     super.registerIcons(reg);
-	     this.icon = reg.registerIcon(getIconString());
-	   }
+	public void registerIcons(IIconRegister reg) {
+		super.registerIcons(reg);
+		this.icon = reg.registerIcon(getIconString());
+	}
 
 }

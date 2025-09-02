@@ -4,6 +4,7 @@
 
  import net.minecraft.enchantment.Enchantment;
  import net.minecraftforge.common.config.Configuration;
+import tb.common.potion.PotionVoidCall;
 import tb.core.TBCore;
  
  public class TBConfig {
@@ -16,17 +17,35 @@ import tb.core.TBCore;
      taintedID = cfg.getInt("taintedEnchantmentID", "Enchantments", 101, 0, Enchantment.enchantmentsList.length, "");
      vaporisingID = cfg.getInt("vaporisingEnchantmentID", "Enchantments", 102, 0, Enchantment.enchantmentsList.length, "");
      
-     aquaticFociUID = cfg.getInt("aquaticFociUID", "Foci", 42, 0, 2147483647, "");
-     nethericFociUID = cfg.getInt("nethericFociUID", "Foci", 43, 0, 2147483647, "");
-     decomposingFociUID = cfg.getInt("decomposingFociUID", "Foci", 44, 0, 2147483647, "");
-     vaporisingFociUID = cfg.getInt("vaporisingFociUID", "Foci", 45, 0, 2147483647, "");
-     calmingFociUID = cfg.getInt("calmingFociUID", "Foci", 46, 0, 2147483647, "");
-     crystalizationFociUID = cfg.getInt("crystalizationFociUID", "Foci", 47, 0, 2147483647, "");
-     warpingFociUID = cfg.getInt("warpingFociUID", "Foci", 48, 0, 2147483647, "");
+     potionVoidCallID = cfg.getInt("potionVoidCallID", "General", 30, 0, 31, "");
+     PotionVoidCall.instance.init();
      
-     allowTobacco = cfg.getBoolean("allowTobacco", "General", true, "If set to falso the tobacco will be disabled - there will be no recipes/no entries in Thaumonomicon");
+     aquaticFociUID = cfg.getInt("aquaticFociUID", "Foci", 10548, 0, 2147483647, "");
+     nethericFociUID = cfg.getInt("nethericFociUID", "Foci", 10550, 0, 2147483647, "");
+     decomposingFociUID = cfg.getInt("decomposingFociUID", "Foci", 10552, 0, 2147483647, "");
+     vaporisingFociUID = cfg.getInt("vaporisingFociUID", "Foci", 10554, 0, 2147483647, "");
+     calmingFociUID = cfg.getInt("calmingFociUID", "Foci", 10556, 0, 2147483647, "");
+     crystalizationFociUID = cfg.getInt("crystalizationFociUID", "Foci", 10558, 0, 2147483647, "");
+     warpingFociUID = cfg.getInt("warpingFociUID", "Foci", 10560, 0, 2147483647, "");
+     spillageFociUID = cfg.getInt("spillageFociUID", "Foci", 10562, 0, 2147483647, "");
+     
+     cascadeDimID = cfg.getInt("cascadeDimID", "General", 17, Integer.MIN_VALUE, Integer.MAX_VALUE, "Dimension ID");
+     cascadeBiomeID = cfg.getInt("cascadeBiomeID", "General", 191, 0, 255, "Biome ID");
+     cascadeDimMovementScale = cfg.getInt("cascadeDimMovementScale", "General", 5, 0, 100, "Integer percent scale of how quickly Dimension scales to overworld");
+     cascadeDimReset = cfg.getInt("cascadeDimReset", "General", 1, 1, 200, "Number of hours Dimension exists before resetting scale");
+     resetTries = cfg.getInt("resetTries", "General", 10, 1, 255, "Number of attemps to delete the Dimension on reset");
+     cascadeDimSPM = cfg.getInt("cascadeDimSPM", "General", 1, 1, 60, "Lightning strikes per X minutes on average");
+     
+     allowTobacco = cfg.getBoolean("allowTobacco", "General", true, "If set to false the tobacco will be disabled - there will be no recipes/no entries in Thaumonomicon");
      minBlazePowderFromPyrofluid = cfg.getInt("minBlazePowderFromPyrofluid", "Pyrofluid", 5, 0, 2147483647, "");
      maxBlazePowderFromPyrofluid = cfg.getInt("maxBlazePowderFromPyrofluid", "Pyrofluid", 37, 0, 2147483647, "");
+     
+     decompGain = cfg.getInt("decompGain", "General", 80, 10, 80, "Percent of aspect amount transferd from Decomp. Focus");
+     decompStackSize = cfg.getInt("decompStackSize", "General", 10, 5, 64, "Max size a stack can be for the Decomp. Focus");
+     
+     warnTimer = cfg.getInt("scytheWarnTimer", "Scythe", 15, 5, 3600, "Time in seconds the scythe will wait to warn player about mobs");
+     warnRange = cfg.getInt("scytheWarnRange", "Scythe", 10, 2, 20, "Range in blocks the scythe will warn player about mobs");
+
      
      speedMultiplierForFurnace = cfg.getInt("speedMultiplierForFurnace", "Advanced Alchemy Furnace", 2, 0, 2147483647, "This is the speed of the Advanced Alchamical Furnace. TC's basic has 1.");
      makeRequireAlumentium = cfg.getBoolean("makeRequireAlumentium", "Advanced Alchemy Furnace", true, "Does the Advanced Alchemical Furnace requires Alumentium to work faster");
@@ -36,7 +55,20 @@ import tb.core.TBCore;
      
      wisdomMaxAspect = cfg.getInt("wisdomMaxAspects", "General", 250, 100, 500, "Max number of any aspect you can recieve from the wisdom tobacco");
      
+     autoScannerSpeed = cfg.getFloat("autoScannerSpeed", "General", 5f, 0.5F, 60F, "Number, in seconds, it takes for the Auto Scanner to scan");
+     
+     overchanterBlacklist = cfg.get("General", "overchanterBlacklist", overchanterBlacklistDefault, "Blacklist enchantment IDs from being boosted in the Overchanter. IDs split with newlines, not commas").getIntList();
+     overchantCap = cfg.getBoolean("overchanterCap", "General", false, "Stop the Overchanter from going past 1 level higher than any enchantment's max level");
+     
+     peacefulLeafSpawnChance = cfg.getInt("peacefulLeafSpawnChance", "General", 3, 0, 100, "Percent chance of Peaceful Leaves spawning mob per tick");
+     netherLeafSpawnChance = cfg.getInt("netherLeafSpawnChance", "General", 5, 0, 100, "Percent chance of Nether Leaves spawning mob per tick");
+     enderLeafSpawnChance = cfg.getInt("enderLeafSpawnChance", "General", 2, 0, 100, "Percent chance of Ender Leaves spawning mob per tick");
+     
      enableTTCompathability = cfg.getBoolean("enableTTCompathability", "General", true, "Allow the mod to register it's enchantments in the Thaumic Tinkerer's enchanter? Set to false if Thaumic Tinkerer is crashing you.");
+   
+     if (cfg.hasChanged()) {
+         cfg.save();
+     }
    }
    
    public static int elderKnowledgeID;
@@ -51,6 +83,7 @@ import tb.core.TBCore;
    public static int calmingFociUID;
    public static int crystalizationFociUID;
    public static int warpingFociUID;
+   public static int spillageFociUID;
    public static boolean allowTobacco;
    public static boolean enableTTCompathability;
    public static int minBlazePowderFromPyrofluid;
@@ -60,6 +93,24 @@ import tb.core.TBCore;
    public static int shardsFromOre;
    public static boolean brightFociRequiresPrimordialPearl;
    public static int wisdomMaxAspect;
+   public static float autoScannerSpeed;
+   public static int[] overchanterBlacklist;
+   public static int[] overchanterBlacklistDefault = {};
+   public static int peacefulLeafSpawnChance;
+   public static int netherLeafSpawnChance;
+   public static int enderLeafSpawnChance;
+   public static int warnTimer;
+   public static double warnRange;
+   public static int decompGain;
+   public static int decompStackSize;
+   public static boolean overchantCap;
+   public static int cascadeDimID;
+   public static int cascadeBiomeID;
+   public static int cascadeDimMovementScale;
+   public static int cascadeDimReset;
+   public static int resetTries;
+   public static int cascadeDimSPM;
+   public static int potionVoidCallID;
    
    public static Configuration getConfiguration() {
        return cfg;
@@ -68,7 +119,7 @@ import tb.core.TBCore;
    public static void init(String configDir) {
 
        if (cfg == null) {
-           File path = new File(configDir + "/" + TBCore.modid + ".cfg");
+           File path = new File(configDir + "/" + "ThaumicBases" + ".cfg");
            cfg = new Configuration(path);
            load();
        }

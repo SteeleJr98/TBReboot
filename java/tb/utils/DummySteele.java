@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -34,6 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -46,6 +48,10 @@ import net.minecraftforge.client.ForgeHooksClient;
 import tb.core.CreativeTabBlocks;
 import tb.core.CreativeTabItems;
 import tb.core.TBCore;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.nodes.NodeModifier;
+import thaumcraft.api.nodes.NodeType;
 
 public class DummySteele {
 	
@@ -177,8 +183,29 @@ public class DummySteele {
 		return findBlocks(w, x, y, z, dist, Blocks.air);
 	}
 	
+	public static void SpamDebugMessage(int padSpace, String message) {
+		SpamDebugMessage(padSpace, message, "");
+	}
 	
-	
+	public static void SpamDebugMessage(int padSpace, String message, String topAndBottom) {
+		if (topAndBottom != "") {
+			TBCore.TBLogger.log(Level.INFO, topAndBottom);
+		}
+		
+		for (int i = 0; i < (topAndBottom != "" ? padSpace : padSpace - 1); i++) {
+			TBCore.TBLogger.log(Level.INFO, "");
+		}
+		
+		TBCore.TBLogger.log(Level.INFO, message);
+		
+		for (int i = 0; i < (topAndBottom != "" ? padSpace : padSpace - 1); i++) {
+			TBCore.TBLogger.log(Level.INFO, "");
+		}
+		
+		if (topAndBottom != "") {
+			TBCore.TBLogger.log(Level.INFO, topAndBottom);
+		}
+	}
 	
 	//Math Utils
 	public static double randomDouble(Random r) {
@@ -882,6 +909,97 @@ public class DummySteele {
 				}
 			}
 		}
+	}
+	
+	
+	public static void sendMessageFromServer(Object msg){
+		if (TBCore.isDev) {
+			MinecraftServer.getServer().getCommandManager().executeCommand(MinecraftServer.getServer(), "/say " + msg.toString());
+		}
+	}
+	
+	public static class MystColour {
+		public final float r;
+		public final float g;
+		public final float b;
+		
+		public MystColour(float r, float g, float b) {
+			this.r = r;
+			this.g = g;
+			this.b = b;
+		}
+		
+		public MystColour(int r, int g, int b) {
+			this.r = r / 255F;
+			this.g = g / 255F;
+			this.b = b / 255F;
+		}
+		
+		public int asInt() {
+			int tempColour = ((int) (this.r * 255) << 16);
+			tempColour += ((int) (this.g * 255) << 8);
+			tempColour += ((int) (this.b * 255));
+			return tempColour;
+		}
+		
+		
+	}
+	
+	public static class SimpleNodeData {
+		public NodeType type;
+		public NodeModifier modifier;
+		public AspectList aspects;
+		private World world;
+		
+		public SimpleNodeData(World world) {
+			this.world = world;
+			this.type = this.getNodeType();
+			this.modifier = this.getNodeModifier();
+			this.aspects = this.getAspects();
+		}
+		
+		private NodeType getNodeType() {
+			
+			NodeType type = NodeType.NORMAL;
+			
+			if (this.world.rand.nextInt(10) == 0) {
+				int randInt = this.world.rand.nextInt(10);
+				
+				if (randInt == 0) {
+					type = NodeType.DARK;
+				}
+				else if (randInt == 1) {
+					type = NodeType.HUNGRY;
+				}
+				else {
+					type = NodeType.NORMAL;
+				}
+				
+			}
+			
+			
+			return type;
+			
+			//return NodeType.values()[this.world.rand.nextInt(NodeType.values().length)];
+		}
+		
+		private NodeModifier getNodeModifier() {
+			return NodeModifier.values()[this.world.rand.nextInt(NodeModifier.values().length)];
+		}
+		
+		private AspectList getAspects() {
+			
+			AspectList tempList = new AspectList();
+			
+			int randInt = this.world.rand.nextInt(5);
+			
+			for (int i = 0; i <= randInt + 1; i++) {
+				tempList.add(Aspect.getAspect(Aspect.aspects.keySet().toArray()[this.world.rand.nextInt(Aspect.aspects.size())].toString()), this.world.rand.nextInt(10));
+			}
+			
+			return tempList;
+		}
+		
 	}
 	
 }

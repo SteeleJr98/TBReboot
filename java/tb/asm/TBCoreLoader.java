@@ -8,37 +8,29 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 @IFMLLoadingPlugin.Name(TBCoreLoader.NAME)
 
 public class TBCoreLoader implements IFMLLoadingPlugin {
-	
+
 	public static final String NAME = "TB CORE";
 
 	@Override
 	public String[] getASMTransformerClass() {
-		// TODO Auto-generated method stub
 		return new String[] {TBCoreTransformer.class.getName()};
 	}
 
 	@Override
 	public String getModContainerClass() {
-		// TODO Auto-generated method stub
-		//return TBContainerCore.class.getName();
 		return TBContainerCore.class.getName();
 	}
 
 	@Override
 	public String getSetupClass() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void injectData(Map<String, Object> data) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void injectData(Map<String, Object> data) {}
 
 	@Override
 	public String getAccessTransformerClass() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

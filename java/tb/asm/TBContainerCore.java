@@ -17,7 +17,7 @@ import tb.core.TBCore;
 
 
 public class TBContainerCore extends DummyModContainer {
-	
+
 	public TBContainerCore() {
 		super(new ModMetadata());
 		ModMetadata meta = getMetadata();
@@ -25,24 +25,23 @@ public class TBContainerCore extends DummyModContainer {
 		meta.name = TBCore.name + " Core";
 		meta.version = TBCore.version;
 		ArrayList<String> authors = new ArrayList<String>();
-	    authors.add("Modbder");
+		authors.add("Modbder");
 		authors.add("Steele");
 		meta.authorList = authors;
 	}
-	
+
 	@Override
 	public boolean registerBus(EventBus bus, LoadController controller) {
 		bus.register(this);
 		return true;
 	}
-	
+
 	@Subscribe
-	public void modConstruction(FMLConstructionEvent event) {
-	}
+	public void modConstruction(FMLConstructionEvent event) {}
+	
 	@EventHandler
-	public void preinit(FMLPreInitializationEvent event) {
-	}
+	public void preinit(FMLPreInitializationEvent event) {}
+	
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-	}
+	public void postInit(FMLPostInitializationEvent event) {}
 }

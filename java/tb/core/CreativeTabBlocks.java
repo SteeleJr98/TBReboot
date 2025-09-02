@@ -6,7 +6,7 @@ import tb.init.TBBlocks;
 
 public class CreativeTabBlocks {
 	public static final CreativeTabs tbTabBlocks = new CreativeTabs(TBCore.modid.toLowerCase() + ".blocks.name") {
-		
+
 		@Override
 		public Item getTabIconItem() {
 			// TODO Auto-generated method stub

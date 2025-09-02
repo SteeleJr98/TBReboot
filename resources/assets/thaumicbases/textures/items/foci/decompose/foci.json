@@ -1,0 +1,25 @@
+{
+  "Level upgrades": [
+    [
+      "Frugal"
+    ],
+    [
+      "Frugal"
+    ],
+    [
+      "Frugal",
+      "Spillage"
+    ],
+    [
+      "Frugal",
+      "Spillage"
+    ],
+    [
+      "Frugal"
+    ]
+  ],
+  "Upgrade values": [
+    "Frugal: -10% Cost",
+    "Spillage: -5% Aspects lost"
+  ]
+}
