@@ -9,8 +9,8 @@ import tb.utils.TBConfig;
 
 public class PotionVoidCall extends Potion {
 	
-	public static PotionVoidCall instance = new PotionVoidCall(TBConfig.potionVoidCallID, true, 0);
-	static final ResourceLocation rl = new ResourceLocation("thaumcraft", "textures/misc/potions.png");
+	public static PotionVoidCall instance = null;
+	static final ResourceLocation rl = new ResourceLocation("thaumicbases", "textures/gui/potions.png");
 
 	public PotionVoidCall(int id, boolean idBadEffect, int liquidColour) {
 		super(id, idBadEffect, liquidColour);
@@ -18,7 +18,7 @@ public class PotionVoidCall extends Potion {
 	
 	public static void init() {
 		/* 23 */     instance.setPotionName("potion.voidcall");
-		/* 24 */     instance.setIconIndex(4, 2);
+		/* 24 */     instance.setIconIndex(3, 1);
 		/* 25 */     instance.setEffectiveness(0.25D);
 		/*    */   }
 	

@@ -75,10 +75,12 @@ public class DimesnionTickHandler {
 					switch (caseInt) {
 					case 1:
 						fastStrike(event.world);
+						chunkDeletor(event.world, true);
 						break;
 						
 					case 2:
 						scalingStrike(event.world);
+						chunkDeletor(event.world, false);
 						break;
 						
 					case 3:
@@ -101,6 +103,10 @@ public class DimesnionTickHandler {
 //				dimAge++;
 //			}
 //		}
+	}
+	
+	private void chunkDeletor(World world, boolean near) {
+		
 	}
 	
 	private void slowStrike(World world) {

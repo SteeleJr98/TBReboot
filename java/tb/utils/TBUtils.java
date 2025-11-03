@@ -278,6 +278,19 @@ public class TBUtils
 		currentlyResetting = false;
 	}
 	
+	public static void deleteChunkNearPlayer(World world, boolean all, boolean near) {
+		if (world.playerEntities.size() > 0) {
+			List pList = world.playerEntities;
+			int dist = near ? 32 : 128;
+			if (all) {
+				for (Object o : pList) {
+					EntityPlayer player = (EntityPlayer) o;
+					Chunk
+				}
+			}
+		}
+	}
+	
 	public static void strikeNearAllPlayers(World world, boolean strikeNodes) {
 		if (world.playerEntities.size() > 0) {
 			List pList = world.playerEntities;

@@ -18,6 +18,7 @@ public class TBCommands {
 		event.registerServerCommand((ICommand)new CommandTBWeather());
 		event.registerServerCommand((ICommand)new CommandForceResetDim());
 		event.registerServerCommand((ICommand)new CommandScanAll());
+		event.registerServerCommand((ICommand)new CommandCascadeChunk());
 	}
 
 }

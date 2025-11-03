@@ -160,7 +160,7 @@ item.tobacco.tobacco_homeward.name=Homeward Tobacco Pile
 item.tobaccoSeeds.name=Tobacco Seeds
 item.mortar.name=Pestle And Mortar
 item.voidSeed.name=Void Plant Seed
-item.resourcebloodycloth.name=Bloody Enchanted Fabric
+item.resource.bloodycloth.name=Bloody Enchanted Fabric
 item.bloodyChest.name=Bloody Thaumaturge's Robe
 item.bloodyLegs.name=Bloody Thaumaturge's Leggings
 item.bloodyBoots.name=Bloody Thaumaturge's Boots
@@ -187,6 +187,9 @@ item.tb.voidFAS.name=Void Flint and Steel
 item.cascadeDispel.name=Cascade Pendant
 item.resource.void_string.name=Void String
 item.resource.void_cloth.name=Void Cloth
+
+#Potions
+potion.voidcall=Call of the Void
 
 #DevItems
 item.debugStick.name=Debug Stick
@@ -459,9 +462,13 @@ tc.research_name.TB.PeacefulSapling=Peaceful Tree
 tc.research_text.TB.PeacefulSapling=More life
 tb.rec.peacefulTree.page.0=You have noticed that the animals of all kind are attracted to the light. You have also noticed that they can appear in different places out of nowhere. You have studied that effect, and have managed to create a tree that will attract animals of all kind towards itself. The animals, corresponding to the biome the tree grows in, will randomly appear beneath it's leaves. You should however keep control over the population, since animals will come endlessly!
 
-tc.research_name.TB.CascadeDispel="Cool research!"
-tc.research_text.TB.CascadeDispel=-said nobody ever
-tb.rec.cascadeDispel.page.0="cool page!" -said nobody ever
+tc.research_name.TB.CascadeDispel=Void Pendant
+tc.research_text.TB.CascadeDispel=A dark protector
+tb.rec.cascadeDispel.page.0=While traversing the realm of collapsing magic you stumble across life in the form of small tufts of grass. The strands are dark and filled with magical potential; Perhaps you could use these strings to take some of this world home as a reminder of what you have seen. You should take care to note however, now that you have stepped foot on this darkened landscape, there is no going back on the journey that has brought you to where you are now...
+
+tc.research_name.TB.CascadeDim=A Volatile realm
+tc.research_text.TB.CascadeDim=Where magic falls within itself
+tb.rec.cascadeDim.page.0=Seeing as how the void metal anvil seemingly pulls magic from thin air to fill the cracks and damage it has taken you ask, what would happen if you forced more essence into it than it is willing to take?<BR>Perhaps if you were able to "crush" and grind a contained node with something large and weighted into a heavily damaged anvil, you could force a few aspects into the torrent of magic the anvil is already pulling. But what could result from your actions? And what aspects could you possibly use? Void, for obvious reasons, and maybe darkness? The metal itself is quite dark. But what else? Perhaps the ground you walk on has more answers than you think.
 
 #Research from TC4
 tc.research_name.TB.INFUSIONENCHANTMENT=Infusion Enchantment
@@ -685,6 +692,7 @@ tc.research_name.TB.Bracelet.Primal=Primal Bracelets
 tc.research_text.TB.Bracelet.Primal=The ultimate way
 tb.rec.bracelet.primal.page.0=Using your knowledge of the Staff core of the Primal you have created a bracelet that shares the same functionality. It will slowly regenerate all aspects within itself up to 10%. It also holds the most vis out of all bracelets and offers the best discount. Lastly, similar to the primal staff core it will automatically add 1 level of Potency to any foci used with it.
 
+
 #vanilla tc researches
 tc.research_name.TB.CAP_gold=Gold Wand Caps
 tc.research_text.TB.CAP_gold=Capping things off with style
@@ -722,6 +730,9 @@ tb.txt.wasteItems=You had no jars to fill...
 tb.txt.pendant.equip=The void keeps you safe
 tb.txt.pendant.unequip=The silence is deafening
 tb.txt.pendant.saveCall=A chill hangs around your neck, as if you were saved from an unseen threat
+tb.txt.pendant.saveCall2=You clutch the pendant that hangs around your neck.
+tb.txt.pendant.saveCall3=The voices subside, for now...
+tb.txt.failCall=Listen to the void, you may learn something...
 
 #scythe warnings
 tb.txt.scythewarn.0=The void whispers a warning...

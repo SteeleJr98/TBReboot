@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -19,9 +20,12 @@ import com.google.common.eventbus.EventBus;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -29,6 +33,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -36,12 +41,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.ServerChatEvent;
@@ -52,6 +59,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
@@ -74,9 +82,12 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IInfusionStabiliser;
+import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.ItemJarFilled;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.playerdata.PacketResearchComplete;
 
 
 
@@ -262,28 +273,65 @@ public class TBEventHandler {
 		}
 	}
 	
+	//protected DataWatcher watcher;
+	
 	@SubscribeEvent
 	public void playerTickEvent(LivingEvent.LivingUpdateEvent event) {
 		if (!event.entityLiving.worldObj.isRemote && event.entityLiving instanceof EntityPlayer && !Config.wuss && !event.entityLiving.isPotionActive(Config.potionWarpWardID)) {
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
-			if (ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), "TB.CascadeVisit")) {
+			PotionEffect effect = player.getActivePotionEffect(Potion.potionTypes[TBConfig.potionVoidCallID]);
+			if (effect != null) {
+				if (effect.getDuration() > 1) {
+					IInventory baubles = BaublesApi.getBaubles(player);
+					for (int i = 0; i < baubles.getSizeInventory(); i++) {
+						if (baubles.getStackInSlot(i) != null && baubles.getStackInSlot(i).getItem() instanceof ItemCascadeDispel) {
+							player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tb.txt.pendant.saveCall2")));
+							player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tb.txt.pendant.saveCall3")));
+							player.removePotionEffect(TBConfig.potionVoidCallID);
+						}
+					}
+				}
+				else {
+					PotionEffect effects[] = {new PotionEffect(Potion.moveSlowdown.id, 45*20), new PotionEffect(Potion.blindness.id, 45*20), new PotionEffect(Potion.wither.id, 10*20, 2), new PotionEffect(Potion.weakness.id, 30*20)};
+					player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tb.txt.failCall")));
+					for (PotionEffect e : effects) {
+						player.addPotionEffect(e);
+					}
+					
+				}
+				//TBCore.TBLogger.info("Player has " + effect.getEffectName() + " with " + effect.getDuration() + " remaining");
+			}
+			
+			if (ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), "TB.CascadeDispel")) {
 				if (player.ticksExisted > 0 && player.ticksExisted % (20*60*30) == 0) {
 					if (player.worldObj.rand.nextInt(100) == 0) {
 						IInventory baubles = BaublesApi.getBaubles(player);
 						for (int i = 0; i < baubles.getSizeInventory(); i++) {
 							if (baubles.getStackInSlot(i) != null && baubles.getStackInSlot(i).getItem() instanceof ItemCascadeDispel) {
-								player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.pendant.saveCall")));
+								player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("tb.txt.pendant.saveCall")));
 								return;
 							}
 						}
-						PotionEffect potion = new PotionEffect(TBConfig.aquaticFociUID, 0, 0, false);
+						PotionEffect potion = new PotionEffect(TBConfig.potionVoidCallID, 20*60*5, 0, false);
 					}
 				}
 			}
 		}
 	}
 	
-	
+	@SubscribeEvent
+	public void itemPickupEvent(EntityItemPickupEvent event) {
+		if (!event.entityPlayer.worldObj.isRemote) {
+			ItemStack tempStack = event.item.getEntityItem();
+			DummySteele.sendMessageFromServer(tempStack.getItem().getUnlocalizedName());
+			DummySteele.sendMessageFromServer(tempStack.getItemDamage());
+			if (tempStack.getItem() == TBItems.resource && tempStack.getItemDamage() == 9 && ThaumcraftApiHelper.isResearchComplete(event.entityPlayer.getCommandSenderName(), "TB.CascadeDim") && !ThaumcraftApiHelper.isResearchComplete(event.entityPlayer.getCommandSenderName(), "TB.CascadeDispel")) {
+				DummySteele.sendMessageFromServer("beep");
+				PacketHandler.INSTANCE.sendTo((IMessage)new PacketResearchComplete("TB.CascadeDispel"), (EntityPlayerMP)event.entityPlayer);
+				Thaumcraft.proxy.getResearchManager().completeResearch(event.entityPlayer, "TB.CascadeDispel");
+			}
+		}
+	}
 
 	
 //	@SubscribeEvent

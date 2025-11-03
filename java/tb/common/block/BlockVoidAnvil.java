@@ -26,6 +26,7 @@ import tb.init.TBBlocks;
 import tb.network.proxy.TBNetworkManager;
 import tb.utils.DummySteele;
 import tb.utils.TBUtils;
+import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IInfusionStabiliser;
@@ -169,7 +170,7 @@ public class BlockVoidAnvil extends BlockAnvil implements IInfusionStabiliser {
 		
 		ItemStack pItem = p.getCurrentEquippedItem();
 		if (pItem != null) {
-			if (pItem.getItem() == ConfigItems.itemPrimalCrusher) {
+			if (pItem.getItem() == ConfigItems.itemPrimalCrusher && ThaumcraftApiHelper.isResearchComplete(p.getCommandSenderName(), "TB.CascadeDim")) {
 				
 				int blockMeta = w.getBlockMetadata(x, y, z);
 				if (blockMeta <= 7) {

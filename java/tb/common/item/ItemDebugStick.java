@@ -55,6 +55,7 @@ public class ItemDebugStick extends Item {
 //						}
 //					}
 //				}
+				player.addChatComponentMessage(new ChatComponentText("Block Class: " + world.getBlock(x, y, z).getClass()));
 				player.addChatComponentMessage(new ChatComponentText("Block meta: " + world.getBlockMetadata(x, y, z)));
 				
 			}

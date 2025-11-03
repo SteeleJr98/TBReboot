@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Level;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
 import tb.core.TBCore;
 import tb.dimension.WorldProviderCascade;
 import tb.utils.DummySteele;
@@ -26,7 +27,8 @@ public class CommandInfo extends CommandBase {
 	public void processCommand(ICommandSender sender, String[] args) {
 		if (sender instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender;
-			TBUtils.sendChatToSender(sender, null);
+			int p = Potion.potionTypes.length;
+			TBUtils.sendChatToSender(sender, "potionTypes lengths: " + p);
 		}
 	}
 
