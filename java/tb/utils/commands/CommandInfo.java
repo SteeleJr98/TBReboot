@@ -27,8 +27,7 @@ public class CommandInfo extends CommandBase {
 	public void processCommand(ICommandSender sender, String[] args) {
 		if (sender instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender;
-			int p = Potion.potionTypes.length;
-			TBUtils.sendChatToSender(sender, "potionTypes lengths: " + p);
+			TBUtils.sendChatToSender(sender, player.getGameProfile().getId().toString());
 		}
 	}
 

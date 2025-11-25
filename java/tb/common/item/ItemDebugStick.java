@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import tb.utils.DummySteele;
@@ -35,93 +36,11 @@ public class ItemDebugStick extends Item {
 
 		Block block = world.getBlock(x, y, z);
 		if (!world.isRemote) {
-
-			if (player.isSneaking()) {
-				//				Entity testEntity = new DopeSquid(world);
-				//				testEntity.posX = player.posX;
-				//				testEntity.posY = player.posY + 1;
-				//				testEntity.posZ = player.posZ;
-				//				world.spawnEntityInWorld(testEntity);
-//				AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(player.posX - 5.0D, player.posY - 5.0D, player.posZ - 5.0D, player.posX + 5.0D, player.posY + 5.0D, player.posZ + 5.0D);
-//				
-//
-//				for (Object o : world.getEntitiesWithinAABB(EntityLivingBase.class, aabb)) {
-//					
-//					EntityLivingBase e = (EntityLivingBase) o;
-//					player.addChatComponentMessage(new ChatComponentText("entity: " + e.getClass()));
-//					if (!(e instanceof EntityPlayer)) {
-//						if (e.attackEntityFrom(DamageSource.outOfWorld, e.getMaxHealth() * 2)) {
-//							player.addChatComponentMessage(new ChatComponentText("hurt entity"));
-//						}
-//					}
-//				}
-				player.addChatComponentMessage(new ChatComponentText("Block Class: " + world.getBlock(x, y, z).getClass()));
-				player.addChatComponentMessage(new ChatComponentText("Block meta: " + world.getBlockMetadata(x, y, z)));
-				
-			}
-			else {
-				
-				if (block == Blocks.dirt || block == Blocks.grass) {
-					if (world.rand.nextBoolean()) {
-						world.setBlock(x, y + 1, z, Blocks.tallgrass, 1, 3);
-					}
-					else {
-//						world.setBlock(x, y + 1, z, Blocks.double_plant, 2, 3);
-//						world.setBlock(x, y + 2, z, Blocks.double_plant, 8, 3);
-						Blocks.double_plant.func_149889_c(world, x, y + 1, z, 2, 2);
-					}
-					
-				}
-				
-//				PositionImpl tempPos = TBUtils.getCornerOfCube(world, x, y, z);
-//				world.setBlock((int)tempPos.getX(), (int)tempPos.getY(), (int)tempPos.getZ(), Blocks.redstone_block);
-				
-				
-				
-				
-//				int dist = 1;
-//				for (int xx = -dist; xx <= dist; xx++) {
-//					for (int yy = -dist; yy <= dist; yy++) {
-//						for (int zz = -dist; zz <= dist; zz++) {
-//							Block tempBlock = world.getBlock(x + xx, y + yy, z + zz);
-//							DummySteele.sendMessageFromServer(tempBlock.getClass().toString());
-//							if (tempBlock instanceof BlockBush) {
-//								DummySteele.sendMessageFromServer("in bush if");
-//								Random rnd = world.rand;
-//								BlockBush tempBush = (BlockBush) tempBlock;
-//								tempBush.updateTick(world, x + xx, y + yy, z + zz, rnd);
-//							}
-//						}
-//					}
-//				}
-				
-				
-//				if (!(world.getBlock(x, y, z) == Blocks.end_stone)) {
-//					TBUtils.sendChatToSender(player, "Block Class: " + block.getClass().toString());
-//					TBUtils.sendChatToSender(player, Item.getItemFromBlock(block).getClass().toString());
-//					TBUtils.sendChatToSender(player, "Block Meta: " + world.getBlockMetadata(x, y, z));
-//					Block worldBlock = world.getBlock(x, y, z);
-//					ItemStack worldStack = new ItemStack(worldBlock);
-//					TBUtils.sendChatToSender(player, "Stack Damage: " + worldStack.getItemDamage());
-//				}
-//				else {
-//					AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(x - 5, y - 5, z - 5, x + 5, y + 5, z + 5);
-//					List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, aabb);
-//					if (!(list.size() == 0)) {
-//						for (EntityItem e : list) {
-//							int damage = e.getEntityItem().getItemDamage();
-//							TBUtils.sendChatToSender(player, "Item class: " + TBUtils.getClassLastString(e.getEntityItem().getItem().getClass().toString()));
-//						}
-//					}
-//					else {
-//						TBUtils.sendChatToSender(player, "No Entity Items found");
-//					}
-//				}
-			}
-
+			int eX = (int) player.posX + 5;
+			int eZ = (int) player.posZ + 5;
+			int eY = TBUtils.getTopBlock(world, eX, eZ);
+			world.createExplosion(null, eX, eY + 1, eZ, 5, false);
 		}
-
-
 
 		return true;
 	}

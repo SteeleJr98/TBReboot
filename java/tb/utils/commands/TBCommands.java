@@ -19,6 +19,7 @@ public class TBCommands {
 		event.registerServerCommand((ICommand)new CommandForceResetDim());
 		event.registerServerCommand((ICommand)new CommandScanAll());
 		event.registerServerCommand((ICommand)new CommandCascadeChunk());
+		event.registerServerCommand((ICommand)new CommandCollector());
 	}
 
 }
