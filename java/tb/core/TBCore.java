@@ -33,6 +33,7 @@ import tb.api.RevolverUpgrade;
 import tb.common.enchantment.EnchantmentHandler;
 import tb.common.entity.EntityRevolverBullet;
 import tb.common.event.TBEventHandler;
+import tb.common.event.TBFMLEventHandler;
 import tb.common.item.ItemEyeInstable;
 import tb.handlers.DimesnionTickHandler;
 import tb.handlers.KeyHandler;
@@ -134,6 +135,7 @@ public class TBCore {
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new EnchantmentHandler());
 		MinecraftForge.EVENT_BUS.register(new TBEventHandler());
+		FMLCommonHandler.instance().bus().register(new TBFMLEventHandler());
 		FMLCommonHandler.instance().bus().register(new DimesnionTickHandler());
 		if (isDev) {
 			
