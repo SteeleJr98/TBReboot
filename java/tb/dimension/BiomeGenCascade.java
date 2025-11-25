@@ -74,7 +74,7 @@ public class BiomeGenCascade extends BiomeGenBase {
         l = chunkX + random.nextInt(16) + 8;
         i1 = chunkZ + random.nextInt(16) + 8;
         j1 = random.nextInt(world.getHeightValue(l, i1) + 32);
-        doNodePlacement(world, l, i1, j1, random);
+        doNodePlacement(world, l, j1, i1, random);
         
         
 	}

@@ -13,6 +13,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Type;
+import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +24,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.world.WorldEvent.Save;
+import tb.common.potion.PotionVoidCall;
 import tb.core.TBCore;
 import tb.init.TBBlocks;
 import tb.utils.DummySteele;
@@ -105,8 +107,22 @@ public class DimesnionTickHandler {
 //		}
 	}
 	
-	private void chunkDeletor(World world, boolean near) {
-		
+	private void chunkDeletor(World world, boolean fast) {
+		if (fast) {
+			if (world.rand.nextInt(20 * 30) == 0) {
+				TBUtils.deleteChunkNearPlayer(world, true, true);
+				DummySteele.sendMessageFromServer("did fast deletion roll");
+			}
+		}
+		else {
+			if (dimAge % 60 == 0) {
+				float ageScale = (float) dimAge / (float) maxAge;
+				if (world.rand.nextFloat() < ageScale) {
+					TBUtils.deleteChunkNearPlayer(world, false, false);
+					DummySteele.sendMessageFromServer("did scaling deletion roll");
+				}
+			}
+		}
 	}
 	
 	private void slowStrike(World world) {
@@ -145,7 +161,23 @@ public class DimesnionTickHandler {
 		}
 	}
 	
-	
+	@SubscribeEvent
+	public void effectClearTick(WorldTickEvent event) {
+		if (event.type == TickEvent.Type.WORLD) {
+			if (event.world.playerEntities.size() > 0) {
+				List<EntityPlayer> playerList = event.world.playerEntities;
+				for (Object o : playerList) {
+					EntityPlayer player = (EntityPlayer) o;
+					if (player.dimension == TBConfig.cascadeDimID) {
+						if (player.getActivePotionEffect(PotionVoidCall.instance) != null) {
+							player.removePotionEffect(TBConfig.potionVoidCallID);
+							//DummySteele.sendMessageFromServer("cleared potion " + TBConfig.potionVoidCallID + " from player " + player.getDisplayName());
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	public static int getDimAge() {
 		return dimAge;

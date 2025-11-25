@@ -20,6 +20,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import tb.core.TBCore;
 import tb.init.TBBlocks;
@@ -30,8 +31,10 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IInfusionStabiliser;
+import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.Thaumcraft;
+import thaumcraft.common.blocks.BlockAiry;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.research.PlayerKnowledge;
@@ -190,20 +193,28 @@ public class BlockVoidAnvil extends BlockAnvil implements IInfusionStabiliser {
 										Aspect.EARTH
 								};
 								if (aList.getAmount(amountCheck[0]) >= 6 && aList.getAmount(amountCheck[1]) >= 6 && aList.getAmount(amountCheck[2]) >= 6) {
-									DummySteele.sendMessageFromServer("node has aspects");
+									//DummySteele.sendMessageFromServer("node has aspects");
+									if (p.dimension == 1) {
+										TBNetworkManager.playSoundOnServer(w, "thaumcraft:craftfail", x, y + 1, z, 1, 1);
+										TBNetworkManager.playSoundOnServer(w, "thaumcraft:urnbreak", x, y + 1, z, 1, 1);
+										//BlockAiry.explodify(w, x, y + 1, z);
+										w.setBlock(x, y + 1, z, Blocks.air, 0, 3);
+										p.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.noEndPortal")));
+										return true;
+									}
 									TBNetworkManager.playSoundOnServer(w, "ambient.weather.thunder", x, y + 1, z, 1, 1);
 									TBNetworkManager.playSoundOnServer(w, "thaumcraft:urnbreak", x, y + 1, z, 1, 1);
 									w.setBlock(x, y + 1, z, TBBlocks.cascadeBlock, 0, 3);
 									return true;
 								}
 								else {
-									DummySteele.sendMessageFromServer("node doesn not have aspects");
+									//DummySteele.sendMessageFromServer("node doesn not have aspects");
 									TBNetworkManager.playSoundOnServer(w, "thaumcraft:jar", x, y + 1, z, 1, 1);
 									return true;
 								}
 							}
 							else {
-								DummySteele.sendMessageFromServer("node is not dark it is: " + tempNode.getNodeType());
+								//DummySteele.sendMessageFromServer("node is not dark it is: " + tempNode.getNodeType());
 								TBNetworkManager.playSoundOnServer(w, "thaumcraft:jar", x, y + 1, z, 1, 1);
 								return true;
 							}

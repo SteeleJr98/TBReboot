@@ -59,11 +59,16 @@ public class TBTeleporter extends Teleporter {
 				int newX = (int)x;
 				int newZ = (int)z;
 				
-				for (int i = -2; i <= 2; i++) {
-					for(int j = -2; j <= 2; j++) {
-						this.worldServerInstance.setBlock(i, topY != -1 ? topY : 5, j, Blocks.bedrock);
-					}
-				}
+//				for (int i = -2; i <= 2; i++) {
+//					for(int j = -2; j <= 2; j++) {
+//						this.worldServerInstance.setBlock(i, topY != -1 ? topY : 5, j, Blocks.bedrock);
+//					}
+//				}
+				
+				makePlatform(topY);
+				
+				
+				
 				
 				
 			}
@@ -76,9 +81,10 @@ public class TBTeleporter extends Teleporter {
 				EntityPlayer player = (EntityPlayer) entity;
 				
 				int yTop = 1;
-				for (int i = -2; i <= 2; i++) {
-					for (int j = -2; j <= 2; j++) {
-						int tempY = TBUtils.getTopBlock(this.worldServerInstance, (int) player.posX + i, (int) player.posX + j);
+				for (int i = -1; i <= 1; i++) {
+					for (int j = -1; j <= 1; j++) {
+						int tempY = TBUtils.getTopBlock(this.worldServerInstance, (int) player.posX + i, (int) player.posZ + j);
+						//DummySteele.sendMessageFromServer("instance gave y of: " + tempY);
 						if (tempY > yTop) {
 							yTop = tempY;
 						}
@@ -116,6 +122,34 @@ public class TBTeleporter extends Teleporter {
 			}
 		}
 		return (int) (player.posY + 1);
+	}
+	
+	private void makePlatform(int topY) {
+		
+		int surfaceLevel = (topY != -1 ? topY : 5);
+		
+		int i;
+		int j = 3;
+		
+		for (i = -1; i <= 1; i++) {
+			this.worldServerInstance.setBlock(i, surfaceLevel, j, Blocks.bedrock);
+			this.worldServerInstance.setBlock(i, surfaceLevel, -j, Blocks.bedrock);
+		}
+		
+		j = 2;
+		
+		for (i = -2; i <= 2; i++) {
+			this.worldServerInstance.setBlock(i, surfaceLevel, j, Blocks.bedrock);
+			this.worldServerInstance.setBlock(i, surfaceLevel, -j, Blocks.bedrock);
+		}
+		
+		j = 1;
+		
+		for (i = -3; i <= 3; i++) {
+			this.worldServerInstance.setBlock(i, surfaceLevel, j, Blocks.bedrock);
+			this.worldServerInstance.setBlock(i, surfaceLevel, -j, Blocks.bedrock);
+			this.worldServerInstance.setBlock(i, surfaceLevel, 0, Blocks.bedrock);
+		}
 	}
 
 }

@@ -42,8 +42,8 @@ public class WorldProviderCascade extends WorldProvider {
 	
 	@Override
 	public double getMovementFactor() {
-		
-		return 1.0D + ((DimesnionTickHandler.getDimAge() / 20F) * 0.0001F * (TBConfig.cascadeDimMovementScale / 100F));
+		//max = 16.2:1
+		return 1.0D + ((DimesnionTickHandler.getDimAge() / 20F) * 0.09F * (TBConfig.cascadeDimMovementScale / 100F));
 	}
 	
 	
