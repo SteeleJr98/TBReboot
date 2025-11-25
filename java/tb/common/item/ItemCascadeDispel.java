@@ -16,6 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import tb.init.TBBlocks;
+import tb.init.TBItems;
 import tb.utils.TBConfig;
 
 public class ItemCascadeDispel extends Item implements IBauble {
@@ -32,8 +33,12 @@ public class ItemCascadeDispel extends Item implements IBauble {
 		if (targetBlock == TBBlocks.cascadeBlock) {
 			if (player.dimension != TBConfig.cascadeDimID) {
 				if (!world.isRemote) {
-					world.playSoundEffect(x, y, z, "thaumcraft:jar4", 1.0F, 1.0F);
+					
 					world.setBlockToAir(x, y, z);
+				}
+				world.playSoundEffect(x, y, z, "thaumcraft:zap", 1.0F, 1.0F);
+				if (player.getCurrentEquippedItem().getItem() instanceof ItemCascadeDispel) {
+					player.setCurrentItemOrArmor(0, null);
 				}
 				return true;
 			}
@@ -46,6 +51,8 @@ public class ItemCascadeDispel extends Item implements IBauble {
 		
 		return false;
 	}
+	
+	
 
 	@Override
 	public boolean canEquip(ItemStack stack, EntityLivingBase entity) {
