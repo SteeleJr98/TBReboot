@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Level;
 import com.google.common.eventbus.EventBus;
 
 import baubles.api.BaublesApi;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
@@ -68,8 +69,11 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import tb.asm.TBCoreTransformer;
+import tb.common.item.ItemAttunedCascadePendant;
 import tb.common.item.ItemCascadeDispel;
 import tb.common.item.ItemThauminiteArmor;
+import tb.common.item.ItemVoidCompass;
+import tb.common.tile.TileCascadeCollector;
 import tb.core.TBCore;
 import tb.handlers.DimesnionTickHandler;
 import tb.handlers.KeyHandler;
@@ -98,6 +102,22 @@ public class TBEventHandler {
 		if (event.entityPlayer != null && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() instanceof tb.common.item.ItemHerobrinesScythe)
 			event.displayname = "Herobrine"; 
 	}
+	
+	@SubscribeEvent
+	public void lightningStrikeEvent(EntityJoinWorldEvent event) {
+		if (!event.world.isRemote) {
+			if (event.entity instanceof EntityLightningBolt && event.entity.dimension == TBConfig.cascadeDimID) {
+				int r = TBConfig.collectorDist;
+				ArrayList<ChunkCoordinates> collectors = new ArrayList<ChunkCoordinates>();
+				collectors = DummySteele.findBlocks(event.world, (int) event.entity.posX, (int) event.entity.posY, (int) event.entity.posZ, r, TBBlocks.cascadeCollector);
+				if (collectors.size() > 0) {
+					ChunkCoordinates cc = collectors.get(event.world.rand.nextInt(collectors.size()));
+					TileCascadeCollector tile = (TileCascadeCollector) event.world.getTileEntity(cc.posX, cc.posY, cc.posZ);
+					tile.tryFillJar();
+				}
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void makeToolTip(ItemTooltipEvent event) {
@@ -124,6 +144,9 @@ public class TBEventHandler {
 				}
 		}
 
+		if (event.itemStack.getItem() instanceof ItemAttunedCascadePendant) {
+			event.toolTip.add(StatCollector.translateToLocal("tb.txt.pendantTooltip") + " " + ((ItemAttunedCascadePendant) event.itemStack.getItem()).getDimension(event.itemStack));
+		}
 
 		if (TBCore.isDev && KeyHandler.isDebugActive) {
 			ItemStack eventStack = event.itemStack;
