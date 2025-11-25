@@ -2,6 +2,7 @@ package tb.common.item.foci;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.lang.reflect.*;
 
 import cpw.mods.fml.relauncher.Side;
@@ -23,7 +24,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import tb.core.TBCore;
 import tb.init.TBFociUpgrades;
+import tb.network.proxy.TBNetworkManager;
 import tb.utils.DummySteele.MystColour;
+import tb.utils.DummySteele;
 import tb.utils.TBConfig;
 import tb.utils.TBUtils;
 import thaumcraft.api.ThaumcraftApi;
@@ -34,6 +37,7 @@ import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.blocks.BlockJar;
 import thaumcraft.common.blocks.BlockJarItem;
 import thaumcraft.common.blocks.ItemJarFilled;
+import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
@@ -129,7 +133,7 @@ public class FociDecompose extends ItemFocusBasic {
 			//aList.add(new AspectList(ei.getEntityItem()));
 
 
-			player.worldObj.playSoundAtEntity(player, "random.fizz", 1, 1);
+			//player.worldObj.playSoundAtEntity(player, "random.fizz", 1, 1);
 			ei.setDead();
 		}
 		List<Integer> jarFillableSlots = getSlots(player, false);
@@ -160,6 +164,9 @@ public class FociDecompose extends ItemFocusBasic {
 						if (aspectAmount < 64) {
 							aspectAmount += Math.round(aList.getAmount(aspect) * ((this.aspectLoss + bonusAmount)/100));
 							if (aspectAmount > 64) {
+								TBNetworkManager.playSoundOnServer(player.worldObj, "thaumcraft:bubble", player.posX, player.posY + 0.3, player.posZ, 0.2F, 0.9F + player.worldObj.rand.nextFloat());
+								spillGoo(player.worldObj, player);
+								//player.worldObj.playSoundAtEntity(player, "thaumcraft:bubble4", 0.2F, 0.45F + player.worldObj.rand.nextFloat() * 0.1F);
 								aspectAmount = 64;
 							}
 							AspectList newList = new AspectList();
@@ -167,6 +174,9 @@ public class FociDecompose extends ItemFocusBasic {
 							jarItem.setAspects(jarStack, newList);
 							toRemove.add(aspect);
 							break;
+						}
+						else {
+							TBNetworkManager.playSoundOnServer(player.worldObj, "thaumcraft:bubble", player.posX, player.posY + 0.3, player.posZ, 0.2F, 0.9F + player.worldObj.rand.nextFloat());
 						}
 					}
 				}
@@ -182,9 +192,11 @@ public class FociDecompose extends ItemFocusBasic {
 			//TBUtils.sendChatToSender(player, "no 'fillable' jars");
 		}
 		if (jarEmptySlots.size() > 0) {
-			int jarSlot = jarEmptySlots.get(0);
+			int jarIndex = 0;
+			int jarSlot = jarEmptySlots.get(jarIndex);
+			DummySteele.sendMessageFromServer("number of empty jar slots: " + jarEmptySlots.size());
 			for (Aspect aspect : aList.aspects.keySet()) {
-				if (player.inventory.getStackInSlot(jarEmptySlots.get(0)) != null) {
+				if (player.inventory.getStackInSlot(jarSlot) != null) {
 
 					ItemStack jarStack = new ItemStack(ConfigItems.itemJarFilled);
 					ItemJarFilled newJarFilled = (ItemJarFilled) jarStack.getItem();
@@ -194,6 +206,9 @@ public class FociDecompose extends ItemFocusBasic {
 					
 					
 					if (aspectAmount > 64) {
+						TBNetworkManager.playSoundOnServer(player.worldObj, "thaumcraft:bubble", player.posX, player.posY + 0.3, player.posZ, 0.2F, 0.9F + player.worldObj.rand.nextFloat());
+						spillGoo(player.worldObj, player);
+						//player.worldObj.playSoundAtEntity(player, "thaumcraft:bubble4", 0.2F, 0.45F + player.worldObj.rand.nextFloat() * 0.1F);
 						aspectAmount = 64;
 					}
 					AspectList newList = new AspectList();
@@ -216,12 +231,17 @@ public class FociDecompose extends ItemFocusBasic {
 					}
 					else {
 						player.inventory.setInventorySlotContents(jarSlot, null);
+						if (jarIndex < jarEmptySlots.size() - 1) {
+							jarIndex++;
+							DummySteele.sendMessageFromServer("Jar index: " + jarIndex);
+							jarSlot = jarEmptySlots.get(jarIndex);
+						}
 					}
 
 				}
 			}
 		}
-		else {
+		if (jarFillableSlots.size() == 0 && jarEmptySlots.size() == 0) {
 			player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tb.txt.wasteItems")));
 		}
 	}
@@ -245,6 +265,17 @@ public class FociDecompose extends ItemFocusBasic {
 	public void registerIcons(IIconRegister reg) {
 		super.registerIcons(reg);
 		this.icon = reg.registerIcon(getIconString());
+	}
+	
+	public void spillGoo(World world, EntityPlayer player) {
+		ArrayList<ChunkCoordinates> floorBlocks = DummySteele.getLowestNearBlock(world, (int) player.posX, (int) player.posY, (int) player.posZ, 1);
+		//DummySteele.sendMessageFromServer("spill goo open blocks: " + floorBlocks.size());
+		if (floorBlocks.size() > 0) {
+			int fluxMeta = world.rand.nextInt(2);
+			int index = new Random().nextInt(floorBlocks.size());
+			ChunkCoordinates coords = floorBlocks.get(index);
+			world.setBlock(coords.posX, coords.posY, coords.posZ, world.rand.nextBoolean() ? ConfigBlocks.blockFluxGoo : ConfigBlocks.blockFluxGas, fluxMeta, 3);
+		}
 	}
 
 }
