@@ -183,6 +183,28 @@ public class DummySteele {
 		return findBlocks(w, x, y, z, dist, Blocks.air);
 	}
 	
+	public static ArrayList<ChunkCoordinates> getLowestNearBlock(World w, int x, int y, int z, int dist) {
+		//DummySteele.sendMessageFromServer("in method");
+		ArrayList<ChunkCoordinates> openList = findOpenBlocks(w, x, y, z, dist);
+		//DummySteele.sendMessageFromServer("open size: " + openList.size());
+		ArrayList<ChunkCoordinates> tempList = new ArrayList();
+		if (openList.size() > 0) {
+			int lowestY = openList.get(0).posY;
+			for (ChunkCoordinates c : openList) {
+				if (c.posY < lowestY) {
+					lowestY = c.posY;
+					//DummySteele.sendMessageFromServer("new lowest: " + lowestY);
+					tempList.clear();
+					tempList.add(c);
+				}
+				if (c.posY == lowestY) {
+					tempList.add(c);
+				}
+			}
+		}
+		return tempList;
+	}
+	
 	public static void SpamDebugMessage(int padSpace, String message) {
 		SpamDebugMessage(padSpace, message, "");
 	}
