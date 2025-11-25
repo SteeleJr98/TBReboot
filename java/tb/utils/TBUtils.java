@@ -26,6 +26,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -34,6 +36,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -62,7 +65,17 @@ public class TBUtils
 	}
 
 
+	public static int getFirstSlotWithItem(Item item, ItemStack[] inventory) {
 
+		for (int i = 0; i < inventory.length; ++i) {
+			if (inventory[i] != null && inventory[i].getItem() == item) {
+				return i;
+			}
+		}
+
+		return -1;
+
+	}
 
 	public static void addWarpToPlayer(EntityPlayer addTo, int amount, int type) {
 		switch (type) {
@@ -148,7 +161,7 @@ public class TBUtils
 	}
 
 	public static int getTopBlock(World world, int x, int z) {
-		for (int y = 256; y > 0; y--) {
+		for (int y = world.getHeight() - 1; y > 0; y--) {
 			Material tempMaterial = world.getBlock(x, y, z).getMaterial();
 			if (tempMaterial != Material.air) {
 				return y;
@@ -159,7 +172,7 @@ public class TBUtils
 	}
 
 	public static int getTopBlockOfType(World world, int x, int z, Block blockType) {
-		for (int y = 256; y > 0; y--) {
+		for (int y = world.getHeight() - 1; y > 0; y--) {
 			if (world.getBlock(x, y, z) == blockType) {
 				return y;
 			}
@@ -279,13 +292,38 @@ public class TBUtils
 	}
 	
 	public static void deleteChunkNearPlayer(World world, boolean all, boolean near) {
+		fillChunkNearPlayer(world, all, near, Blocks.air);
+	}
+	
+	public static void fillChunkNearPlayer(World world, boolean all, boolean near, Block fillBlock) {
 		if (world.playerEntities.size() > 0) {
 			List pList = world.playerEntities;
 			int dist = near ? 32 : 128;
 			if (all) {
 				for (Object o : pList) {
 					EntityPlayer player = (EntityPlayer) o;
-					Chunk
+					tempMethod(world, player, fillBlock, dist);
+				}
+			}
+			else {
+				EntityPlayer tempPlayer = (EntityPlayer) pList.get(world.rand.nextInt(pList.size()));
+				tempMethod(world, tempPlayer, fillBlock, dist);
+			}
+		}
+	}
+	
+	public static void tempMethod(World world, EntityPlayer player, Block fillBlock, int dist) {
+		if (player.dimension == TBConfig.cascadeDimID) {
+			int targetX = (int) player.posX + (world.rand.nextBoolean() ? dist : -dist);
+			int targetZ = (int) player.posZ + (world.rand.nextBoolean() ? dist : -dist);
+			int topY = TBUtils.getTopBlock(world, targetX, targetZ);
+			//world.createExplosion(player, targetZ, dist, targetX, targetZ, currentlyResetting);
+			world.createExplosion(null, targetX, topY + 1, targetZ, 5, false);
+			for (int x = targetX - 8; x < targetX + 8; x++) {
+				for (int z = targetZ - 8; z < targetZ + 8; z++) {
+					for (int y = 1; y <= world.getActualHeight(); y++) {
+						world.setBlock(x, y, z, fillBlock, 0, 3);
+					}
 				}
 			}
 		}
