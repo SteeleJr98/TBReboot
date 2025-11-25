@@ -96,6 +96,7 @@ tile.enderPlanks.name=Ender Wood Planks
 
 tile.tb.autoDeconst.name=Auto Scanner
 tile.tb.cascadeBlock.name=Void Cascade
+tile.tb.cascadeCollector.name=Cascade Collector
 
 
 #dimension
@@ -187,6 +188,9 @@ item.tb.voidFAS.name=Void Flint and Steel
 item.cascadeDispel.name=Cascade Pendant
 item.resource.void_string.name=Void String
 item.resource.void_cloth.name=Void Cloth
+
+item.attunedCascadePendant.name=Attuned Cascade Pendant
+item.voidCompass.name=Void Compass
 
 #Potions
 potion.voidcall=Call of the Void
@@ -466,9 +470,27 @@ tc.research_name.TB.CascadeDispel=Void Pendant
 tc.research_text.TB.CascadeDispel=A dark protector
 tb.rec.cascadeDispel.page.0=While traversing the realm of collapsing magic you stumble across life in the form of small tufts of grass. The strands are dark and filled with magical potential; Perhaps you could use these strings to take some of this world home as a reminder of what you have seen. You should take care to note however, now that you have stepped foot on this darkened landscape, there is no going back on the journey that has brought you to where you are now...
 
+tc.research_name.TB.AttunedPendant=Attuned Pendant
+tc.research_text.TB.AttunedPendant=Surf the void
+tb.rec.attunedPendant.page.0=The Cascade sits between the overworld and the vast nothingness that lays beneath and thusly will always be connected. But what if you could shift that connection by using a bit of the void to move your final endpoint to a specific domain? By attuning the pendant to a certain world, you've been able to control, albeit loosely, where you end up upon leaving the Cascade. The dimensional attunement happens when the infusion completes, so make sure to do the cast where you want to end back up.
+
 tc.research_name.TB.CascadeDim=A Volatile realm
 tc.research_text.TB.CascadeDim=Where magic falls within itself
 tb.rec.cascadeDim.page.0=Seeing as how the void metal anvil seemingly pulls magic from thin air to fill the cracks and damage it has taken you ask, what would happen if you forced more essence into it than it is willing to take?<BR>Perhaps if you were able to "crush" and grind a contained node with something large and weighted into a heavily damaged anvil, you could force a few aspects into the torrent of magic the anvil is already pulling. But what could result from your actions? And what aspects could you possibly use? Void, for obvious reasons, and maybe darkness? The metal itself is quite dark. But what else? Perhaps the ground you walk on has more answers than you think.
+tb.rec.cascadeDim.page.1=Hearing tales of inconsistent and everchanging worlds in the past you venture into the dark and storming horizon of this unknown land. Shimmering and blinking nodes of all kinds form a band around the centre seemingly holding this land together, but there is no rhyme or reason to what magic they hold almost as if they were smashed together and shaken. Small storms pepper the air with cracks of lightning creating small rips back to a familiar yet far off location. Curiously however, they never seem to bring you back to the same place; it almost feels as the longer you stay here, the further from home you venture, even without taking a single step.
+
+tc.research_name.TB.DecompFocus=Wand Focus: Decompose
+tc.research_text.TB.DecompFocus=A distillery in your pocket
+tb.rec.decomp.page.0=Do you ever just need a small amount of a specific aspect in a jar but don't want to go through the lengthy and laborious task of melting it down, sifting through alembics, opening the correct pipes, tearing down all the pipes after you realized you opened the wrong pipes, and finally getting a small trickle of an aspect you forgot was in the item? Well, fear not, with this wand focus you can simply point at some items on the ground and POOF, the empty jars you had in your pockets are now filled with magic! This does come at the cost of losing a faint amount of essentia in the process, and please take care to make sure you don't over fill the jars...
+tb.rec.decomp.page.1=<LINE>§l      Spillage Upgrade §r<LINE>Available at level 3, this upgrade will allow the focus to lose less aspects when filling jars.
+
+tc.research_name.TB.VoidCompass=Void Compass
+tc.research_text.TB.VoidCompass=Make the Cascade make sense
+tb.rec.voidCompass.page.0=By infusing a normal, everyday compass with a bit of the Void, you've been able to create a sort of "Compression Tester" for a certain world. Your new compass is able to tell you approximately where you'll end up when leaving the Cascade by measuring the density of the world around you.
+
+tc.research_name.TB.CascadeCollector=Cascade Collector
+tc.research_text.TB.CascadeCollector=Lightning in a bottle
+tb.rec.cascadeCollector.page.0=Rifling through your notes you've come to realize, although the weather can sometimes get a little dark and moody, you have no real way to capture that essence in your magical endeavours. Perhaps offering a grounding point in an area where storms are ever so present would allow you to filter out some of that raw power being released from the sky and capture it in a vessel. Note that due to the potency of the energy, you can only fill some jars part way.
 
 #Research from TC4
 tc.research_name.TB.INFUSIONENCHANTMENT=Infusion Enchantment
@@ -733,6 +755,11 @@ tb.txt.pendant.saveCall=A chill hangs around your neck, as if you were saved fro
 tb.txt.pendant.saveCall2=You clutch the pendant that hangs around your neck.
 tb.txt.pendant.saveCall3=The voices subside, for now...
 tb.txt.failCall=Listen to the void, you may learn something...
+tb.txt.compassUse1=The void nudges you towards
+tb.txt.compassUsePendant=in your attuned world.
+tb.txt.pendantTooltip=Attuned Dimension:
+tb.txt.pendantBlacklist=The Void rejects this world...
+tb.txt.noEndPortal=The Void detests being connected to another void...
 
 #scythe warnings
 tb.txt.scythewarn.0=The void whispers a warning...

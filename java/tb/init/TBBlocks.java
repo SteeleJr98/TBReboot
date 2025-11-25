@@ -16,6 +16,7 @@ import tb.common.block.BlockAutoDeconstructor;
 import tb.common.block.BlockBraizer;
 import tb.common.block.BlockBriar;
 import tb.common.block.BlockCampfire;
+import tb.common.block.BlockCascadeCollector;
 import tb.common.block.BlockCascadePortal;
 import tb.common.block.BlockCryingObelisk;
 import tb.common.block.BlockCrystalBlock;
@@ -151,9 +152,10 @@ public class TBBlocks {
 
 		if (TBCore.isDev) {
 			DummySteele.registerBlock(testBlock, "testBlock", core, ItemBlock.class);
-			DummySteele.registerBlock(cascadeBlock, "cascade", core, ItemBlock.class);
 		}
 		DummySteele.registerBlock(autoDeconst, "autoDeconst", core, ItemBlock.class);
+		DummySteele.registerBlock(cascadeBlock, "cascade", core, ItemBlock.class);
+		DummySteele.registerBlock(cascadeCollector, "cascadeCollector", core, ItemBlock.class);
 
 
 
@@ -219,6 +221,8 @@ public class TBBlocks {
 	public static Block testBlock = (new TBTestBlock(Material.rock)).setBlockName("tb.testBlock").setBlockTextureName("cobblestone");
 	public static Block autoDeconst = (new BlockAutoDeconstructor()).setBlockName("tb.autoDeconst").setBlockTextureName("thaumicbases:autoDeconst/");
 
+	public static Block cascadeCollector = (new BlockCascadeCollector().setBlockName("tb.cascadeCollector").setBlockTextureName("thaumicbases:cascadeCollector/"));
+	
 	public static final Class<TBCore> core = TBCore.class;
 }
 

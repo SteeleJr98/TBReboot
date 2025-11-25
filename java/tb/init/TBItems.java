@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import scala.tools.nsc.doc.model.Public;
 import tb.common.item.ItemEyeInstable;
+import tb.common.item.ItemAttunedCascadePendant;
 import tb.common.item.ItemBloodyArmor;
 import tb.common.item.ItemCascadeDispel;
 import tb.common.item.ItemCastingBracelet;
@@ -34,6 +35,7 @@ import tb.common.item.ItemThauminitePickaxe;
 import tb.common.item.ItemThauminiteShears;
 import tb.common.item.ItemThauminiteShovel;
 import tb.common.item.ItemThauminiteSword;
+import tb.common.item.ItemVoidCompass;
 import tb.common.item.ItemVoidFlintAndSteel;
 import tb.common.item.ItemVoidShears;
 import tb.common.item.TBResource;
@@ -105,6 +107,9 @@ public class TBItems {
 		}
 		
 		DummySteele.registerItem(cascadeDispel, "cascadeDispel", core);
+		DummySteele.registerItem(attunedCascadePendant, "attunedCascadePendant", core);
+		
+		DummySteele.registerItem(voidCompass, "voidCompass", core);
 		
 		DummySteele.registerItem(fociDecompose, "fociDecompose", core);
 
@@ -219,6 +224,10 @@ public class TBItems {
 
 	public static WandRod WAND_ROD_VOID;
 	public static StaffRod STAFF_ROD_THAUMIUM;
+	
+	public static Item attunedCascadePendant = (new ItemAttunedCascadePendant()).setUnlocalizedName("attunedCascadePendant").setTextureName("thaumicbases:cascadeDispel");
+	public static Item voidCompass = (new ItemVoidCompass()).setUnlocalizedName("voidCompass").setTextureName("thaumicbases:voidCompass");
+	
 	public static final Class<TBCore> core = TBCore.class;
 }
 

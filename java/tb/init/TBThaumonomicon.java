@@ -943,14 +943,39 @@ public class TBThaumonomicon {
 
 
 
+		
 
+		
+		InfusionRecipe decompFociRec = new InfusionRecipe("TB.DecompFocus", new ItemStack(TBItems.fociDecompose, 1, 0), 2, (new AspectList().add(Aspect.ENTROPY, 15).add(Aspect.WATER, 10).add(Aspect.FIRE, 10).add(Aspect.MOTION, 5).add(Aspect.AURA, 10)), new ItemStack(ConfigItems.itemResource, 1, 3), new ItemStack[] {new ItemStack(ConfigBlocks.blockTube, 1, 0), new ItemStack(ConfigBlocks.blockJar, 1, 0), new ItemStack(ConfigBlocks.blockTube, 1, 0), new ItemStack(ConfigItems.itemBucketDeath, 1, 0), new ItemStack(ConfigBlocks.blockTube, 1, 0), new ItemStack(ConfigItems.itemBucketDeath, 1, 0), new ItemStack(ConfigBlocks.blockTube, 1, 0), new ItemStack(ConfigBlocks.blockMetalDevice, 1, 1)});
 
+		ItemStack[] attunedItems = new ItemStack[] {
+				new ItemStack(ConfigItems.itemEldritchObject, 1, 3),
+				new ItemStack(TBItems.resource, 1, 9),
+				new ItemStack(TBItems.resource, 1, 10),
+				new ItemStack(ConfigItems.itemResource, 1, 15),
+				new ItemStack(TBItems.resource, 1, 10),
+				new ItemStack(TBItems.resource, 1, 9),
+				new ItemStack(TBItems.voidCompass, 1, 0),
+				new ItemStack(TBItems.resource, 1, 9),
+				new ItemStack(TBItems.resource, 1, 10),
+				new ItemStack(ConfigItems.itemResource, 1, 15),
+				new ItemStack(TBItems.resource, 1, 10),
+				new ItemStack(TBItems.resource, 1, 9)
+		};
+		
+		InfusionRecipe attunedPendantRec = new InfusionRecipe("TB.AttunedPendant", new ItemStack(TBItems.attunedCascadePendant, 1, 0), 6, (new AspectList().add(Aspect.DARKNESS, 16).add(Aspect.VOID, 32).add(Aspect.TRAVEL, 32).add(Aspect.WEATHER, 16)), new ItemStack(TBItems.cascadeDispel, 1, 0), attunedItems);
 
+		
+		ItemStack[] compassItems = new ItemStack[] {
+				new ItemStack(TBItems.resource, 1, 9),
+				new ItemStack(TBItems.resource, 1, 9),
+				new ItemStack(ConfigItems.itemResource, 1, 16),
+				new ItemStack(TBItems.resource, 1, 9)
+		};
+		
+		InfusionRecipe voidCompassRec = new InfusionRecipe("TB.VoidCompass", new ItemStack(TBItems.voidCompass, 1, 0), 2, (new AspectList().add(Aspect.TRAVEL, 8).add(Aspect.MECHANISM, 16).add(Aspect.VOID, 8)), new ItemStack(Items.compass), compassItems);
 
-
-
-
-
+		ShapedArcaneRecipe cascadeCollectorRec = new ShapedArcaneRecipe("TB.CascadeCollector", TBBlocks.cascadeCollector, (new AspectList().add(Aspect.WATER, 5).add(Aspect.AIR, 5).add(Aspect.ORDER, 10)), new Object[] {" T ", "STS", "FBF", Character.valueOf('T'), new ItemStack(ConfigBlocks.blockTube, 1, 0), Character.valueOf('S'), new ItemStack(TBItems.resource, 1, 9), Character.valueOf('F'), new ItemStack(ConfigItems.itemResource, 1, 8), Character.valueOf('B'), new ItemStack(ConfigBlocks.blockMetalDevice, 1, 9)});
 
 		ThaumcraftApi.addWarpToItem(new ItemStack(TBItems.tobacco, 1, 1), 1);
 		ThaumcraftApi.addWarpToItem(new ItemStack(TBItems.nodeFoci, 1, 1), 1);
@@ -1466,6 +1491,17 @@ public class TBThaumonomicon {
 		.setPages(new ResearchPage[] {new ResearchPage("tb.rec.cascadeDispel.page.0"), new ResearchPage(cascadeDispelRecipe), new ResearchPage(cascadeClothRecipe)})
 		.registerResearchItem();
 		
+		(new ResearchItem("TB.AttunedPendant", "THAUMICBASES", (new AspectList().add(Aspect.VOID, 5).add(Aspect.TRAP, 5).add(Aspect.TRAVEL, 5)), 16, 4, 1, new ItemStack(TBItems.attunedCascadePendant, 1, 0)))
+		.setParents(new String[] {"TB.CascadeDispel"})
+		.setConcealed()
+		.setPages(new ResearchPage[] {new ResearchPage("tb.rec.attunedPendant.page.0"), new ResearchPage(attunedPendantRec)})
+		.registerResearchItem();
+		
+		(new ResearchItem("TB.VoidCompass", "THAUMICBASES", (new AspectList().add(Aspect.TRAVEL, 5).add(Aspect.MIND, 5).add(Aspect.MECHANISM, 5)), 15, 5, 1, new ItemStack(TBItems.voidCompass, 1, 0)))
+		.setParents(new String[] {"TB.CascadeDispel"})
+		.setConcealed()
+		.setPages(new ResearchPage[] {new ResearchPage("tb.rec.voidCompass.page.0"), new ResearchPage(voidCompassRec)})
+		.registerResearchItem();
 		
 		ItemStack empty = new ItemStack(ConfigBlocks.blockHole, 1, 15);
 		ConfigResearch.recipes.put("BuildCascadeAnvil", Arrays.asList(new Object[] { 
@@ -1477,11 +1513,23 @@ public class TBThaumonomicon {
 
 		(new ResearchItem("TB.CascadeDim", "THAUMICBASES", (new AspectList().add(Aspect.VOID, 5).add(Aspect.AIR, 5).add(Aspect.TRAVEL, 5).add(Aspect.DARKNESS, 5)), 14, 3, 1, new ItemStack(TBBlocks.cascadeBlock)))
 		.setPages(new ResearchPage[] {
-				new ResearchPage("tb.rec.cascadeDim.page.0"), new ResearchPage((List)ConfigResearch.recipes.get("BuildCascadeAnvil"))
+				new ResearchPage("tb.rec.cascadeDim.page.0"), new ResearchPage((List)ConfigResearch.recipes.get("BuildCascadeAnvil")), new ResearchPage("tb.rec.cascadeDim.page.1")
 		})	
 		.setConcealed()
 		//.setItemTriggers(new ItemStack(TBItems.tobacco, 1, 7))
 		.setParents(new String[] {"TB.VoidAnvil", "PRIMALCRUSHER"}).registerResearchItem();
+		
+		(new ResearchItem("TB.CascadeCollector", "THAUMICBASES", (new AspectList().add(Aspect.AIR, 5).add(Aspect.WATER, 5).add(Aspect.VOID, 5)), 16, 5, 2, new ItemStack(TBBlocks.cascadeCollector))
+		.setPages(new ResearchPage[] {new ResearchPage("tb.rec.cascadeCollector.page.0"), new ResearchPage(cascadeCollectorRec)})
+		.setParents(new String[] {"TB.CascadeDim"})
+		.setConcealed())
+		.registerResearchItem();
+		
+		(new ResearchItem("TB.DecompFocus", "THAUMICBASES", (new AspectList().add(Aspect.WATER, 5).add(Aspect.ENTROPY, 5).add(Aspect.AURA, 5).add(Aspect.FIRE, 5)), -3, -2, 1, new ItemStack(TBItems.fociDecompose)))
+		.setParents(new String[] {"TB.INFUSION", "TB.CRUCIBLE", "TUBES", "LIQUIDDEATH"})
+		.setConcealed()
+		.setPages(new ResearchPage[] {new ResearchPage("tb.rec.decomp.page.0"), new ResearchPage(decompFociRec), new ResearchPage("tb.rec.decomp.page.1")})
+		.registerResearchItem();
 		
 		(new ResearchItem("TB.EntityDec", "THAUMICBASES", (new AspectList()).add(Aspect.MIND, 8).add(Aspect.DEATH, 8).add(Aspect.SOUL, 8), 7, -19, 1, new ItemStack(TBBlocks.entityDeconstructor, 1, 0)))
 		.setParents(new String[] { "TB.INFUSION"
@@ -2328,9 +2376,15 @@ public class TBThaumonomicon {
 		ThaumcraftApi.getCraftingRecipes().add(quartzBraceletRec);
 		ThaumcraftApi.getCraftingRecipes().add(primalBraceletRec);
 		
+		ThaumcraftApi.getCraftingRecipes().add(decompFociRec);
+		
 		ThaumcraftApi.getCraftingRecipes().add(autoDeconstRecipe);
 		ThaumcraftApi.getCraftingRecipes().add(cascadeDispelRecipe);
 		ThaumcraftApi.getCraftingRecipes().add(cascadeClothRecipe);
+		ThaumcraftApi.getCraftingRecipes().add(attunedPendantRec);
+		ThaumcraftApi.getCraftingRecipes().add(voidCompassRec);
+		
+		ThaumcraftApi.getCraftingRecipes().add(cascadeCollectorRec);
 		
 
 		int n;

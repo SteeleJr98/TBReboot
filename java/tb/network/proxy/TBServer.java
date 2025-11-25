@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import scala.reflect.internal.Trees.New;
 import tb.common.inventory.ContainerAutoDeconstructor;
+import tb.common.inventory.ContainerCascadeCollector;
 import tb.common.inventory.ContainerOverchanter;
 import tb.common.inventory.ContainerRevolver;
 import tb.common.inventory.ContainerSneakyGrab;
@@ -61,6 +62,9 @@ implements IGuiHandler
 			}
 			if (ID == 4331820) {
 				return new ContainerSneakyGrab(player.inventory, (EntityPlayer) TBUtils.getTaggedEntityLookingAway(player, 1));
+			}
+			if (ID == 4331824) {
+				return new ContainerCascadeCollector(player.inventory, world.getTileEntity(x, y, z));
 			}
 
 

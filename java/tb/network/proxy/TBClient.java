@@ -32,6 +32,7 @@ import tb.client.gui.GuiSneakyGrab;
 import tb.client.gui.GuiVoidAnvil;
 import tb.client.gui.GuiThaumicAnvil;
 import tb.client.gui.GuiAutoDeconstructor;
+import tb.client.gui.GuiCascadeCollector;
 import tb.client.gui.GuiFociCrafter;
 import tb.client.render.block.BrazierRenderer;
 import tb.client.render.block.CampfireRenderer;
@@ -104,6 +105,9 @@ public class TBClient extends TBServer {
 			}
 			if (ID == 4331820) {
 				return new GuiSneakyGrab(player.inventory, (EntityPlayer) TBUtils.getTaggedEntityLookingAway(player, 1));
+			}
+			if (ID == 4331824) {
+				return new GuiCascadeCollector(player.inventory, world, x, y, z);
 			}
 
 

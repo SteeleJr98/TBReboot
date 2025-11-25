@@ -5,7 +5,8 @@
 import tb.common.tile.TileAutoDeconstructor;
 import tb.common.tile.TileBraizer;
  import tb.common.tile.TileCampfire;
- import tb.common.tile.TileEntityDeconstructor;
+import tb.common.tile.TileCascadeCollector;
+import tb.common.tile.TileEntityDeconstructor;
  import tb.common.tile.TileNodeLinker;
  import tb.common.tile.TileNodeManipulator;
  import tb.common.tile.TileOverchanter;
@@ -24,7 +25,7 @@ import tb.common.tile.TileBraizer;
      GameRegistry.registerTileEntity(TileCampfire.class, "tb.campfire");
      GameRegistry.registerTileEntity(TileBraizer.class, "tb.brazier");
      GameRegistry.registerTileEntity(TileAutoDeconstructor.class, "tb.autoConst");
-   
+     GameRegistry.registerTileEntity(TileCascadeCollector.class, "tb.cascadeCollector");
      
    }
  }
