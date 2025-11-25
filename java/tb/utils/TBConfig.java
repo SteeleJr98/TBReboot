@@ -70,8 +70,11 @@ public class TBConfig {
 
 		enableTTCompathability = cfg.getBoolean("enableTTCompathability", "General", true, "Allow the mod to register it's enchantments in the Thaumic Tinkerer's enchanter? Set to false if Thaumic Tinkerer is crashing you.");
 
-		
+		pendantDimBlacklist = cfg.get("General", "attunedPendantDimBlacklist", pendantDimBlacklistDefault, "Blacklist dimension IDs from being attuned to the upgraded pendant. IDs split with newlines, not commas").getIntList();
 
+		collectorAmount = cfg.getInt("collectorAmmount", "General", 4, 1, 8, "Amount Cascade Collector adds per strike");
+		collectorDist = cfg.getInt("collectorDist", "General", 16, 2, 64, "How close, in blocks, a collector needs to be to activate");
+		
 		if (cfg.hasChanged()) {
 			cfg.save();
 		}
@@ -117,6 +120,10 @@ public class TBConfig {
 	public static int resetTries;
 	public static int cascadeDimSPM;
 	public static int potionVoidCallID;
+	public static int[] pendantDimBlacklist;
+	public static int[] pendantDimBlacklistDefault = {1};
+	public static int collectorAmount;
+	public static int collectorDist;
 
 	public static Configuration getConfiguration() {
 		return cfg;
