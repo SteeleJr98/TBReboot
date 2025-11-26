@@ -20,7 +20,7 @@ public class TBConfig {
 
 		int pTypeTotal = adjustPotionTypesIfNeeded();
 		
-		potionVoidCallID = cfg.getInt("potionVoidCallID", "General", 45, 0, 50, "");
+		potionVoidCallID = cfg.get("potionVoidCallID", "General", 45, "").getInt();
 		PotionVoidCall.instance = new PotionVoidCall(TBConfig.potionVoidCallID, true, 7889559);
 		PotionVoidCall.init();
 
