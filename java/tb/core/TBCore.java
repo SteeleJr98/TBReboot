@@ -60,7 +60,7 @@ import tb.utils.commands.TBCommands;
 public class TBCore {
 	
 	public static final String modid = "thaumicbases";
-	public static final String version = "2.3.1";
+	public static final String version = "2.4.1";
 	public static final String name = "Thaumic Bases Reboot";
 	public static final String serverProxy = "tb.network.proxy.TBServer";
 	public static final String clientProxy = "tb.network.proxy.TBClient";
@@ -69,8 +69,8 @@ public class TBCore {
 
 
 
-	public static final boolean isDev = true;
-	public static final boolean dimTesting = true;
+	public static final boolean isDev = false;
+	public static final boolean dimTesting = false;
 	public static File saveFolder;
 	
 
