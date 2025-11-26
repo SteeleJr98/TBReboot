@@ -33,8 +33,8 @@ public class TBConfig {
 		warpingFociUID = cfg.getInt("warpingFociUID", "Foci", 10560, 0, 2147483647, "");
 		spillageFociUID = cfg.getInt("spillageFociUID", "Foci", 10562, 0, 2147483647, "");
 
-		cascadeDimID = cfg.getInt("cascadeDimID", "General", 17, Integer.MIN_VALUE, Integer.MAX_VALUE, "Dimension ID");
-		cascadeBiomeID = cfg.getInt("cascadeBiomeID", "General", 191, 0, 255, "Biome ID");
+		cascadeDimID = cfg.getInt("cascadeDimID", "General", 41275, Integer.MIN_VALUE, Integer.MAX_VALUE, "Dimension ID");
+		cascadeBiomeID = cfg.getInt("cascadeBiomeID", "General", 196, 0, 255, "Biome ID");
 		cascadeDimMovementScale = cfg.getInt("cascadeDimMovementScale", "General", 5, 0, 100, "Integer percent scale of how quickly Dimension scales to overworld");
 		cascadeDimReset = cfg.getInt("cascadeDimReset", "General", 1, 1, 200, "Number of hours Dimension exists before resetting scale");
 		resetTries = cfg.getInt("resetTries", "General", 10, 1, 255, "Number of attemps to delete the Dimension on reset");
