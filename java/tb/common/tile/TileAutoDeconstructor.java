@@ -82,6 +82,7 @@ public class TileAutoDeconstructor extends TileEntity implements ISidedInventory
 				tryMoveInv();
 
 				markDirty();
+				this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 			}
 
 		}
@@ -141,6 +142,7 @@ public class TileAutoDeconstructor extends TileEntity implements ISidedInventory
 				ItemStack itemStack = this.inventory[slot];
 				this.inventory[slot] = null;
 				markDirty();
+				this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 				return itemStack;
 			} 
 
@@ -152,6 +154,7 @@ public class TileAutoDeconstructor extends TileEntity implements ISidedInventory
 			}
 
 			markDirty();
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 			return itemstack;
 		} 
 
@@ -219,6 +222,9 @@ public class TileAutoDeconstructor extends TileEntity implements ISidedInventory
 		if (tag.hasKey("itm")) {
 			this.inventory[0] = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("itm"));
 		}
+		if (tag.hasKey("itm2")) {
+			this.inventory[1] = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("itm2"));
+		}
 
 		NBTTagList playerList = (NBTTagList)tag.getTag("playerList");
 
@@ -238,6 +244,12 @@ public class TileAutoDeconstructor extends TileEntity implements ISidedInventory
 			NBTTagCompound t = new NBTTagCompound();
 			this.inventory[0].writeToNBT(t);
 			tag.setTag("itm", (NBTBase)t);
+		}
+		if (this.inventory[1] != null) {
+
+			NBTTagCompound t = new NBTTagCompound();
+			this.inventory[1].writeToNBT(t);
+			tag.setTag("itm2", (NBTBase)t);
 		}
 
 		NBTTagList playerList = new NBTTagList();

@@ -3,6 +3,8 @@ package tb.common.tile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import tb.utils.TBConfig;
 import thaumcraft.api.aspects.Aspect;
@@ -53,6 +55,7 @@ public class TileCascadeCollector extends TileEntity implements IInventory {
 				this.inventory[0] = jarStack;
 			}
 			this.markDirty();
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 		}
 	}
 
@@ -77,6 +80,7 @@ public class TileCascadeCollector extends TileEntity implements IInventory {
 				ItemStack itemStack = this.inventory[slot];
 				this.inventory[slot] = null;
 				markDirty();
+				this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 				return itemStack;
 			} 
 
@@ -88,6 +92,7 @@ public class TileCascadeCollector extends TileEntity implements IInventory {
 			}
 
 			markDirty();
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 			return itemstack;
 		} 
 
@@ -145,6 +150,29 @@ public class TileCascadeCollector extends TileEntity implements IInventory {
 			}
 		}
 		return (stack.getItem() instanceof BlockJarItem || fillCheck);
+	}
+	
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+
+
+
+		if (tag.hasKey("itm")) {
+			this.inventory[0] = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("itm"));
+		}
+	}
+
+	public void writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+
+
+
+		if (this.inventory != null) {
+
+			NBTTagCompound t = new NBTTagCompound();
+			this.inventory[0].writeToNBT(t);
+			tag.setTag("itm", (NBTBase)t);
+		} 
 	}
 
 }
